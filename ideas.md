@@ -1,0 +1,1 @@
+'/blog-static'/'/static-blog' with some markDown or html blog-posts (e.g. google-disclosure)
