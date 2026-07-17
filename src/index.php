@@ -1,10 +1,12 @@
-Hello, I'm Fabian Ternis – A Student and developer from Germany.
+<section id="hero">
+    Hello, I'm Fabian Ternis – A Student and developer from Germany.
 Building my HomeLab @ ternis.net
 Webdevelopment @ (xpsystems.eu && ternis-edv.de)
 Links via ternis.link
 
 I just own too many domain (see: dnbx.de)
 
+</section>
 <hr>
 
 I am also trying not to get sued by cult-management.com for owning ('twins-on-ice.de' && 'mirrortwins.de' && 'twinsonice.eu') as well as ('emiliamacula.de' && 'letiziamacula.de')
@@ -46,3 +48,11 @@ What i host on my HomeLab (i know, nobody asked):
 <hr>
 
 Device Specs (screenfetch)
+
+
+<hr>
+
+Some other projects i am currently not working on:
+- Web-Search.org (Just anotehr open-source Searchengine)
+- MTEX.dev (Developer Tools (SchemaBuilder(which i am currently working on) might be one of thiose but is currently not beeing built under the MTEX.dev Brand))
+... way too many more ...

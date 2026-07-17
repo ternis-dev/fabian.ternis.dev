@@ -1,0 +1,28 @@
+:root {
+    /* --color-bg: #cdcdcd; */
+    /* --color-bg: #dcdcdc; */
+    --color-bg: #eaeaea;
+    --color-text: #1c1c1c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    
+    box-sizing: border-box;
+}
+
+body {
+    /* background-color: var(--bg-color);
+    color: var(--text-color) */
+    background-color: var(--color-bg);
+    color: var(--color-text);max-width: 1234px; 
+    width: 90%;
+    margin: 0 auto;
+
+    section {
+        &#hero {
+            min-height: 45dvh;
+        }
+    }
+}
