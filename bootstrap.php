@@ -9,8 +9,12 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     header('Content-Type: text/css; charset=UTF-8');
     readfile(__DIR__.'/assets/css'.$safePath);
     exit;
+} elseif (str_ends_with($safePath, '.ttf') && file_exists(__DIR__.'/assets/fonts'.$safePath)) {
+    header('Content-Type: font/ttf');
+    readfile(__DIR__.'/assets/fonts'.$safePath);
+    exit;
 } else {
-    $http_ocde = 404;
+    $http_code = 404;
 }
 ?>
 

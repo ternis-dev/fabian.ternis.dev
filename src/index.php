@@ -1,24 +1,17 @@
 <section id="hero">
-    Hello, I'm Fabian Ternis – A Student and developer from Germany.
-Building my HomeLab @ ternis.net
-Webdevelopment @ (xpsystems.eu && ternis-edv.de)
-Links via ternis.link
-
-I just own too many domain (see: dnbx.de)
-
+    <h1>Hello, I'm Fabian Ternis</h1>
+    <h2>A Student and developer from Germany.</h2>
+    <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
+    <h3>Webdevelopment @ <span class="font-code">(<a href="http://xpsystems.eu">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
+    <h3>Links via <a href="http://ternis.link">ternis.link</a></h3>
+    <h3>I just own too many domain (see: <a href="http://dnbx.de">dnbx.de</a>)</h3>
 </section>
 <hr>
-
 I am also trying not to get sued by cult-management.com for owning ('twins-on-ice.de' && 'mirrortwins.de' && 'twinsonice.eu') as well as ('emiliamacula.de' && 'letiziamacula.de')
-
 <hr>
-
 Whenever i do a disclosure (in any way), i get no response (e.g. 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
-
 <hr>
-
 Building (mostly Vibing) storygrab.net as side-project taht is powered by cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de(alt: mirrortwins.de)
-
 <br>
 <br>
 
