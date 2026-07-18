@@ -3,12 +3,11 @@
     <h2>A Student and developer from Germany.</h2>
     <div class="some-container">
         <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
-        <h3>Webdevelopment @ <span class="font-code">(<a href="http://xpsystems.eu">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
-        <h3>Links via <a href="http://fabian-ternis-dev.ternis.link">ternis.link</a></h3>
-        <h3>I just own too many domain (see: <a href="http://dnbx.de#domainlist">dnbx.de</a>)</h3>
+        <h3>Webdevelopment @ <span class="font-code">(<a href="http://xpsystems.eu" target="_blank">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
+        <h3>Links via <a href="http://fabian-ternis-dev.ternis.link" target="_blank">ternis.link</a></h3>
+        <h3>I just own too many domain (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a>)</h3>
         <div class="img-container">
-            <img src="BASF_2026.jpg" class="me">
-            <span class="copyright-note">&copy; Image by <a href="https://basf.com">BASF SE</a>.</span>
+            <img src="BASF_2026.jpg" class="me" alt="Fabian Ternis at BASF SE in Ludwigshafen during the Jugend Forscht State Competition / Landeswettbewerb Rheinland-Pfalz">            <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">BASF SE</a></span>
         </div>
     </div>
 </section>

@@ -14,6 +14,38 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-Regular.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-Italic.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-Bold.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-BoldItalic.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: bolditalic;
+    font-display: swap;
+}
+
 :root {
     /* --color-bg: #cdcdcd; */
     /* --color-bg: #dcdcdc; */
@@ -24,7 +56,10 @@
     --color-link: #199cf3;
 
     --font-main: 'Libre Baskerville', Georgia, serif;
-    --font-code: ;
+    --font-code: 'Anonymous Pro', monospace;
+
+    --cursor-pointer: pointer;
+    --cusrsor-default: default;
 }
 
 * {
@@ -32,13 +67,23 @@
     padding: 0;
 
     box-sizing: border-box;
+
+    background-color: var(--a-background-color);
+    color: var(--a-color);
 }
 
 body {
     /* background-color: var(--bg-color);
     color: var(--text-color) */
-    background-color: var(--color-bg);
-    color: var(--color-text-primary);
+    --a-background-color: var(--color-bg);
+    --a-color: var(--color-text-primary);
+    cursor: var(--cusrsor-default);
+
+    ::selection {
+        background-color: var(--a-color);
+        color: var(--a-background-color);
+    }
+
     /* max-width: 1234px; */
     max-width: 999px;
     width: 90%;
@@ -79,7 +124,8 @@ body {
                     flex-direction: column;
 
                     position: absolute;
-                    right: 5rem;
+                    /* right: 7.5rem; */
+                    right: 5.75;
                     bottom: 0;
                     align-items: flex-end;
 
@@ -94,14 +140,22 @@ body {
                     }
 
                     .copyright-note {
-                        color: var(--color-text-tertiary);
+                        --a-color:var(--color-text-tertiary);
                         font-size: .8rem;
                         margin-top: .5rem;
                         /* right: 1rem; */
+                        text-align: start;
+                        padding-inline-end: 32px;
                     }
 
                     @media(min-width: 1200px) {
-                        transform: translateY(5rem) rotate(10deg);
+                        transform: translateY(5rem) rotate(6.789deg);
+                        &:hover {
+                            transform: translateY(5.1rem) rotate(4deg) scale(1.025);
+                            img.me {
+                                border-radius: 12px;
+                            }
+                        }
                     }
                 }
             }
@@ -112,12 +166,12 @@ body {
 
             h2 {
                 /* color: var(--color-text-secondary); */
-                color: var(--color-text-tertiary);
+                --a-color:var(--color-text-tertiary);
                 font-size: 1.8rem;
             }
 
             h3 {
-                color: var(--color-text-secondary);
+                --a-color:var(--color-text-secondary);
                 font-size: 1.348rem;
                 transform: translateX(1rem);
                 position: relative; 
@@ -136,9 +190,10 @@ body {
         }
 
         a {
-            color: var(--color-link);
+            --a-color:var(--color-link);
             text-decoration: none;
             position: relative;
+            cursor: var(--cursor-pointer);
 
             &::after {
                 content: "";
@@ -148,7 +203,7 @@ body {
                 /* width: 101%; */
                 width: 0;
                 height: 2px;
-                background-color: var(--color-link);
+                background-color:var(--color-link); /* ::select ... ? */
 
                 /* transform: scaleX(0); */
                 transform-origin: left center;
