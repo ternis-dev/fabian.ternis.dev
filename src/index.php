@@ -1,32 +1,37 @@
 <section id="hero">
     <h1>Hello, I'm Fabian Ternis</h1>
     <h2>A Student and developer from Germany.</h2>
-    <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
-    <h3>Webdevelopment @ <span class="font-code">(<a href="http://xpsystems.eu">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
-    <h3>Links via <a href="http://ternis.link">ternis.link</a></h3>
-    <h3>I just own too many domain (see: <a href="http://dnbx.de">dnbx.de</a>)</h3>
+    <div class="some-container">
+        <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
+        <h3>Webdevelopment @ <span class="font-code">(<a href="http://xpsystems.eu">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
+        <h3>Links via <a href="http://fabian-ternis-dev.ternis.link">ternis.link</a></h3>
+        <h3>I just own too many domain (see: <a href="http://dnbx.de#domainlist">dnbx.de</a>)</h3>
+        <div class="img-container">
+            <img src="BASF_2026.jpg" class="me">
+            <span class="copyright-note">&copy; Image by <a href="https://basf.com">BASF SE</a>.</span>
+        </div>
+    </div>
 </section>
-<hr>
-I am also trying not to get sued by cult-management.com for owning ('twins-on-ice.de' && 'mirrortwins.de' && 'twinsonice.eu') as well as ('emiliamacula.de' && 'letiziamacula.de')
-<hr>
-Whenever i do a disclosure (in any way), i get no response (e.g. 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
-<hr>
-Building (mostly Vibing) storygrab.net as side-project taht is powered by cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de(alt: mirrortwins.de)
-<br>
-<br>
 
+<section>
+    I am also trying not to get sued by cult-management.com for owning ('twins-on-ice.de' && 'mirrortwins.de' && 'twinsonice.eu') as well as ('emiliamacula.de' && 'letiziamacula.de')
+    <hr>
+    Whenever i do a disclosure (in any way), i get no response (e.g. 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
+    <hr>
+    Building (mostly Vibing) storygrab.net as side-project taht is powered by cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de(alt: mirrortwins.de)
+</section>
+
+<section>
 Still sad about loosing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)
 
 you can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')
-
-<hr>
-
+</section>
+<section id="news">
 Latest Stuff:
 - joined HackClub in July 2026
+</section>
 
-
-<hr>
-
+<section id="homelab">
 What i host on my HomeLab (i know, nobody asked):
 - WireGuard (Both internally and Externally)
 - Pi-Hole (just about the average hole)
@@ -37,6 +42,7 @@ What i host on my HomeLab (i know, nobody asked):
 [- RoundCube (Didn't know taht was possible)]
 - n8n (Whatever taht is)
 
+</section>
 
 <hr>
 

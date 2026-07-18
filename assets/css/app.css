@@ -18,7 +18,9 @@
     /* --color-bg: #cdcdcd; */
     /* --color-bg: #dcdcdc; */
     --color-bg: #eaeaea;
-    --color-text: #1c1c1c;
+    --color-text-primary: #1c1c1c;
+    --color-text-secondary: #313131;
+    --color-text-tertiary: #545454;
     --color-link: #199cf3;
 
     --font-main: 'Libre Baskerville', Georgia, serif;
@@ -36,19 +38,129 @@ body {
     /* background-color: var(--bg-color);
     color: var(--text-color) */
     background-color: var(--color-bg);
-    color: var(--color-text);
-    max-width: 1234px;
+    color: var(--color-text-primary);
+    /* max-width: 1234px; */
+    max-width: 999px;
     width: 90%;
     margin: 0 auto;
     font-family: var(--font-main);
 
     section {
         &#hero {
+            margin-top: 5dvh;
             min-height: 45dvh;
+
+            .some-container {
+                /* display: flex; */
+                
+                /* h3 {
+                    --x: 0;
+                    --x-base: 3rem;
+                    transform: translateX(calc(var(--x) + var(--x-base)));
+                    &:nth-child(1) {
+                        --x: 1rem;
+                    }
+                    &:nth-child(2) {
+                        --x: 2rem;
+                    }
+                    &:nth-child(3) {
+                        --x: 4rem;
+                    }
+                    &:nth-child(4) {
+                        --x: 8rem;
+                    }
+                }*/
+
+                /*height: 100%; /* should have been 100% of left height ofd section ... */
+
+                position: relative;
+                .img-container {
+                    display: flex;
+                    flex-direction: column;
+
+                    position: absolute;
+                    right: 5rem;
+                    bottom: 0;
+                    align-items: flex-end;
+
+                    img.me {
+                        position: absolute;
+                        border: 1px solid var(--color-text-tertiary);
+                        width: 14vw;
+                        right: 0;
+                        bottom: 1.1rem;
+                        border-radius: 24px;
+                        corner-shape: squircle;
+                    }
+
+                    .copyright-note {
+                        color: var(--color-text-tertiary);
+                        font-size: .8rem;
+                        margin-top: .5rem;
+                        /* right: 1rem; */
+                    }
+
+                    @media(min-width: 1200px) {
+                        transform: translateY(5rem) rotate(10deg);
+                    }
+                }
+            }
+
+            h1 {
+                font-size: 3.03rem;
+            }
+
+            h2 {
+                /* color: var(--color-text-secondary); */
+                color: var(--color-text-tertiary);
+                font-size: 1.8rem;
+            }
+
+            h3 {
+                color: var(--color-text-secondary);
+                font-size: 1.348rem;
+                transform: translateX(1rem);
+                position: relative; 
+
+                /* &::before {
+                    content: "·";
+                    color: var(--color-text-secondary);
+                    font-size: 3rem;
+                    position: absolute; 
+                    
+                    left: -10px; 
+                    top: 50%;
+                    transform: translateY(-50%);
+                } */
+            }
         }
 
         a {
             color: var(--color-link);
+            text-decoration: none;
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 2px;
+                left: 0;
+                /* width: 101%; */
+                width: 0;
+                height: 2px;
+                background-color: var(--color-link);
+
+                /* transform: scaleX(0); */
+                transform-origin: left center;
+                transition: transform .2s ease-out, width .2s ease-out;
+            }
+
+            &:hover {
+                &::after {
+                    /* transform: scaleX(1); */
+                    width: 101%;
+                }
+            }
         }
     }
 }
