@@ -60,6 +60,11 @@
 
     --cursor-pointer: pointer;
     --cusrsor-default: default;
+
+    /* --transition-duration: 1s; */
+    /* --transition-duration: .125s; */
+    /* --transition-one: var(--transition-duration) cubic-bezier(.74,.27,.34,1.25);  */
+    --transition-one: .2345s cubic-bezier(.5,-0.36,0,1.27); 
 }
 
 * {
@@ -93,7 +98,10 @@ body {
     section {
         &#hero {
             margin-top: 5dvh;
-            min-height: 45dvh;
+            min-height: 21dvh;
+            
+            --some-variable: 4rem;
+            margin-bottom: calc(var(--some-variable) * 1.2);
 
             .some-container {
                 /* display: flex; */
@@ -120,19 +128,26 @@ body {
 
                 position: relative;
                 .img-container {
+                    --transition-duration: .125s;
+
+                    transition: all var(--transition-one);
+
                     display: flex;
                     flex-direction: column;
 
                     position: absolute;
                     /* right: 7.5rem; */
                     right: 5.75;
-                    bottom: 0;
+                    bottom: calc(-1 * var(--some-variable));
                     align-items: flex-end;
 
                     img.me {
+                        transition: all var(--transition-one);
                         position: absolute;
                         border: 1px solid var(--color-text-tertiary);
-                        width: 14vw;
+                        /* width: 14vw; */
+                        /* width: clamp(9vw, 350px, 20vw); */
+                        height: clamp(15dvh, 325px, 50dvh);
                         right: 0;
                         bottom: 1.1rem;
                         border-radius: 24px;
@@ -158,6 +173,49 @@ body {
                         }
                     }
                 }
+
+                &::after {
+                    position: absolute;
+                    content: "...";
+                    /* color: red; */
+                    /* color: var(--color-text-secondary); */
+                    color: var(--color-text-tertiary);
+                    opacity: .6;
+                    font-size: 8rem;
+                    /* align-self: center; */
+                    left: 50%;
+                    translate: -50% 0;
+                    /* rotate: --r; */
+                    animation: rot-ate;
+
+                    /* @keyframes rot-ate {
+                        /* 0%,100% {
+                            --r: 0deg;
+                        } *//*
+                        33% {
+                            --r: 5deg;
+                        }
+
+                        67% {
+                            --r: -5deg;
+                        }*/
+                    animation: rot-ate 2s ease-in-out infinite; 
+
+
+                    transform-origin : center bottom; /* ToDo: set this the exact way ... */
+                }
+
+                /* @keyframes rot-ate {
+                    0%, 100% {
+                        rotate: 0deg;
+                    }
+                    33% {
+                        rotate: 5deg;
+                    }
+                    67% {
+                        rotate: -5deg;
+                    }
+                } */
             }
 
             h1 {
@@ -222,4 +280,22 @@ body {
 
 .font-code {
     font-family: var(--font-code);
+}
+
+@keyframes rot-ate {
+    /* 0%, 100% {
+        rotate: 0deg;
+    }
+    33% {
+        rotate: 5deg;
+    }
+    67% {
+        rotate: -5deg;
+    } */
+    0%, 100% {
+        rotate: 5deg;
+    }
+    50% {
+        rotate: -5deg;
+    }
 }
