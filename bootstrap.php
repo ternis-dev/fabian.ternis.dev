@@ -25,6 +25,8 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
 } else {
     $http_code = 404;
 }
+
+// Todo: generalize this and just use array ... ('suffix', 'path', 'mime')
 ?>
 
 
@@ -32,8 +34,10 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabian Ternis</title>
+    <title>Fabian Ternis – Personal Website</title>
     <link rel="stylesheet" href="app.css">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=7">  ???-->
+    <meta name="keywords" content="Fabian Ternis, ternis.dev, Web developer, StoryGrab, twins-on-ice Website, twinsonice website, ternis.net, Ternis HomeLab">
 </head>
 <body>
     <div class="theme-select-container">
