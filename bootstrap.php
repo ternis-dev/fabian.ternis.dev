@@ -9,6 +9,10 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     header('Content-Type: text/css; charset=UTF-8');
     readfile(__DIR__.'/assets/css'.$safePath);
     exit;
+} elseif (str_ends_with($safePath, '.js') && file_exists(__DIR__.'/assets/js'.$safePath)) {
+    header('Content-Type: text/js; charset=UTF-8');
+    readfile(__DIR__.'/assets/js'.$safePath);
+    exit;
 } elseif (str_ends_with($safePath, '.ttf') && file_exists(__DIR__.'/assets/fonts'.$safePath)) {
     header('Content-Type: font/ttf');
     readfile(__DIR__.'/assets/fonts'.$safePath);
@@ -32,6 +36,11 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
+    <div class="theme-select-container">
+        <select name="theme" id="theme-select"></select>
+    </div>
     <?= readfile(__DIR__.'/src/index.php') ?>
+    
+    <script src="app.js"></script>
 </body>
 </html>

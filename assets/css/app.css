@@ -100,8 +100,8 @@ body {
             margin-top: 5dvh;
             min-height: 21dvh;
             
-            --some-variable: 4rem;
-            margin-bottom: calc(var(--some-variable) * 1.2);
+            --some-variable: 5.5rem;
+            margin-bottom: calc(var(--some-variable) * 2);
 
             .some-container {
                 /* display: flex; */
@@ -147,7 +147,7 @@ body {
                         border: 1px solid var(--color-text-tertiary);
                         /* width: 14vw; */
                         /* width: clamp(9vw, 350px, 20vw); */
-                        height: clamp(15dvh, 325px, 50dvh);
+                        height: clamp(15dvh, 360px, 50dvh);
                         right: 0;
                         bottom: 1.1rem;
                         border-radius: 24px;
@@ -272,6 +272,23 @@ body {
                 &::after {
                     /* transform: scaleX(1); */
                     width: 101%;
+                }
+            }
+        }
+    }
+
+    &#homelab {
+        ul.tech-list {
+            /* ToOd: make this more like aI actually want it ... */
+            display: grid;
+            list-style: none;
+            li {
+                display: flex;
+                flex-direction: column;
+                .name {
+                }
+
+                .description { /* more like a "note" */
                 }
             }
         }
