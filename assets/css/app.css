@@ -78,6 +78,19 @@
 }
 
 body {
+    &[data-theme="dark"] {
+        --color-bg: green;
+    }
+    &[data-theme="light"] { 
+        --color-bg: yellow;
+    }
+    &[data-theme="catpucchino"] {
+        --color-bg: red;
+    }
+    &[data-theme="dracula"] {
+        --color-bg: blue;
+    }
+
     /* background-color: var(--bg-color);
     color: var(--text-color) */
     --a-background-color: var(--color-bg);
@@ -275,24 +288,35 @@ body {
                 }
             }
         }
-    }
 
-    &#homelab {
-        ul.tech-list {
-            /* ToOd: make this more like aI actually want it ... */
-            display: grid;
-            list-style: none;
-            li {
-                display: flex;
-                flex-direction: column;
-                .name {
-                }
-
-                .description { /* more like a "note" */
+        &#homelab {
+            ul.tech-list {
+                /* ToOd: make this more like aI actually want it ... */
+                display: grid;
+                list-style: none;
+                li {
+                    display: flex;
+                    flex-direction: column;
+                    .name {
+                    }
+    
+                    .description { /* more like a "note" */
+                    }
                 }
             }
         }
+
+        ul {
+            transform: translateX(2rem);
+        }
+
+       
+        /* &:not(&::nth-child(1)) {*/
+        &:not(:first-child) {
+            margin-top: 3rem;
+        }
     }
+
 }
 
 .font-code {

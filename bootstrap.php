@@ -43,6 +43,7 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     <div class="theme-select-container">
         <select name="theme" id="theme-select"></select>
     </div>
+
     <?= readfile(__DIR__.'/src/index.php') ?>
     
     <script src="app.js"></script>
