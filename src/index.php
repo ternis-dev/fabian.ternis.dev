@@ -39,86 +39,26 @@
     <section id="homelab">
         <h2>What [software] I host on my HomeLab (I know, nobody asked):</h2>
         <ul class="tech-list">
+            <?php foreach(config('homelab_techs') as $tech): ?>
             <li>
-                <div class="name">WireGuard</div>
-                <div class="description">Both internally and externally</div>
+                <div class="name"><?= htmlspecialchars($tech['name']) ?></div>
+                <div class="description"><?= htmlspecialchars($tech['description']) ?></div>
+                <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.image_suffix') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
                 <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://www.wireguard.com/quickstart/">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://git.zx2c4.com/wireguard-linux/">Source</a>
+                    <?php foreach($tech['links'] as $linkName => $linkUrl): ?>
+                    <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a>
+                    <?php endforeach; ?>
+                    <?php if (isset($tech['commented_links'])): ?>
+                        <?php foreach($tech['commented_links'] as $linkName => $linkUrl): ?>
+                        <!-- <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a> -->
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </li>
-            <li>
-                <div class="name">Pi-Hole</div>
-                <div class="description">Just about the average hole</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://docs.pi-hole.net/">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/pi-hole/pi-hole">Source</a>
-                    <a target="_blank" data-has-arrow=true href="http://pi-hole.ternis.net/admin">Open</a>
-                </div>
-            </li>
-            <li>
-                <div class="name">Immich</div>
-                <div class="description">No docker-images but pictures instead</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://immich.app/docs/overview">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/immich-app/immich">Source</a>
-                    <a target="_blank" data-has-arrow=true href="http://immich.ternis.net">Open</a>
-                </div>
-            </li>
-            <li>
-                <div class="name">NextCloud</div>
-                <div class="description">The cloud of the future</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://docs.nextcloud.com/">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/nextcloud/server">Source</a>
-                    <a target="_blank" data-has-arrow=true href="http://cloud.ternis.net">Open</a>
-                </div>
-            </li>
-            <li>
-                <div class="name">Gitea</div>
-                <div class="description">Great Drink</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://docs.gitea.com/">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/go-gitea/gitea">Source</a>
-                    <a target="_blank" data-has-arrow=true href="http://git.ternis.net">Open</a>
-                </div>
-            </li>
-            <li>
-                <div class="name">Docker</div>
-                <div class="description">Just some Containers arriving</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://docs.docker.com/">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/moby/moby">Source</a>
-                </div>
-            </li>
-            <li>
-                <div class="name">Roundcube</div>
-                <div class="description">Didn't know that was possible</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://github.com/roundcube/roundcubemail/wiki">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/roundcube/roundcubemail">Source</a>
-                    <!-- <a target="_blank" data-has-arrow=true href="http://webmail.ternis.net">Open</a> -->
-                </div>
-            </li>
-            <li>
-                <div class="name">n8n</div>
-                <div class="description">Whatever that is</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://docs.n8n.io/">Docs</a>
-                    <a target="_blank" data-has-arrow=true href="https://github.com/n8n-io/n8n">Source</a>
-                    <a target="_blank" data-has-arrow=true href="http://n8n.ternis.net">Open</a>
-                </div>
-            </li>
-            <li>
-                <div class="name">Jellyfin</div>
-                <div class="description">In the water!?</div>
-                <div class="links-container">
-                    <a target="_blank" data-has-arrow=true href="https://jellyfin.org/docs/">Docs</a>
-                    <a target="_blank" data-has-arrow=truea href="https://github.com/jellyfin/jellyfin">Source</a>
-                    <a target="_blank" data-has-arrow=true href="http://jellyfin.ternis.net">Open</a>
-                </div>
-            </li>
+            <?php endforeach; ?>
+            <other>... and more ...</other>
         </ul>
+
     </section>
 
     <section id="devices">
@@ -135,3 +75,15 @@
         ... way too many more ...
     </section>
 </main>
+
+<footer>
+    <div class="footer-container">
+        Fabian Ternis
+        <ul class="footer-row">
+            <li class="footer-item">a</li>
+            <li class="footer-item">b</li>
+            <li class="footer-item">c</li>
+            <li class="footer-item">d</li>
+        </ul>
+    </div>
+</footer>

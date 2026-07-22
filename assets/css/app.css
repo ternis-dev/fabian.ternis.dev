@@ -65,7 +65,13 @@
     /* --transition-duration: .125s; */
     /* --transition-one: var(--transition-duration) cubic-bezier(.74,.27,.34,1.25);  */
     --transition-one: .2345s cubic-bezier(.5,-0.36,0,1.27); 
+
+    --font-size-main: 1rem;
+
+    /* --breakpoint-two: 1200px; */
 }
+
+@custom-media --breakpoint-two (min-width: 1200px); /* WHY NOT FUNCTIONING ? */
 
 * {
     margin: 0;
@@ -102,6 +108,7 @@ body {
         color: var(--a-background-color);
     }
 
+    font-size: var(--font-size-main);
     /* max-width: 1234px; */
     max-width: 999px;
     width: 90%;
@@ -176,6 +183,8 @@ body {
                         padding-inline-end: 32px;
                     }
 
+                    /* @media(min-width: var(--breakpoint-two)) { */
+                    /* @media (--breakpoint-two) { */
                     @media(min-width: 1200px) {
                         transform: translateY(5rem) rotate(6.789deg);
                         &:hover {
@@ -261,12 +270,12 @@ body {
         }
 
         a {
-            --a-color:var(--color-link);
+            --a-color: var(--color-link);
             text-decoration: none;
             position: relative;
             cursor: var(--cursor-pointer);
 
-            &::after {
+            &::before {
                 content: "";
                 position: absolute;
                 bottom: 2px;
@@ -282,9 +291,50 @@ body {
             }
 
             &:hover {
-                &::after {
+                &::before {
                     /* transform: scaleX(1); */
                     width: 101%;
+                }
+            }
+
+            /* padding-right: 2rem; */
+            margin-right: 2rem;
+
+            &[data-has-arrow=true] {
+                /* color: red; */
+                
+                &::after {
+                    content: ""; 
+                    position: absolute;
+                    /* background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E"); */
+
+                    /* background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: contain; */
+
+                    height: var(--font-size-main);
+                    width: 1rem;
+                    bottom: 2px;
+
+                    transition: var(--transition-one);
+
+                    background-color: var(--color-link);
+
+                    -webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+                    mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+
+                    -webkit-mask-repeat: no-repeat;
+                    mask-repeat: no-repeat;
+                    -webkit-mask-position: center;
+                    mask-position: center;
+                    -webkit-mask-size: contain;
+                    mask-size: contain;
+                }
+
+                &:hover {
+                    &::after {
+                        transform: translateX(.35rem);
+                    }
                 }
             }
         }
@@ -302,6 +352,19 @@ body {
     
                     .description { /* more like a "note" */
                     }
+
+                    img {
+                        &.tech-logo {
+                            /* width: 512px; */
+                            width: 90px;
+                            height: auto;
+                            /* height: 120px;
+                            width: auto;
+                            aspect-ratio: 1/1; */
+                        }
+                    }
+
+                    border: 2px solid black;
                 }
             }
         }
@@ -315,6 +378,19 @@ body {
         &:not(:first-child) {
             margin-top: 3rem;
         }
+    }
+
+    footer {
+        /* @media(min-width: var(--breakpoint-two)) { */
+        /* @media (--breakpoint-two) { */
+        @media(min-width: 1200px) {
+            margin-inline: 10vw;
+        }
+
+
+        /* not getting applied anyhow */
+        background-color: var(--color-text-secondary);
+        color: var(--color-bg);
     }
 
 }

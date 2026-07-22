@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/src/helpers.php';
+
 $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $safePath = str_replace(['..', '//'], '', $requestPath);
@@ -22,6 +24,17 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     header('Content-Type: '.$content_type);
     readfile(__DIR__.'/assets/img'.$safePath);
     exit;
+} elseif (str_ends_with($safePath, '.image_suffix')) {
+    $basePath = substr($safePath, 0, -strlen('.image_suffix'));
+    $extensions = ['webp' => 'image/webp', 'png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg'];
+    foreach ($extensions as $ext => $mime) {
+        if (file_exists(__DIR__.'/assets/img'.$basePath.'.'.$ext)) {
+            header('Content-Type: '.$mime);
+            readfile(__DIR__.'/assets/img'.$basePath.'.'.$ext);
+            exit;
+        }
+    }
+    $http_code = 404;
 } else {
     $http_code = 404;
 }
@@ -44,7 +57,7 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
         <select name="theme" id="theme-select"></select>
     </div>
 
-    <?= readfile(__DIR__.'/src/index.php') ?>
+    <?php include __DIR__.'/src/index.php'; ?>
     
     <script src="app.js"></script>
 </body>
