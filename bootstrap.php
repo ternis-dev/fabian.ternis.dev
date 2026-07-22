@@ -1,6 +1,10 @@
 <?php
 
 require_once __DIR__.'/src/helpers.php';
+if (file_exists(__DIR__.'/vendor/autoload.php')) {
+    require_once __DIR__.'/vendor/autoload.php';
+}
+require_once __DIR__.'/src/API/base.php';
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -39,6 +43,14 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     $http_code = 404;
 }
 
+
+use App\API\DomainBox;
+
+$dnbx = new DomainBox();
+
+$domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999]);
+
+
 // Todo: generalize this and just use array ... ('suffix', 'path', 'mime')
 ?>
 
@@ -51,11 +63,15 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     <link rel="stylesheet" href="app.css">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=7">  ???-->
     <meta name="keywords" content="Fabian Ternis, ternis.dev, Web developer, StoryGrab, twins-on-ice Website, twinsonice website, ternis.net, Ternis HomeLab">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 <body>
     <div class="theme-select-container">
-        <select name="theme" id="theme-select"></select>
+        <select name="theme" id="theme-select">
+        </select>
     </div>
+
+    <!-- <?php foreach($domains as $domain) { echo(json_encode($domain)); }; ?> -->
 
     <?php include __DIR__.'/src/index.php'; ?>
     
