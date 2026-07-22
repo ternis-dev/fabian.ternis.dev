@@ -42,7 +42,7 @@
             <?php foreach(config('homelab_techs') as $tech): ?>
             <li>
                 <div class="name"><?= htmlspecialchars($tech['name']) ?></div>
-                <div class="description"><?= htmlspecialchars($tech['description']) ?></div>
+                <div class="comment"><?= htmlspecialchars($tech['comment']) ?></div>
                 <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.image_suffix') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
                 <div class="links-container">
                     <?php foreach($tech['links'] as $linkName => $linkUrl): ?>

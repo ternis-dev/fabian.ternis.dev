@@ -297,10 +297,11 @@ body {
                 }
             }
 
-            /* padding-right: 2rem; */
-            margin-right: 2rem;
-
+            
             &[data-has-arrow=true] {
+                /* padding-right: 2rem; */
+                margin-right: 2rem; /* FIXED: moved inside ... (broke some UI when it was outside ...) ... */
+
                 /* color: red; */
                 
                 &::after {
@@ -350,7 +351,7 @@ body {
                     .name {
                     }
     
-                    .description { /* more like a "note" */
+                    .comment { /* more like a "note" */
                     }
 
                     img {

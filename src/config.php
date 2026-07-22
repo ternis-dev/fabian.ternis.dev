@@ -5,7 +5,8 @@ return [
     'homelab_techs' => [
         [
             'name' => 'WireGuard',
-            'description' => 'Both internally and externally',
+            // 'comment' => 'Both internally and externally',
+            'comment' => 'What cabeling is there to guard?',
             // 'image' => '/homelab/wireguard', // ...
             // 'image_alt' => 'Wireguard logo',
             'links' => [
@@ -15,7 +16,7 @@ return [
         ],
         [
             'name' => 'Pi-Hole',
-            'description' => 'Just about the average hole',
+            'comment' => 'Just about the average hole',
             // 'image' => '/homelab/pi-hole',
             // 'image_alt' => 'Pi-hole logo',
             'links' => [
@@ -26,7 +27,7 @@ return [
         ],
         [
             'name' => 'Immich',
-            'description' => 'No docker-images but pictures instead',
+            'comment' => 'No docker-images but pictures instead',
             // 'image' => '/homelab/immich',
             // 'image_alt' => 'Immich logo',
             'links' => [
@@ -37,7 +38,7 @@ return [
         ],
         [
             'name' => 'NextCloud',
-            'description' => 'The cloud of the future',
+            'comment' => 'The cloud of the future',
             // 'image' => '/homelab/nextcloud',
             // 'image_alt' => 'Nextcloud logo',
             'links' => [
@@ -48,7 +49,7 @@ return [
         ],
         [
             'name' => 'Gitea',
-            'description' => 'Great Drink',
+            'comment' => 'Great Drink',
             'links' => [
                 'Docs' => 'https://docs.gitea.com/',
                 'Source' => 'https://github.com/go-gitea/gitea',
@@ -57,7 +58,7 @@ return [
         ],
         [
             'name' => 'Docker',
-            'description' => 'Just some Containers arriving',
+            'comment' => 'Just some Containers arriving',
             'links' => [
                 'Docs' => 'https://docs.docker.com/',
                 'Source' => 'https://github.com/moby/moby'
@@ -65,7 +66,7 @@ return [
         ],
         [
             'name' => 'Roundcube',
-            'description' => 'Didn\'t know that was possible',
+            'comment' => 'Didn\'t know that was possible',
             'links' => [
                 'Docs' => 'https://github.com/roundcube/roundcubemail/wiki',
                 'Source' => 'https://github.com/roundcube/roundcubemail',
@@ -74,7 +75,7 @@ return [
         ],
         [
             'name' => 'n8n',
-            'description' => 'Whatever that is',
+            'comment' => 'Whatever that is',
             'links' => [
                 'Docs' => 'https://docs.n8n.io/',
                 'Source' => 'https://github.com/n8n-io/n8n',
@@ -83,7 +84,8 @@ return [
         ],
         [
             'name' => 'Jellyfin',
-            'description' => 'In the water!?',
+            // 'comment' => 'In the water!?',
+            'comment' => 'Shark or Dolphin?',
             'links' => [
                 'Docs' => 'https://jellyfin.org/docs/',
                 'Source' => 'https://github.com/jellyfin/jellyfin',

@@ -4,6 +4,12 @@ require_once __DIR__.'/src/helpers.php';
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require_once __DIR__.'/vendor/autoload.php';
 }
+
+// Load environment variables if Dotenv is installed and .env exists
+if (class_exists(\Dotenv\Dotenv::class) && file_exists(__DIR__.'/.env')) {
+    $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->safeLoad();
+}
 require_once __DIR__.'/src/API/base.php';
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -49,7 +55,7 @@ use App\API\DomainBox;
 $dnbx = new DomainBox();
 
 $domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999]);
-
+$devices = config('devices', []);
 
 // Todo: generalize this and just use array ... ('suffix', 'path', 'mime')
 ?>
