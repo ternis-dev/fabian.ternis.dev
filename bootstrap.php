@@ -34,8 +34,8 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
     header('Content-Type: '.$content_type);
     readfile(__DIR__.'/assets/img'.$safePath);
     exit;
-} elseif (str_ends_with($safePath, '.image_suffix')) {
-    $basePath = substr($safePath, 0, -strlen('.image_suffix'));
+} elseif (str_ends_with($safePath, '.unknown.image.mime')) {
+    $basePath = substr($safePath, 0, -strlen('.unknown.image.mime'));
     $extensions = ['webp' => 'image/webp', 'png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg'];
     foreach ($extensions as $ext => $mime) {
         if (file_exists(__DIR__.'/assets/img'.$basePath.'.'.$ext)) {
@@ -45,6 +45,7 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
         }
     }
     $http_code = 404;
+    // ToDO: Add .unknown.mime (support for more than just images ...)
 } else {
     $http_code = 404;
 }
@@ -54,8 +55,13 @@ use App\API\DomainBox;
 
 $dnbx = new DomainBox();
 
-$domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999]);
+$domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data']; // the ['data] at the end IMPORTANT ... (not to make this mistake again ...)
 $devices = config('devices', []);
+$hi = "Hello World!";
+
+// usort($domains, function($a, $b) {
+//     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);
+// });
 
 // Todo: generalize this and just use array ... ('suffix', 'path', 'mime')
 ?>
@@ -75,6 +81,11 @@ $devices = config('devices', []);
     <div class="theme-select-container">
         <select name="theme" id="theme-select">
         </select>
+    </div>
+    <div id="live-time-container">
+        <span class="location-indicator">Europe/Berlin</span>:
+        <span id="live-time-display"></span>
+        <span id="live-time-emoji"></span>
     </div>
 
     <!-- <?php foreach($domains as $domain) { echo(json_encode($domain)); }; ?> -->

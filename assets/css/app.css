@@ -84,6 +84,8 @@
 }
 
 body {
+    overflow-x: hidden;
+
     &[data-theme="dark"] {
         --color-bg: green;
     }
@@ -181,6 +183,7 @@ body {
                         /* right: 1rem; */
                         text-align: start;
                         padding-inline-end: 32px;
+                        font-family: sans-serif;
                     }
 
                     /* @media(min-width: var(--breakpoint-two)) { */
@@ -366,7 +369,13 @@ body {
                     }
 
                     border: 2px solid black;
+
+                    /* &:not(:last-child) { */
+                    &:not(:last-of-type) {
+                        border-bottom: 0;
+                    }
                 }
+                width: fit-content;
             }
         }
 
@@ -378,6 +387,48 @@ body {
         /* &:not(&::nth-child(1)) {*/
         &:not(:first-child) {
             margin-top: 3rem;
+        }
+    }
+
+    /* marquee {
+        &.news-ticker {
+            &.bottom {
+            }
+        }
+    } */
+    .news-ticker {
+        &.bottom {
+            overflow: hidden;
+            white-space: nowrap;
+            /* width: 100%; */
+            width: 100vw;
+
+            position: sticky;
+            bottom: 0;
+            z-index: 999;
+
+            display: flex;
+            align-items: center;
+
+            --a-background-color: #cc0000;
+            --a-color: #ffffff;
+
+            font-family: system-ui, -apple-system, sans-serif; /* maybe new "news"-font ... */
+            font-size: 1.25rem;
+            font-weight: 700;
+            
+            text-transform: uppercase; /* Think about removng it ... */
+            letter-spacing: 0.05em;
+            padding: 12px 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.25);
+
+            margin-inline-start: calc(50% - 50vw);
+            .ticker-content {
+                display: inline-block;
+                padding-left: 100%;
+                animation: ticker-scroll 15s linear infinite;
+                will-change: transform;
+            }
         }
     }
 
@@ -415,5 +466,14 @@ body {
     }
     50% {
         rotate: -5deg;
+    }
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100%, 0, 0);
     }
 }

@@ -9,7 +9,7 @@
             <h3>I just own too many domains (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a>)</h3>
             <div class="img-container">
                 <img src="/BASF_2026.jpg" class="me" alt="Fabian Ternis at BASF SE in Ludwigshafen during the Jugend Forscht State Competition / Landeswettbewerb Rheinland-Pfalz">
-                <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">&copy; BASF SE</a></span>
+                <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">BASF&trade; SE</a></span>
             </div>
         </div>
     </section>
@@ -43,7 +43,7 @@
             <li>
                 <div class="name"><?= htmlspecialchars($tech['name']) ?></div>
                 <div class="comment"><?= htmlspecialchars($tech['comment']) ?></div>
-                <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.image_suffix') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
+                <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.unknown.image.mime') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
                 <div class="links-container">
                     <?php foreach($tech['links'] as $linkName => $linkUrl): ?>
                     <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a>
@@ -74,6 +74,34 @@
         - MTEX.dev (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))
         ... way too many more ...
     </section>
+
+    <section id="domains">
+        <h2>Domains I <i>currently</i> own</h2>
+        <?php if(isset($domains) && !empty($domains)): ?>
+            <!-- <?php var_dump($domains) ?> -->
+
+            <div class="domains-container">
+                <?php foreach($domains as $domain): ?>
+                    <div class="domain" id="domain_<?= $domain['name'] . '_' . $domain['tld']?>">
+                        <span><span class="name"><?= $domain['name'] ?></span>.<span class="tld"><?= $domain['tld'] ?></span></span>
+                    </div>
+                <?php endforeach; ?>
+            </div>   
+        <?php else: ?>
+            <div class="error">
+                There SEEMS to be an error retreving the list of Domains from dnbx.de.
+                To see the list anyway visit <a href="http://dnbx.de#domainlist">this</a>.
+            </div>
+        <?php endif; ?>
+    </section>
+
+    <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
+    <div class="news-ticker bottom">
+        <div class="ticker-content">
+            This is just a fun, little website about me, my problems and co.
+        </div>
+    </div>
+    <!-- </marquee> -->
 </main>
 
 <footer>

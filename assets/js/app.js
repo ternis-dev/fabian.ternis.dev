@@ -27,4 +27,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     themeInput.addEventListener('change', updateTheme)
+
+    const liveTimeContainer = document.getElementById('live-time-container');
+    const liveTimeDisplay = document.getElementById('live-time-display');
+    const liveTimeEmoji = document.getElementById('live-time-emoji');
+    let liveTimeDisplayExists = true;
+    function updateLiveTime() {
+        // if(exists(liveTimeDisplay)) {
+        if(liveTimeDisplay) {
+            const time = new Date();
+
+            // liveTimeDisplay.textContent = time.toLocaleTimeString();
+            liveTimeDisplay.textContent = time.toLocaleTimeString(undefined, { 
+                timeZone: 'Europe/Berlin' 
+            });
+            liveTimeDisplayExists = true;
+        } else {
+            if(liveTimeDisplayExists) {
+                console.error('no TimeDisplay could be found!');
+                liveTimeDisplayExists = false;
+            }
+        }
+    }
+
+
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
 });

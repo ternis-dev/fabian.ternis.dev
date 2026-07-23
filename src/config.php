@@ -16,7 +16,8 @@ return [
         ],
         [
             'name' => 'Pi-Hole',
-            'comment' => 'Just about the average hole',
+            // 'comment' => 'Just about the average hole',
+            'comment' => 'Is it perfectly round?',
             // 'image' => '/homelab/pi-hole',
             // 'image_alt' => 'Pi-hole logo',
             'links' => [
@@ -38,7 +39,8 @@ return [
         ],
         [
             'name' => 'NextCloud',
-            'comment' => 'The cloud of the future',
+            // 'comment' => 'The cloud of the future',
+            'comment' => 'Wasn\'t the sky clear before?',
             // 'image' => '/homelab/nextcloud',
             // 'image_alt' => 'Nextcloud logo',
             'links' => [
