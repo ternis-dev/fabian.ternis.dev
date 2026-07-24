@@ -15,7 +15,7 @@
     </section>
     
     <section id="other">
-        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span></h4>
+        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course.</h4>
         <hr>
         Whenever I do a disclosure (in any way), I get no response (e.g., 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
         <hr>
@@ -28,7 +28,7 @@
     </section>
 
     <section id="news">
-    <h2>Latest Stuff ("news"):</h2>
+    <h2>Latest Stuff ("news", not teh banner):</h2>
     <ul>
         <li>I might get shipped a <a href="http://" target="_blank" class="wiki-link knowledge-link">Floppy Disk</a> from <a href="http://" target="_blank" class="wiki-link knowledge-link">HackClub</a> for participating in "<a href="http://99.hackclub.com">Its like 1999</a>". View my submittion <a href="https://projects.fabianternis.de/99site/" target="_blank">here</a> and the source <a href="https://github.com/fabianternis/99site" target="_blank">here</a>. <span class="note">note: This was my first EVER HackClub-submission</span></li>
         <li>Started my <a href="http://" target="_blank" class="wiki-link knowledge-link">HomeLab</a> ...</li>
@@ -76,7 +76,7 @@
     </section>
 
     <section id="domains">
-        <h2>Domains I <i>currently</i> own</h2>
+        <h2>Domains I <some>currently</some> own</h2>
         <?php if(isset($domains) && !empty($domains)): ?>
             <!-- <?php var_dump($domains) ?> -->
 
@@ -99,6 +99,8 @@
     <div class="news-ticker bottom">
         <div class="ticker-content">
             This is just a fun, little website about me, my problems and co.
+            <span class="ticker-divider"></span>
+            Consider leaving a Star on GitHub.
         </div>
     </div>
     <!-- </marquee> -->

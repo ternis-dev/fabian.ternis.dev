@@ -69,3 +69,8 @@ commercial or otherwise.
 
 This isn't legal advice, please consider consulting a lawyer and see the full
 license for all details.
+
+
+---
+
+#### At some point 40+minutes of Work(heartbeats) were sent into the coid after my mobile-hotspot and my laptop had misscommunication due to a DHCP- and Netowkring- configuration mistake, i made 

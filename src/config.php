@@ -40,7 +40,8 @@ return [
         [
             'name' => 'NextCloud',
             // 'comment' => 'The cloud of the future',
-            'comment' => 'Wasn\'t the sky clear before?',
+            // 'comment' => 'Wasn\'t the sky clear before?',
+            'comment' => 'I can\'t see it in the Sky.',
             // 'image' => '/homelab/nextcloud',
             // 'image_alt' => 'Nextcloud logo',
             'links' => [
@@ -77,7 +78,8 @@ return [
         ],
         [
             'name' => 'n8n',
-            'comment' => 'Whatever that is',
+            // 'comment' => 'Whatever that is',
+            'comment' => 'I just hear n\'s',
             'links' => [
                 'Docs' => 'https://docs.n8n.io/',
                 'Source' => 'https://github.com/n8n-io/n8n',

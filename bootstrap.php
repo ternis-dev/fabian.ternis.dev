@@ -55,7 +55,8 @@ use App\API\DomainBox;
 
 $dnbx = new DomainBox();
 
-$domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data']; // the ['data] at the end IMPORTANT ... (not to make this mistake again ...)
+$domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? []; // the ['data] at the end IMPORTANT ... (not to make this mistake again ...)
+// $domains = []; // Internet "problem" (was my fault with DHCP and co.)
 $devices = config('devices', []);
 $hi = "Hello World!";
 
@@ -87,11 +88,18 @@ $hi = "Hello World!";
         <span id="live-time-display"></span>
         <span id="live-time-emoji"></span>
     </div>
+    <div id="github-star-container">
+        <div id="github-star-action">Todo: CSS, JS</div>
+    </div>
 
     <!-- <?php foreach($domains as $domain) { echo(json_encode($domain)); }; ?> -->
 
     <?php include __DIR__.'/src/index.php'; ?>
     
+
+    <code>
+        sudo apt install sl -y && sl
+    </code>
     <script src="app.js"></script>
 </body>
 </html>
