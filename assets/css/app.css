@@ -69,6 +69,7 @@
     --font-code: 'Anonymous Pro', monospace;
     --font-time: system-ui, -apple-system, sans-serif;
     --font-size-main: 1rem;
+    --font-footer: system-ui, -apple-system, sans-serif;
 
     --cursor-pointer: pointer;
     --cusrsor-default: default;
@@ -534,6 +535,9 @@ body {
         }
     }
 
+    .footer-container {
+        width: 100%;
+        min-height: 100dvh;
     footer {
         /* @media(min-width: var(--breakpoint-two)) { */
         /* @media (--breakpoint-two) { */
@@ -541,12 +545,62 @@ body {
             margin-inline: 10vw;
         }
 
-
         /* not getting applied anyhow */
-        background-color: var(--color-text-secondary);
-        color: var(--color-bg);
-    }
+        --a-background-color: var(--color-text-secondary);
+        --a-color: var(--color-bg);
+        
+        width: 100%;
+        margin-inline: 0;
 
+        ul {
+            list-style: none;
+            li {
+                transform: translateX(10px);
+            }
+        }
+        /* margin-block-end */
+        margin-block: 2rem;
+        border-radius: 2rem;
+        padding: 1rem;
+        height: fit-content;
+        min-height: 50dvh;
+        border: .7531rem solid var(--a-background-color);
+        transition: all .5s ease-in-out;
+        font-family: var(--font-footer);
+        position: relative;
+        bottom: 0;
+
+        &:hover {
+            border-color: var(--color-text-tertiary);
+        }
+            .footer-content-container {
+                /* display: flex;
+                flex-direction: row;
+                width: 100%; */
+
+                .footer-row {
+                    display: flex;
+                    flex-direction: row;
+                    width: 100%;
+
+                    /* .footer-row { */
+                    .footer-column {
+                        /* width: 70%; */
+                        width: 30%;
+                        .footer-item {
+    
+                        }
+                    }
+                    &.bottom-oriented {
+                        justify-self: flex-end;
+                    }
+                }
+            }
+    }
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
 
     overflow-x: hidden;
 
@@ -621,4 +675,17 @@ body {
     @media(max-width: 1000px) {
         display:none;
     }
+}
+
+
+
+/* ToDo: move to right position */
+
+
+some,
+currently,
+random,
+fun {
+    color: var(--color-text-tertiary);
+    font-style: italic;
 }

@@ -68,6 +68,14 @@
         <?php endforeach; ?>
     </section>
     
+
+    <section id="more_random">
+        <h2>Some more <random>random</random> stuff</h2>
+        <div>
+            My mail is hosted on <a href="https://ternismail.de">TernisMail</a> (but not on my <a href="https://ternis.net">HomeLab</a>)
+        </div>
+    </section>
+
     <section>
         <h2>Some other projects I am currently not working on:</h2>
         - Web-Search.org (Just another open-source Search engine)
@@ -76,7 +84,7 @@
     </section>
 
     <section id="domains">
-        <h2>Domains I <some>currently</some> own</h2>
+        <h2>Domains I <currently>currently</currently> own</h2>
         <?php if(isset($domains) && !empty($domains)): ?>
             <!-- <?php var_dump($domains) ?> -->
 
@@ -95,6 +103,29 @@
         <?php endif; ?>
     </section>
 
+
+    <section id="stories">
+        <h2>Stories I <some>recently</some> posted</h2>
+        <h3>Brought to you by the power of <a href="https://storygrab.net/?from=1">StoryGrab</a> <!-- TODO: Knowledgebase ... (Storygrab maily created for twins-on-ice.de ... --></h3>
+        <?php if(isset($stories) && !is_empty($stories)): ?>
+            <div class="stories-container">
+                <?php foreach($stories as $story): ?>
+                    <div class="story">
+                        TODO ...
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <h4>Seems like there was an Error, loading teh stories form <a href="<?= 'https://storygrab.net/@'. ($_ENV['STORYGRAB_USERNAME'] ?? 'ternisfabian') /*(isset($_ENV['STORYGRAB_USERNAME']) ? $_ENV['STORYGRAB_USERNAME'] : 'ternisfabian')*/ ?>">My Profile</a></h4>
+        <?php endif; ?>
+    </section>
+
+    <section id="spam_pervention">
+        <h2>A Captcha just for <fun>fun</fun>!</h2>
+        <h3>You can check the captcha (from <a href="http://cloudflare.com">CloudFlare</a>'s <a href="https://www.cloudflare.com/products/turnstile/">Turnstile</a> <a href="https://turnstile.pages.dev/">()</a> )</h3>
+        
+    </section>
+
     <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
     <div class="news-ticker bottom">
         <div class="ticker-content">
@@ -106,14 +137,33 @@
     <!-- </marquee> -->
 </main>
 
-<footer>
-    <div class="footer-container">
-        Fabian Ternis
-        <ul class="footer-row">
-            <li class="footer-item">a</li>
-            <li class="footer-item">b</li>
-            <li class="footer-item">c</li>
-            <li class="footer-item">d</li>
-        </ul>
-    </div>
-</footer>
+<div class="footer-container">
+    <footer>
+        <div class="footer-content-container">
+            Fabian Ternis
+            <div class="footer-row bottom-oriented">
+                <!-- <ul class="footer-row"> -->
+                <ul class="footer-column">
+                    <li class="footer-item">a</li>
+                    <li class="footer-item">b</li>
+                    <li class="footer-item">c</li>
+                    <li class="footer-item">d</li>
+                </ul>
+                <!-- <ul class="footer-row"> -->
+                <ul class="footer-column">
+                    <li class="footer-item">1</li>
+                    <li class="footer-item">2</li>
+                    <li class="footer-item">3</li>
+                    <li class="footer-item">4</li>
+                </ul>
+                <!-- <ul class="footer-row"> -->
+                <ul class="footer-column">
+                    <li class="footer-item">I</li>
+                    <li class="footer-item">II</li>
+                    <li class="footer-item">III</li>
+                    <li class="footer-item">IV</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
