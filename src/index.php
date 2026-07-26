@@ -29,7 +29,7 @@
     </section>
 
     <section id="news">
-        <h2>Latest Stuff ("news", not teh banner):</h2>
+        <h2>Latest Stuff ("news", not the banner):</h2>
 
         <ol>
             <li><currently>Currently</currently> have 30+ Side-Projects and about 50 unused domains. – What am i doing? (with my live and money)</li>
@@ -70,7 +70,8 @@
     <section id="devices">
         <h2>Device Specs (screenfetch)</h2>
         <?php foreach($devices as $device): ?>
-            <div><?= htmlspecialchars($device) ?></div>
+            <!-- <code class="fetch"><?= ($device['fetch']) ?></code> -->
+            <pre><code class="fetch"><?= htmlspecialchars($device['fetch'], ENT_QUOTES, 'UTF-8') ?></code></pre>
         <?php endforeach; ?>
     </section>
     
@@ -122,12 +123,12 @@
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <h4>Seems like there was an Error, loading teh stories form <a href="<?= 'https://storygrab.net/@'. ($_ENV['STORYGRAB_USERNAME'] ?? 'ternisfabian') /*(isset($_ENV['STORYGRAB_USERNAME']) ? $_ENV['STORYGRAB_USERNAME'] : 'ternisfabian')*/ ?>">My Profile</a></h4>
+            <h4>Seems like there was an Error, loading the stories form <a href="<?= 'https://storygrab.net/@'. ($_ENV['STORYGRAB_USERNAME'] ?? 'ternisfabian') /*(isset($_ENV['STORYGRAB_USERNAME']) ? $_ENV['STORYGRAB_USERNAME'] : 'ternisfabian')*/ ?>">My Profile</a></h4>
         <?php endif; ?>
     </section>
 
     <section id="redaction">
-        <h2>This is, how teh U.S. goverment <redacts>redacts</redacts> texts</h2>
+        <h2>This is, how the U.S. goverment <redacts>redacts</redacts> texts</h2>
         <tipp>Tipp: Try selecting the text below</tipp>
         <redacted>
             <h1>Hi There, you may not be able to read this – but Google is</h1>

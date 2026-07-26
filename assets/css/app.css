@@ -115,6 +115,7 @@ body {
     /* background-color: var(--bg-color);
     color: var(--text-color) */
     --a-background-color: var(--color-bg);
+    --body-background-color: var(--a-background-color);
     --a-color: var(--color-text-primary);
     cursor: var(--cusrsor-default);
     max-width: var(--max-width);
@@ -541,21 +542,45 @@ body {
         }
 
         &#redaction {
+
+            tipp {
+                /* margin-block: .25rem; */
+                /* height: 2rem; */
+                font-style: italic;
+                font-size: large;
+                /* transform: translateX(101px); */
+            }
+
             redacted {
+                /* h1,
+                h2,
+                p,
+                h3,
+                h4,
+                h5 { */
                 --the-color: #000;
-                --that-color: #fff;
-                
+                /* --that-color: #fff; */
+                --that-color: var(--body-background-color);
+
+
                 color: var(--the-color);
                 background-color: var(--the-color);
                 --a-color: var(--the-color);
                 --a-background-color: var(--the-color);
-                
     
                 ::selection {
                     /* color: var(--that-color); */
                     /* --a-background-color: var(--that-color); */
+
+
                     background-color: var(--that-color);
+                    /* background-color: var(--body-background-color); */
+                    
+
                 }
+
+                /* width: fit-content
+                } */
             }
         }
 
