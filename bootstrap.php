@@ -11,8 +11,10 @@ if (class_exists(\Dotenv\Dotenv::class) && file_exists(__DIR__.'/.env')) {
     $dotenv->safeLoad();
 }
 require_once __DIR__.'/src/API/base.php';
+require_once __DIR__.'/src/API/turnstile.php';
+require_once __DIR__.'/src/API/cloudflare.php';
 
-$requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
 $safePath = str_replace(['..', '//'], '', $requestPath);
 
@@ -52,8 +54,25 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
 
 
 use App\API\DomainBox;
+use App\API\Turnstile;
 
 $dnbx = new DomainBox();
+$turnstile = new Turnstile();
+$turnstileResult = null;
+
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnstile-response'])) {
+    $token = $_POST['cf-turnstile-response'] ?? '';
+    $remoteIp = $_SERVER['REMOTE_ADDR'] ?? null;
+    $turnstileResult = $turnstile->verify($token, $remoteIp);
+
+    // If request is AJAX/API, return JSON
+    if ((!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') 
+        || (isset($_SERVER['HTTP_ACCEPT']) && str_contains($_SERVER['HTTP_ACCEPT'], 'application/json'))) {
+        header('Content-Type: application/json');
+        echo json_encode($turnstileResult);
+        exit;
+    }
+}
 
 $domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? []; // the ['data] at the end IMPORTANT ... (not to make this mistake again ...)
 // $domains = []; // Internet "problem" (was my fault with DHCP and co.)

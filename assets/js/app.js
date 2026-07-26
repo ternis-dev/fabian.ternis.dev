@@ -53,4 +53,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateLiveTime();
     setInterval(updateLiveTime, 1000);
+
+    // Cloudflare Turnstile integration
+    const turnstileForm = document.getElementById('turnstile-form');
+    const turnstileResult = document.getElementById('turnstile-result');
+
+    if (turnstileForm && turnstileResult) {
+        turnstileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(turnstileForm);
+            const token = formData.get('cf-turnstile-response');
+
+            if (!token) {
+                turnstileResult.className = 'captcha-result-box result-error';
+                turnstileResult.innerHTML = `
+                    <div class="result-message status-error">
+                        <h4>✗ Captcha Not Completed</h4>
+                        <p>Please complete the Cloudflare Turnstile CAPTCHA widget first.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            turnstileResult.className = 'captcha-result-box';
+            turnstileResult.innerHTML = '<div class="result-message">Verifying token with Cloudflare API...</div>';
+
+            try {
+                const response = await fetch(turnstileForm.action || window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    turnstileResult.className = 'captcha-result-box result-success';
+                    turnstileResult.innerHTML = `
+                        <div class="result-message status-success">
+                            <h4>✓ Captcha Verification Passed!</h4>
+                            <p>Token successfully validated by Cloudflare Turnstile siteverify API.</p>
+                            <pre><code>${JSON.stringify(data, null, 2)}</code></pre>
+                        </div>
+                    `;
+                } else {
+                    turnstileResult.className = 'captcha-result-box result-error';
+                    turnstileResult.innerHTML = `
+                        <div class="result-message status-error">
+                            <h4>✗ Captcha Verification Failed!</h4>
+                            <p>Cloudflare Turnstile API returned error.</p>
+                            <pre><code>${JSON.stringify(data, null, 2)}</code></pre>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                turnstileResult.className = 'captcha-result-box result-error';
+                turnstileResult.innerHTML = `
+                    <div class="result-message status-error">
+                        <h4>✗ Network / Server Error</h4>
+                        <p>${err.message}</p>
+                    </div>
+                `;
+            }
+        });
+    }
 });
+
+// Global callbacks for Turnstile widget
+window.onTurnstileSuccess = function(token) {
+    console.log('Turnstile solved token:', token);
+};
+
+window.onTurnstileError = function(errorCode) {
+    console.error('Turnstile error:', errorCode);
+};

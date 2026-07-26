@@ -1,60 +1,66 @@
 <main>
     <section id="hero">
-        <h1>Hello, I'm Fabian Ternis</h1>
+        <h1>Hello, I'm <me>Fabian Ternis</me></h1>
         <h2>A Student and developer from Germany.</h2>
         <div class="some-container">
             <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
             <h3>Web development @ <span class="font-code">(<a href="http://xpsystems.eu" target="_blank">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
             <h3>Links via <a href="http://fabian-ternis-dev.ternis.link" target="_blank">ternis.link</a></h3>
-            <h3>I just own too many domains (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a>)</h3>
+            <h3>I just own too many domains (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a> and/or <a href="#domains">this</a>)</h3>
             <div class="img-container">
                 <img src="/BASF_2026.jpg" class="me" alt="Fabian Ternis at BASF SE in Ludwigshafen during the Jugend Forscht State Competition / Landeswettbewerb Rheinland-Pfalz">
-                <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">BASF&trade; SE</a></span>
+                <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">BASF&trade;</a></span>
             </div>
         </div>
     </section>
     
     <section id="other">
-        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course.</h4>
+        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a>.</h4>
+        
         <hr>
         Whenever I do a disclosure (in any way), I get no response (e.g., 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
         <hr>
-        Building (mostly Vibing) storygrab.net as a side-project that is powered by Cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de (alt: mirrortwins.de)
+        Building (mostly <vibing>Vibing</vibing>) storygrab.net as a side-project that is powered by Cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de (alt: mirrortwins.de)
     </section>
 
     <section id="contact">
         <h3>Still sad about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
-        You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')
+        <p>You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')</p>
     </section>
 
     <section id="news">
-    <h2>Latest Stuff ("news", not teh banner):</h2>
-    <ul>
-        <li>I might get shipped a <a href="http://" target="_blank" class="wiki-link knowledge-link">Floppy Disk</a> from <a href="http://" target="_blank" class="wiki-link knowledge-link">HackClub</a> for participating in "<a href="http://99.hackclub.com">Its like 1999</a>". View my submittion <a href="https://projects.fabianternis.de/99site/" target="_blank">here</a> and the source <a href="https://github.com/fabianternis/99site" target="_blank">here</a>. <span class="note">note: This was my first EVER HackClub-submission</span></li>
-        <li>Started my <a href="http://" target="_blank" class="wiki-link knowledge-link">HomeLab</a> ...</li>
-        <li>joined HackClub in July 2026</li>
-    </ul>
+        <h2>Latest Stuff ("news", not teh banner):</h2>
+
+        <ol>
+            <li><currently>Currently</currently> have 30+ Side-Projects and about 50 unused domains. – What am i doing? (with my live and money)</li>
+            <!-- Why not try a ordered-list? -->
+            <li>I just registered my first <tld>.shop</tld><!-- ToDo (JS) each tld-tag should be a link to domains-section and auto-filter ofr all domains with taht tld ... --> Domain (<code>twinsonice.shop</code>)</li>
+            <li>I might get shipped a <a href="http://" target="_blank" class="wiki-link knowledge-link">Floppy Disk</a> from <a href="http://" target="_blank" class="wiki-link knowledge-link">HackClub</a> for participating in "<a href="http://99.hackclub.com">Its like 1999</a>". View my submittion <a href="https://projects.fabianternis.de/99site/" target="_blank">here</a> and the source <a href="https://github.com/fabianternis/99site" target="_blank">here</a>. <span class="note">note: This was my first EVER HackClub-submission</span></li>
+            <li>Started my <a href="http://" target="_blank" class="wiki-link knowledge-link">HomeLab</a> ...</li>
+            <li><really>really</really> joined HackClub in July 2026</li>
+            <li>Order is "reversed" btw.</li>
+        </ol>
     </section>
 
     <section id="homelab">
         <h2>What [software] I host on my HomeLab (I know, nobody asked):</h2>
         <ul class="tech-list">
             <?php foreach(config('homelab_techs') as $tech): ?>
-            <li>
-                <div class="name"><?= htmlspecialchars($tech['name']) ?></div>
-                <div class="comment"><?= htmlspecialchars($tech['comment']) ?></div>
-                <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.unknown.image.mime') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
-                <div class="links-container">
-                    <?php foreach($tech['links'] as $linkName => $linkUrl): ?>
-                    <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a>
-                    <?php endforeach; ?>
-                    <?php if (isset($tech['commented_links'])): ?>
-                        <?php foreach($tech['commented_links'] as $linkName => $linkUrl): ?>
-                        <!-- <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a> -->
+                <li>
+                    <div class="name"><?= htmlspecialchars($tech['name']) ?></div>
+                    <div class="comment"><?= htmlspecialchars($tech['comment']) ?></div>
+                    <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.unknown.image.mime') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
+                    <div class="links-container">
+                        <?php foreach($tech['links'] as $linkName => $linkUrl): ?>
+                        <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a>
                         <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-            </li>
+                        <?php if (isset($tech['commented_links'])): ?>
+                            <?php foreach($tech['commented_links'] as $linkName => $linkUrl): ?>
+                            <!-- <a target="_blank" data-has-arrow=true href="<?= htmlspecialchars($linkUrl) ?>"><?= htmlspecialchars($linkName) ?></a> -->
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </li>
             <?php endforeach; ?>
             <other>... and more ...</other>
         </ul>
@@ -68,13 +74,13 @@
         <?php endforeach; ?>
     </section>
     
-
     <section id="more_random">
         <h2>Some more <random>random</random> stuff</h2>
         <div>
-            My mail is hosted on <a href="https://ternismail.de">TernisMail</a> (but not on my <a href="https://ternis.net">HomeLab</a>)
+            <div>My mail is hosted on <a href="https://ternismail.de">TernisMail</a> (but not on my <a href="https://ternis.net">HomeLab</a>)</div>
         </div>
     </section>
+
 
     <section>
         <h2>Some other projects I am currently not working on:</h2>
@@ -82,6 +88,7 @@
         - MTEX.dev (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))
         ... way too many more ...
     </section>
+
 
     <section id="domains">
         <h2>Domains I <currently>currently</currently> own</h2>
@@ -103,7 +110,6 @@
         <?php endif; ?>
     </section>
 
-
     <section id="stories">
         <h2>Stories I <some>recently</some> posted</h2>
         <h3>Brought to you by the power of <a href="https://storygrab.net/?from=1">StoryGrab</a> <!-- TODO: Knowledgebase ... (Storygrab maily created for twins-on-ice.de ... --></h3>
@@ -120,10 +126,44 @@
         <?php endif; ?>
     </section>
 
+    <section id="redaction">
+        <h2>This is, how teh U.S. goverment <redacts>redacts</redacts> texts</h2>
+        <tipp>Tipp: Try selecting the text below</tipp>
+        <redacted>
+            <h1>Hi There, you may not be able to read this – but Google is</h1>
+        </redacted>
+    </section>
+
     <section id="spam_pervention">
         <h2>A Captcha just for <fun>fun</fun>!</h2>
-        <h3>You can check the captcha (from <a href="http://cloudflare.com">CloudFlare</a>'s <a href="https://www.cloudflare.com/products/turnstile/">Turnstile</a> <a href="https://turnstile.pages.dev/">()</a> )</h3>
+        <h3>You can check the captcha (from <a href="https://cloudflare.com" target="_blank">CloudFlare</a>'s <a href="https://www.cloudflare.com/products/turnstile/" target="_blank">Turnstile</a> <a href="https://turnstile.pages.dev/" target="_blank">()</a>)</h3>
         
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+        <form id="turnstile-form" action="#spam_pervention" method="POST" class="turnstile-container">
+            <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onTurnstileSuccess" data-error-callback="onTurnstileError" data-theme="auto"></div>
+            <div class="captcha-controls">
+                <button type="submit" id="verify-captcha-btn" class="btn-verify">Verify Captcha</button>
+            </div>
+        </form>
+
+        <div id="turnstile-result" class="captcha-result-box <?= isset($turnstileResult) ? ($turnstileResult['success'] ? 'result-success' : 'result-error') : '' ?>">
+            <?php if (isset($turnstileResult)): ?>
+                <?php if ($turnstileResult['success']): ?>
+                    <div class="result-message status-success">
+                        <h4>Captcha Verification Passed!</h4>
+                        <p>Token successfully validated by Cloudflare Turnstile siteverify API.</p>
+                        <pre><code><?= htmlspecialchars(json_encode($turnstileResult, JSON_PRETTY_PRINT)) ?></code></pre>
+                    </div>
+                <?php else: ?>
+                    <div class="result-message status-error">
+                        <h4>Captcha Verification Failed!</h4>
+                        <p>Cloudflare Turnstile API returned error.</p>
+                        <pre><code><?= htmlspecialchars(json_encode($turnstileResult, JSON_PRETTY_PRINT)) ?></code></pre>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
     </section>
 
     <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
@@ -131,7 +171,7 @@
         <div class="ticker-content">
             This is just a fun, little website about me, my problems and co.
             <span class="ticker-divider"></span>
-            Consider leaving a Star on GitHub.
+            Consider leaving a Star on <a href="https://github.com/ternis-dev/fabian.ternis.dev">GitHub</a>.
         </div>
     </div>
     <!-- </marquee> -->
@@ -155,6 +195,8 @@
                     <li class="footer-item">2</li>
                     <li class="footer-item">3</li>
                     <li class="footer-item">4</li>
+                    <li class="footer-item">5</li>
+                    <li class="footer-item">6</li>
                 </ul>
                 <!-- <ul class="footer-row"> -->
                 <ul class="footer-column">
@@ -162,8 +204,21 @@
                     <li class="footer-item">II</li>
                     <li class="footer-item">III</li>
                     <li class="footer-item">IV</li>
+                    <li class="footer-item">V</li>
+                </ul>
+                <ul class="footer-column">
+                    <li class="footer-item">One</li>
+                    <li class="footer-item">Two</li>
+                    <li class="footer-item">Three</li>
+                    <li class="footer-item">Four</li>
+                    <li class="footer-item">Five</li>
+                    <li class="footer-item">Six</li>
+                    <!-- Seven Skipped ... -->
+                    <li class="footer-item">Eight</li>
                 </ul>
             </div>
+            Current Time: < ToDo >
+            Time Spent: < Hacka Time >
         </div>
     </footer>
 </div>
