@@ -14,6 +14,7 @@
         </div>
     </section>
     
+
     <section id="other">
         <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a>.</h4>
         
@@ -23,10 +24,12 @@
         Building (mostly <vibing>Vibing</vibing>) storygrab.net as a side-project that is powered by Cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de (alt: mirrortwins.de)
     </section>
 
+
     <section id="contact">
         <h3>Still sad about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
         <p>You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')</p>
     </section>
+
 
     <section id="news">
         <h2>Latest Stuff ("news", not the banner):</h2>
@@ -42,8 +45,10 @@
         </ol>
     </section>
 
+
     <section id="homelab">
         <h2>What [software] I host on my HomeLab (I know, nobody asked):</h2>
+
         <ul class="tech-list">
             <?php foreach(config('homelab_techs') as $tech): ?>
                 <li>
@@ -64,22 +69,23 @@
             <?php endforeach; ?>
             <other>... and more ...</other>
         </ul>
-
     </section>
+
 
     <section id="devices">
         <h2>Device Specs (screenfetch)</h2>
+
         <?php foreach($devices as $device): ?>
             <!-- <code class="fetch"><?= ($device['fetch']) ?></code> -->
             <pre><code class="fetch"><?= htmlspecialchars($device['fetch'], ENT_QUOTES, 'UTF-8') ?></code></pre>
         <?php endforeach; ?>
     </section>
     
+
     <section id="more_random">
         <h2>Some more <random>random</random> stuff</h2>
-        <div>
-            <div>My mail is hosted on <a href="https://ternismail.de">TernisMail</a> (but not on my <a href="https://ternis.net">HomeLab</a>)</div>
-        </div>
+
+        <div>My mail is hosted on <a href="https://ternismail.de">TernisMail</a> (but not on my <a href="https://ternis.net">HomeLab</a>)</div>
     </section>
 
 
@@ -93,6 +99,7 @@
 
     <section id="domains">
         <h2>Domains I <currently>currently</currently> own</h2>
+
         <?php if(isset($domains) && !empty($domains)): ?>
             <!-- <?php var_dump($domains) ?> -->
 
@@ -111,14 +118,23 @@
         <?php endif; ?>
     </section>
 
+
     <section id="stories">
         <h2>Stories I <some>recently</some> posted</h2>
+
         <h3>Brought to you by the power of <a href="https://storygrab.net/?from=1">StoryGrab</a> <!-- TODO: Knowledgebase ... (Storygrab maily created for twins-on-ice.de ... --></h3>
-        <?php if(isset($stories) && !is_empty($stories)): ?>
+        <?php if(isset($stories) && !empty($stories)): ?>
             <div class="stories-container">
                 <?php foreach($stories as $story): ?>
-                    <div class="story">
-                        TODO ...
+                    <div class="story story-container">
+
+                        <?php //if($story['type'] == 'image'): ?>
+
+                        <?php if(!isset($story['video_path'])): ?>
+                            <img src="<?= storygrab_media_url($story['image_path']) ?>" data-instagram-id="" class="story-image">
+                        <?php endif; ?>
+
+                        <!-- <pre><code><?= var_dump($story) ?></code></pre> -->
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -127,19 +143,30 @@
         <?php endif; ?>
     </section>
 
+
     <section id="redaction">
         <h2>This is, how the U.S. goverment <redacts>redacts</redacts> texts</h2>
+
         <tipp>Tipp: Try selecting the text below</tipp>
         <redacted>
-            <h1>Hi There, you may not be able to read this – but Google is</h1>
+            <h1>Hi There, you may not be able to read this – but Google's Crawler is</h1>
+            <h2>I actually have no idea what to write here</h2>
+            <p>So, sohoild i just simply put the good, old Lorem here?</p>
+
+            <h2>Lorem Startum</h2>
+            <p>Lorem ipsum dolor sit</p>
         </redacted>
     </section>
 
+
     <section id="spam_pervention">
         <h2>A Captcha just for <fun>fun</fun>!</h2>
+
         <h3>You can check the captcha (from <a href="https://cloudflare.com" target="_blank">CloudFlare</a>'s <a href="https://www.cloudflare.com/products/turnstile/" target="_blank">Turnstile</a> <a href="https://turnstile.pages.dev/" target="_blank">()</a>)</h3>
         
+
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 
         <form id="turnstile-form" action="#spam_pervention" method="POST" class="turnstile-container">
             <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onTurnstileSuccess" data-error-callback="onTurnstileError" data-theme="auto"></div>
@@ -167,6 +194,7 @@
         </div>
     </section>
 
+
     <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
     <div class="news-ticker bottom">
         <div class="ticker-content">
@@ -178,10 +206,12 @@
     <!-- </marquee> -->
 </main>
 
+
 <div class="footer-container">
     <footer>
         <div class="footer-content-container">
             Fabian Ternis
+
             <div class="footer-row bottom-oriented">
                 <!-- <ul class="footer-row"> -->
                 <ul class="footer-column">
@@ -218,8 +248,11 @@
                     <li class="footer-item">Eight</li>
                 </ul>
             </div>
-            Current Time: < ToDo >
-            Time Spent: < Hacka Time >
+
+            <div>
+                <div>Current Time: < ToDo ></div>
+               <div>Time Spent: < Hacka Time ></div>
+            </div>
         </div>
     </footer>
 </div>

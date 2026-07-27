@@ -49,6 +49,7 @@
 :root {
     /* Base Colors */
     --color-bg: #eaeaea;
+    --color-bg-secondary: #e0e0e0;
     --color-text-primary: #1c1c1c;
     --color-text-secondary: #313131;
     --color-text-tertiary: #545454;
@@ -542,7 +543,6 @@ body {
         }
 
         &#redaction {
-
             tipp {
                 /* margin-block: .25rem; */
                 /* height: 2rem; */
@@ -581,6 +581,57 @@ body {
 
                 /* width: fit-content
                 } */
+            }
+        }
+
+        &#stories {
+            .stories-container {
+                display: flex;
+                flex-direction: row;
+                gap: 12px;
+                
+                overflow-x: scroll;
+                
+                margin-top: .31rem;
+
+                /* border-inline: 7.5px solid var(--color-text-secondary); */
+                border-inline-end: 7.5px solid var(--a-border-inline-end-color);
+                border-inline-start: 7.5px solid var(--a-border-inline-start-color);
+                padding-inline: 2rem;
+
+                --a-border-inline-start-color: var(--color-bg);
+                --a-border-inline-end-color: var(--color-text-secondary);
+
+                &.scrolled {
+                    --a-border-inline-start-color: var(--color-text-secondary)
+                }
+                &.ended {
+                    --a-border-inline-end-color: var(--color-bgy)
+                }
+
+                .story-container {
+                    img.story-image {
+                        /* width: 30px; */
+                        /* width: 30vw; */
+                        width: 13vw;
+                        /* border-radius: calc(var(--a-border-radius)); */
+                        border-radius: calc(var(--a-border-radius) - var(--a-padding));
+                    }
+
+                    padding: var(--a-padding);
+                    border-radius: var(--a-border-radius);
+
+                    &:hover {
+                        --a-border-radius: 3rem;
+                    }
+
+                    --a-border-radius: 0;
+                    /* overflow: hidden; */
+                    --a-padding: 2px;
+                    padding: var(--a-padding);
+                    background-color: var(--color-bg-secondary);
+                    background-color: var(--color-text-secondary);
+                }
             }
         }
 

@@ -72,7 +72,31 @@ class StoryGrab extends Base
     }
 
     /**
-     * 4. Create Custom Embed Template
+     * 4. Get Latest Stories From Profile
+     * Fetch the most recent stories for a specific Instagram profile.
+     * 
+     * @param string|int $username Username (e.g., 'ternisfabian') or limit if integer
+     * @param int $limit Defaults to 10
+     * @return array
+     */
+    public function getLatestStoriesFromProfile($username = 'ternisfabian', int $limit = 10): array
+    {
+        if (is_int($username)) {
+            $limit = $username;
+            $username = 'ternisfabian';
+        }
+
+        $response = $this->client->request('GET', "profile/{$username}/stories", [
+            'query' => [
+                'limit' => $limit,
+            ]
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true) ?? [];
+    }
+
+    /**
+     * 5. Create Custom Embed Template
      * Save custom HTML, CSS, and JS to dynamically render your video embeds.
      * 
      * @param string $name Template name
@@ -97,7 +121,7 @@ class StoryGrab extends Base
     }
 
     /**
-     * 5. Generate Time-Limited Video Embed
+     * 6. Generate Time-Limited Video Embed
      * Generate a secure, time-limited URL for your video, rendered using your custom template.
      * 
      * @param string $videoUrl Required video URL

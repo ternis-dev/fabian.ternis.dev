@@ -55,6 +55,7 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
 
 use App\API\DomainBox;
 use App\API\Turnstile;
+use App\API\StoryGrab;
 
 $dnbx = new DomainBox();
 $turnstile = new Turnstile();
@@ -78,6 +79,9 @@ $domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ??
 // $domains = []; // Internet "problem" (was my fault with DHCP and co.)
 $devices = config('devices', []);
 $hi = "Hello World!";
+
+$storygrab_api = new StoryGrab(env('STORYGRAB_API_TOKEN'));
+$stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian')['data'] ?? [];
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);

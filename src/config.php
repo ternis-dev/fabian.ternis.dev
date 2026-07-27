@@ -97,6 +97,8 @@ return [
             ]
         ]
     ],
+
+    // DEVICES
     'devices' => [
         [
             'id' => 112,
@@ -124,6 +126,7 @@ return [
                           
 EOF,
         ],
+
         [
             'id' => 121,
             'name' => 'HP (16/500 GB)',
@@ -179,6 +182,7 @@ EOF,
 
 EOF,
         ],
+
         [
             'id' => 123,
             'name' => 'HP (8/100 GB)',
@@ -207,6 +211,7 @@ EOF,
 
 EOF,
         ],
+
         [
             'id' => 04,
             'name' => 'EPYC KVM (dedicated IPv4)',
@@ -234,6 +239,7 @@ EOF,
                           `oo++.          
 EOF,
         ],
+
         [
             'id' => 06,
             'name' => 'EPYC KVM (dedicated IPv4)',
@@ -261,6 +267,7 @@ EOF,
                       
 EOF,
         ],
+
         [
             'id' => 07,
             'name' => 'Ryzen KVM (dedicated IPv4)',
@@ -288,6 +295,7 @@ EOF,
                         
 EOF,
         ],
+
         [
             'id' => 10,
             'name' => 'EPYC KVM (dedicated IPv4)',
@@ -314,6 +322,7 @@ EOF,
                 `""""       
 EOF,
         ],
+
     ],
 ];
 

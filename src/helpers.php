@@ -61,3 +61,13 @@ if (!function_exists('env')) {
         return $value;
     }
 }
+
+
+if (!function_exists('storygrab_media_url')) {
+    function storygrab_media_url($path) {
+
+        $base_url = env('STORYGRAB_BASE_URL') ?? 'https://media.storygrab.net/';
+
+        return $base_url . $path;
+    }
+}
