@@ -105,7 +105,7 @@
 
             <div class="domains-container">
                 <?php foreach($domains as $domain): ?>
-                    <div class="domain" id="domain_<?= $domain['name'] . '_' . $domain['tld']?>">
+                    <div class="domain tld-<?= $domain['tld'] ?>" id="domain_<?= $domain['name'] . '_' . $domain['tld']?>">
                         <span><span class="name"><?= $domain['name'] ?></span>.<span class="tld"><?= $domain['tld'] ?></span></span>
                     </div>
                 <?php endforeach; ?>
@@ -127,7 +127,6 @@
             <div class="stories-container">
                 <?php foreach($stories as $story): ?>
                     <div class="story story-container">
-
                         <?php //if($story['type'] == 'image'): ?>
 
                         <?php if(!isset($story['video_path'])): ?>

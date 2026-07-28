@@ -324,7 +324,6 @@ body {
                     width: 101%;
                 }
             }
-
             
             &[data-has-arrow=true] {
                 /* padding-right: 2rem; */
@@ -451,14 +450,35 @@ body {
 
                     .tld {
                         font-weight: 400;
-                        color: var(--color-text-secondary);
+                        color: var(--tld-color);
                     }
                 }
             }
 
             .error {
                 /* TODO: style this */
+
             }
+
+            --tld-color: var(--color-text-secondary);
+            &.tld-de {  --tld-color: #000;}
+            &.tld-eu {  --tld-color: #001;}
+            &.tld-net { --tld-color: #010;}
+            &.tld-name {--tld-color: #100;}
+            &.tld-pics {--tld-color: #011;}
+            &.tld-dev { --rld-color: #110;}
+            &.tld-xyz { --tld-color: #111;}
+            &.tld-me {  --tld-color: #002;}
+            &.tld-ch {  --tld-color: #020;}
+            &.tld-app { --tld-color: #200;}
+            &.tld-blog {--tld-color: #012;}
+            &.tld-link {--tld-color: #022;}
+            &.tld-fyi { --tld-color: #120;}
+            &.tld-lol { --tld-color: #220;}
+            &.tld-media{--tld-color: #122;}
+            &.tld-org { --tld-color: #212;}
+            &.tld-site {--tld-color: #221;}
+            &.tld-re {  --tld-color: #222;}
         }
 
         &#spam_pervention {
@@ -483,6 +503,7 @@ body {
             .btn-verify {
                 --a-background-color: var(--color-text-tertiary);
                 --a-color: #fff;
+
                 border: none;
                 padding: 0.6rem 1.4rem;
                 border-radius: 0.5rem;
@@ -511,15 +532,17 @@ body {
                     /* --a-background-color: rgba(46, 160, 67, 0.15); */
                     background-color: rgba(46, 160, 67, 0.15);
                     --a-background-color: rgba(46, 160, 67, 0.00);
-                    border: 1px solid #2ea043;
                     --a-color: #56d364;
+                    --a-border-color: #2ea043;
+
+                    border: 1px solid var(--a-border-color);
                 }
 
                 &.result-error {
                     /* --a-background-color: rgba(248, 81, 73, 0.15); */
                     background-color: rgba(248, 81, 73, 0.15);
                     --a-background-color: rgba(248, 81, 73, 0.00);
-                    border: 1px solid #f85149;
+                    --a-border-color: #f85149;
                     --a-color: #ff7b72;
                 }
 
@@ -536,6 +559,7 @@ body {
                     font-family: var(--font-code, monospace);
                     font-size: 0.85rem;
                     margin-top: 0.5rem;
+
                     --a-color: var(--color-bg);
                     --a-background-color: var(var(--color-text-primary)); /* was ment for ::select but does not function ... */
                 }
@@ -575,8 +599,6 @@ body {
 
                     background-color: var(--that-color);
                     /* background-color: var(--body-background-color); */
-                    
-
                 }
 
                 /* width: fit-content
@@ -588,13 +610,84 @@ body {
             .stories-container {
                 display: flex;
                 flex-direction: row;
+
+                /* gap: 1rem; */
+                overflow: hidden;
+
+
+                /* --s-i-widht: 9rem; */
+                --s-i-height: 45dvh;
+                --s-i-s-multiply: 1;
+                /* --s-i-x-BASE: 50%; */
+                --s-i-x-BASE: 300%;
+                --s-i-x: var(--s-i-x-BASE);
+                /* 
+                --s-i-xs-1: 40%;
+                --s-i-xs-2: 30%;
+                --s-i-xs-3: 20%;
+                --s-i-xs-4: 10%;
+                */
+
+                --s-i-xs-1: 300%;
+                --s-i-xs-2: 266%;
+                --s-i-xs-3: 125%;
+                --s-i-xs-4: 100%;
+
+
+
+                min-height: calc(var(--s-i-height) * 1.2);
+                margin-block: 2dvh;
+
+                .story-container {
+                    img.story-image {
+                        /* width: var(--s-i-widht); */
+                        height: var(--s-i-height);
+                    }
+
+                    position: absolute;
+
+                    transform: translateX(var(--s-i-x));
+
+
+                    /* ToDo: Use JS for taht ... ? */
+                    &:nth-child(1) {
+                        --s-i-x: calc(var(--s-i-x-BASE) - var(--s-i-xs-1));
+                    }
+                    &:nth-child(2) {
+                        --s-i-x: calc(var(--s-i-x-BASE) - var(--s-i-xs-2));
+                    }
+                    &:nth-child(3) {
+                        --s-i-x: calc(var(--s-i-x-BASE) - var(--s-i-xs-3));
+                    }
+                    &:nth-child(4) {
+                        --s-i-x: calc(var(--s-i-x-BASE) - var(--s-i-xs-4));
+                    }
+                    &:nth-child(5) {
+                        --s-i-x: var(--s-i-x-BASE);
+                    }
+                    &:nth-child(6) {
+                        --s-i-x: calc(var(--s-i-x-BASE) + var(--s-i-xs-4));
+                    }
+                    &:nth-child(7) {
+                        --s-i-x: calc(var(--s-i-x-BASE) + var(--s-i-xs-3));
+                    }
+                    &:nth-child(8) {
+                        --s-i-x: calc(var(--s-i-x-BASE) + var(--s-i-xs-2));
+                    }
+                    &:nth-child(9) {
+                        --s-i-x: calc(var(--s-i-x-BASE) + var(--s-i-xs-1));
+                    }
+                }
+
+                /*
+                    –––– --- DEPRECIATED --- ––––
+
                 gap: 12px;
                 
                 overflow-x: scroll;
                 
                 margin-top: .31rem;
 
-                /* border-inline: 7.5px solid var(--color-text-secondary); */
                 border-inline-end: 7.5px solid var(--a-border-inline-end-color);
                 border-inline-start: 7.5px solid var(--a-border-inline-start-color);
                 padding-inline: 2rem;
@@ -608,16 +701,15 @@ body {
                 &.ended {
                     --a-border-inline-end-color: var(--color-bgy)
                 }
+                *\/
 
                 .story-container {
                     img.story-image {
-                        /* width: 30px; */
-                        /* width: 30vw; */
                         width: 13vw;
-                        /* border-radius: calc(var(--a-border-radius)); */
                         border-radius: calc(var(--a-border-radius) - var(--a-padding));
                     }
 
+                    /*
                     padding: var(--a-padding);
                     border-radius: var(--a-border-radius);
 
@@ -626,17 +718,22 @@ body {
                     }
 
                     --a-border-radius: 0;
-                    /* overflow: hidden; */
                     --a-padding: 2px;
                     padding: var(--a-padding);
+
                     background-color: var(--color-bg-secondary);
                     background-color: var(--color-text-secondary);
+                    */
                 }
             }
         }
 
         ul {
             transform: translateX(2rem);
+            /* ul,
+            ol {
+                transform: translateX(-0.5rem);
+            } */
         }
 
        
@@ -714,41 +811,46 @@ body {
     .footer-container {
         width: 100%;
         min-height: 100dvh;
-    footer {
-        /* @media(min-width: var(--breakpoint-two)) { */
-        /* @media (--breakpoint-two) { */
-        @media(min-width: 1200px) {
-            margin-inline: 10vw;
-        }
 
-        /* not getting applied anyhow */
-        --a-background-color: var(--color-text-secondary);
-        --a-color: var(--color-bg);
-        
-        width: 100%;
-        margin-inline: 0;
-
-        ul {
-            list-style: none;
-            li {
-                transform: translateX(10px);
+        footer {
+            /* @media(min-width: var(--breakpoint-two)) { */
+            /* @media (--breakpoint-two) { */
+            @media(min-width: 1200px) {
+                margin-inline: 10vw;
             }
-        }
-        /* margin-block-end */
-        margin-block: 2rem;
-        border-radius: 2rem;
-        padding: 1rem;
-        height: fit-content;
-        min-height: 50dvh;
-        border: .7531rem solid var(--a-background-color);
-        transition: all .5s ease-in-out;
-        font-family: var(--font-footer);
-        position: relative;
-        bottom: 0;
 
-        &:hover {
-            border-color: var(--color-text-tertiary);
-        }
+
+            /* not getting applied anyhow */
+            --a-background-color: var(--color-text-secondary);
+            --a-color: var(--color-bg);
+            
+
+            width: 100%;
+            margin-inline: 0;
+
+
+            ul {
+                list-style: none;
+                li {
+                    transform: translateX(10px);
+                }
+            }
+
+            /* margin-block-end */
+            margin-block: 2rem;
+            border-radius: 2rem;
+            padding: 1rem;
+            height: fit-content;
+            min-height: 50dvh;
+            border: .7531rem solid var(--a-background-color);
+            transition: all .5s ease-in-out;
+            font-family: var(--font-footer);
+            position: relative;
+            bottom: 0;
+
+            &:hover {
+                border-color: var(--color-text-tertiary);
+            }
             .footer-content-container {
                 /* display: flex;
                 flex-direction: row;
@@ -772,13 +874,16 @@ body {
                     }
                 }
             }
-    }
+        }
+
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
     }
 
+
     overflow-x: hidden;
+
 
     /* #github-star-container {
         --a-background-color: var(--color-github-black);
@@ -791,9 +896,11 @@ body {
     } */
 }
 
+
 .font-code {
     font-family: var(--font-code);
 }
+
 
 @keyframes rot-ate {
     /* 0%, 100% {
@@ -823,6 +930,7 @@ body {
 }
 
 
+
 #live-time-container {
     .location-indicator {
         color: var(--color-text-tertiary);
@@ -833,16 +941,21 @@ body {
     }
 }
 
+
 #github-star-container {
     /* anyhow not functioniong if inside body ... */
     --a-background-color: var(--color-github-black);
-    position: absolute;
+    /* position: absolute; */
     position: fixed;
+
     z-index: 6969;
+
     top: 0;
     right: 0;
+
     width: 10dvh;
     height: 10dvh;
+
     rotate: 45deg;
     /* translate: 0 -5dvh; */
     transform: translateY(-3dvh);
@@ -857,14 +970,7 @@ body {
 
 /* ToDo: move to right position */
 
-some,
-currently,
-random,
-fun,
-really,
-me,
-vibing,
-redacts {
+some, currently, random, fun, really, me, vibing, redacts {
     color: var(--color-text-tertiary);
     font-style: italic;
 }
