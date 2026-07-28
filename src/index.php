@@ -201,6 +201,13 @@
         </redacted>
     </section>
 
+    <section id="buttons">
+        <h2>Just <some>some</some> Buttons</h2>
+
+        <div>
+            
+        </div>
+    </section>
 
     <section id="spam_pervention">
         <h2>A Captcha just for <fun>fun</fun>!</h2>
