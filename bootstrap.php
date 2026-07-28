@@ -81,7 +81,7 @@ $devices = config('devices', []);
 $hi = "Hello World!";
 
 $storygrab_api = new StoryGrab(env('STORYGRAB_API_TOKEN'));
-$stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian')['data'] ?? [];
+$stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);
@@ -124,5 +124,6 @@ $stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian')['data'] ?
         sudo apt install sl -y && sl
     </code>
     <script src="app.js"></script>
+    <script src="stories.js" defer></script>
 </body>
 </html>
