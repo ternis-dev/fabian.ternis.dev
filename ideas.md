@@ -3,3 +3,6 @@ every code-tag automatically gets a copy-btn unless specifically data-has-copy=f
 
 
 ONLY LOAD TURNSTILE IF USER ALLOWED EXTERNAL COOKIES ...
+
+- shortlink-creation with option: "frontend"/"backend"
+- store links in localStorage

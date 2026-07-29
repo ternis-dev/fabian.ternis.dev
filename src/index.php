@@ -205,8 +205,37 @@
         <h2>Just <some>some</some> Buttons</h2>
 
         <div>
-            
+
         </div>
+    </section>
+
+    <section id="linkshorten">
+        <h2>I <would>would</would> have a form to shorten a link with <a href="http://ternis.link">ternis.link</a> but i am still working on it.</h2>
+
+        <h3>So, instead of <a href="http://ternis.link">ternis.link</a>, I will use <a href="http://twinsonice.link">twinsonice.link</a> (short: <a href="http://icelnk.de">icelnk.de</a>).</h3>
+        <!-- <from id="link_shortening_form" method="post" action="/todo"> -->
+        <!-- <from id="link_shortening_form" method="post" action="/"> -->
+            <!-- BRUH – i wrote "from" instead of "form" ... -->
+        <form id="link_shortening_form" method="post" action="/">
+            <lable for="url">url</lable>
+            <input type="url" name="url" id="url_input" placeholder="https://fabian.ternis.dev/wow">
+
+            <lable for="label">Label (optional)</lable>
+            <input type="text" name="label" id="label_input">
+
+            <input type="submit" value="Create with backend" id="backend_submit" disabled>
+            <input type="submit" value="Create in fromtend" id="frontend_submit">
+        </form>
+
+        <?php if(isset($_POST['url'])): ?>
+            <?php $new_link = $api_['icelink']->createLink($_POST['url'], $_POST['label']) ?>
+            <script>
+                const link_shortening_response = <?= json_encode($new_link) // it btw was just json-decoded in teh function ?>;
+            </script>
+            <script src="linkshorten.js"></script>
+
+            <!--?= $new_link['short_url'] //DEBUG(less debug and more a initial test)?-->
+        <?php endif; ?>
     </section>
 
     <section id="spam_pervention">

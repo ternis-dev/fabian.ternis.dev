@@ -1,3 +1,6 @@
+<?php if($_SERVER['REQUEST_URI'] == '/todo') { die('Seems like you found a part of this website that is not working (yet)'); }
+        elseif($_SERVER['REQUEST_URI'] == '/wow') { die('Wow – you found a secret page'); } ?>
+
 <?php
 
 require_once __DIR__.'/src/helpers.php';
@@ -13,6 +16,7 @@ if (class_exists(\Dotenv\Dotenv::class) && file_exists(__DIR__.'/.env')) {
 require_once __DIR__.'/src/API/base.php';
 require_once __DIR__.'/src/API/turnstile.php';
 require_once __DIR__.'/src/API/cloudflare.php';
+require_once __DIR__.'/src/API/twinsonicelink.php'; // should i do this ... ill keep it for now
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
@@ -56,10 +60,13 @@ if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safeP
 use App\API\DomainBox;
 use App\API\Turnstile;
 use App\API\StoryGrab;
+use App\API\TwinsOnIceLink;
 
+// from now on using $api_ for better access ...
 $dnbx = new DomainBox();
 $turnstile = new Turnstile();
 $turnstileResult = null;
+$api_['icelink'] = new TwinsOnIceLink();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnstile-response'])) {
     $token = $_POST['cf-turnstile-response'] ?? '';
@@ -119,10 +126,9 @@ $stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['dat
 
     <?php include __DIR__.'/src/index.php'; ?>
     
-
-    <code>
+    <!--code>
         sudo apt install sl -y && sl
-    </code>
+    </code-->
     <script src="app.js"></script>
     <script src="stories.js" defer></script>
 </body>
