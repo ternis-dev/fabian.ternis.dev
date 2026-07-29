@@ -1020,7 +1020,7 @@ body {
                                     background: transparent;
 
                                     &:hover {
-                                        --a-background-color: #d32f2f; /* TodO: make this function ... */
+                                        --a-background-color: #d32f2f;
                                         background-color: var(--a-background-color);
                                         --a-color: #ffffff;
                                     }

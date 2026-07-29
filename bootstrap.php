@@ -1,5 +1,7 @@
-<?php if($_SERVER['REQUEST_URI'] == '/todo') { die('Seems like you found a part of this website that is not working (yet)'); }
-        elseif($_SERVER['REQUEST_URI'] == '/wow') { die('Wow – you found a secret page'); } ?>
+<?php 
+if (($_SERVER['REQUEST_URI'] ?? '') === '/todo') { die('Seems like you found a part of this website that is not working (yet)'); }
+elseif (($_SERVER['REQUEST_URI'] ?? '') === '/wow') { die('Wow – you found a secret page'); }
+?>
 
 <?php
 
@@ -19,42 +21,82 @@ require_once __DIR__.'/src/API/cloudflare.php';
 require_once __DIR__.'/src/API/twinsonicelink.php'; // should i do this ... ill keep it for now
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-
 $safePath = str_replace(['..', '//'], '', $requestPath);
 
-// if(str_ends_with($_SERVER['REQUEST_URI'], '.css') && file_exists(__DIR__.'/assets/css/'.$_SERVER['uri'])) {
-if (str_ends_with($safePath, '.css') && file_exists(__DIR__.'/assets/css'.$safePath)) {
-    header('Content-Type: text/css; charset=UTF-8');
-    readfile(__DIR__.'/assets/css'.$safePath);
+$getMimeType = function($path) {
+    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    return match($ext) {
+        'css'  => 'text/css; charset=UTF-8',
+        'js'   => 'text/javascript; charset=UTF-8',
+        'ttf'  => 'font/ttf',
+        'woff' => 'font/woff',
+        'woff2'=> 'font/woff2',
+        'png'  => 'image/png',
+        'jpg', 'jpeg' => 'image/jpeg',
+        'webp' => 'image/webp',
+        'svg'  => 'image/svg+xml',
+        'gif'  => 'image/gif',
+        'ico'  => 'image/x-icon',
+        default => 'application/octet-stream',
+    };
+};
+
+$serveFile = function($filePath, $mimeType) {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: ' . $mimeType);
+    header('Content-Length: ' . filesize($filePath));
+    readfile($filePath);
     exit;
-} elseif (str_ends_with($safePath, '.js') && file_exists(__DIR__.'/assets/js'.$safePath)) {
-    header('Content-Type: text/js; charset=UTF-8');
-    readfile(__DIR__.'/assets/js'.$safePath);
-    exit;
-} elseif (str_ends_with($safePath, '.ttf') && file_exists(__DIR__.'/assets/fonts'.$safePath)) {
-    header('Content-Type: font/ttf');
-    readfile(__DIR__.'/assets/fonts'.$safePath);
-    exit;
-} elseif ((str_ends_with($safePath, '.jpg') || str_ends_with($safePath, '.png') || str_ends_with($safePath, '.jpeg')) && file_exists(__DIR__.'/assets/img'.$safePath)) {
-    $content_type = (str_ends_with($safePath, '.png') ? 'image/png' : 'image/jpeg');
-    header('Content-Type: '.$content_type);
-    readfile(__DIR__.'/assets/img'.$safePath);
-    exit;
-} elseif (str_ends_with($safePath, '.unknown.image.mime')) {
-    $basePath = substr($safePath, 0, -strlen('.unknown.image.mime'));
-    $extensions = ['webp' => 'image/webp', 'png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg'];
+};
+
+// 1. Direct asset routing (css, js, fonts, img)
+$assetDirs = ['css', 'js', 'fonts', 'img'];
+$cleanAssetPath = preg_replace('#^/assets/(css|js|fonts|img)?#', '', $safePath);
+
+foreach ($assetDirs as $dir) {
+    $targetFile = __DIR__ . '/assets/' . $dir . $cleanAssetPath;
+    if (file_exists($targetFile) && is_file($targetFile)) {
+        $serveFile($targetFile, $getMimeType($targetFile));
+    }
+}
+
+// 2. Dynamic image extension resolver (.unknown.image.mime)
+if (str_ends_with($safePath, '.unknown.image.mime')) {
+    $basePath = substr($cleanAssetPath, 0, -strlen('.unknown.image.mime'));
+    $basePath = preg_replace('#^/img#', '', $basePath);
+    $extensions = ['webp' => 'image/webp', 'png' => 'image/png', 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'svg' => 'image/svg+xml'];
+
     foreach ($extensions as $ext => $mime) {
-        if (file_exists(__DIR__.'/assets/img'.$basePath.'.'.$ext)) {
-            header('Content-Type: '.$mime);
-            readfile(__DIR__.'/assets/img'.$basePath.'.'.$ext);
-            exit;
+        $candidate = __DIR__ . '/assets/img' . $basePath . '.' . $ext;
+        if (file_exists($candidate) && is_file($candidate)) {
+            $serveFile($candidate, $mime);
         }
     }
-    $http_code = 404;
-    // ToDO: Add .unknown.mime (support for more than just images ...)
-} else {
-    $http_code = 404;
+
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    http_response_code(404);
+    header('Content-Type: text/plain');
+    echo 'Image not found';
+    exit;
 }
+
+// 3. Static asset 404 handling
+$assetExtensions = ['css', 'js', 'ttf', 'woff', 'woff2', 'jpg', 'jpeg', 'png', 'webp', 'svg', 'gif', 'ico'];
+$ext = strtolower(pathinfo($safePath, PATHINFO_EXTENSION));
+if (in_array($ext, $assetExtensions, true)) {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    http_response_code(404);
+    header('Content-Type: text/plain');
+    echo 'Asset not found';
+    exit;
+}
+
 
 
 use App\API\DomainBox;
