@@ -210,31 +210,33 @@
     </section>
 
     <section id="linkshorten">
-        <h2>I <would>would</would> have a form to shorten a link with <a href="http://ternis.link">ternis.link</a> but i am still working on it.</h2>
+        <h2>I <would>would</would> have a form to shorten a link with <a href="http://ternis.link" target="_blank">ternis.link</a> but i am still working on it.</h2>
 
-        <h3>So, instead of <a href="http://ternis.link">ternis.link</a>, I will use <a href="http://twinsonice.link">twinsonice.link</a> (short: <a href="http://icelnk.de">icelnk.de</a>).</h3>
-        <!-- <from id="link_shortening_form" method="post" action="/todo"> -->
-        <!-- <from id="link_shortening_form" method="post" action="/"> -->
-            <!-- BRUH – i wrote "from" instead of "form" ... -->
-        <form id="link_shortening_form" method="post" action="/">
-            <lable for="url">url</lable>
-            <input type="url" name="url" id="url_input" placeholder="https://fabian.ternis.dev/wow">
+        <h3>So, instead of <a href="http://ternis.link" target="_blank">ternis.link</a>, I will use <a href="http://twinsonice.link" target="_blank">twinsonice.link</a> (short: <a href="http://icelnk.de" target="_blank">icelnk.de</a>).</h3>
+        <form id="link_shortening_form" method="post" action="#linkshorten">
+            <div class="form-field">
+                <label for="url_input">URL</label>
+                <input type="url" name="url" id="url_input" placeholder="https://fabian.ternis.dev/wow" required>
+            </div>
 
-            <lable for="label">Label (optional)</lable>
-            <input type="text" name="label" id="label_input">
+            <div class="form-field">
+                <label for="label_input">Label (optional)</label>
+                <input type="text" name="label" id="label_input" placeholder="Custom Link Title">
+            </div>
 
-            <input type="submit" value="Create with backend" id="backend_submit" disabled>
-            <input type="submit" value="Create in fromtend" id="frontend_submit">
+            <div class="form-buttons">
+                <input type="submit" value="Create with backend" id="backend_submit" name="submit_mode">
+                <button type="button" id="frontend_submit">Create in frontend</button>
+            </div>
         </form>
 
-        <?php if(isset($_POST['url'])): ?>
-            <?php $new_link = $api_['icelink']->createLink($_POST['url'], $_POST['label']) ?>
-            <script>
-                const link_shortening_response = <?= json_encode($new_link) // it btw was just json-decoded in teh function ?>;
-            </script>
-            <script src="linkshorten.js"></script>
+        <div id="linkshorten_results"></div>
 
-            <!--?= $new_link['short_url'] //DEBUG(less debug and more a initial test)?-->
+        <?php if(isset($_POST['url'])): ?>
+            <?php $new_link = $api_['icelink']->createLink($_POST['url'], $_POST['label'] ?? null); ?>
+            <script>
+                window.link_shortening_response = <?= json_encode($new_link) ?>;
+            </script>
         <?php endif; ?>
     </section>
 

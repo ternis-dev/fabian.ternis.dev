@@ -131,5 +131,6 @@ $stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['dat
     </code-->
     <script src="app.js"></script>
     <script src="stories.js" defer></script>
+    <script src="linkshorten.js" defer></script>
 </body>
 </html>
