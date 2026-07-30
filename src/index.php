@@ -13,10 +13,12 @@
             </div>
         </div>
 
-        <br><br>
-        <?php $cmt = $latest_commit; ?>
-        <!-- <div>My most recent commit: "<?= $cmt['message'] ?>" (at <?= $cmt['date'] ?>, id: <?= ($cmt['short_id']) ?>) on <code><?= $cmt['repo'] ?></code></div> -->
-        <div>My most recent commit: "<?= strlen($cmt['message'] > 10) ? substr($cmt['message'], 0, 10) . '...' : $cmt['message'] ?>" (at <?= $cmt['date'] ? (new DateTimeImmutable($cmt['date']))->format('M j, Y \a\t g:i A') : 'N/A' ?>, id: <?= ($cmt['short_id']) ?>) on <code><?= $cmt['repo'] ?></code></div>
+        <br><!--br-->
+        <?php
+            $cmt = $latest_commit;
+            $strlenpoint = 15;
+        ?>
+        <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>" (<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
     </section>
     
 

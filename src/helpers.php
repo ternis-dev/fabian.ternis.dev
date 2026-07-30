@@ -71,3 +71,78 @@ if (!function_exists('storygrab_media_url')) {
         return $base_url . $path;
     }
 }
+
+if (!function_exists('cache')) {
+    /**
+     * Get the CacheService instance or retrieve an item from cache.
+     * 
+     * @param string|null $key
+     * @param mixed $default
+     * @return \App\Services\CacheService|mixed
+     */
+    function cache(?string $key = null, mixed $default = null) {
+        static $cacheService = null;
+        if ($cacheService === null) {
+            $cacheService = new \App\Services\CacheService();
+        }
+
+        if ($key === null) {
+            return $cacheService;
+        }
+
+        return $cacheService->get($key, $default);
+    }
+}
+
+if (!function_exists('time_ago')) {
+    /**
+     * Convert a datetime string, timestamp, or DateTime object into a human-readable "time ago" string.
+     * 
+     * @param string|int|\DateTimeInterface|null $datetime
+     * @return string
+     */
+    function time_ago($datetime): string {
+        if (empty($datetime)) {
+            return 'N/A';
+        }
+
+        try {
+            if ($datetime instanceof \DateTimeInterface) {
+                $timestamp = $datetime->getTimestamp();
+            } elseif (is_numeric($datetime)) {
+                $timestamp = (int)$datetime;
+            } else {
+                $timestamp = (new \DateTimeImmutable($datetime))->getTimestamp();
+            }
+        } catch (\Exception $e) {
+            return 'N/A';
+        }
+
+        $diff = time() - $timestamp;
+
+        if ($diff < 5 && $diff >= 0) {
+            return 'just now';
+        }
+        if ($diff < 60 && $diff >= 0) {
+            return $diff . ' seconds ago';
+        }
+
+        $intervals = [
+            31536000 => 'year',
+            2592000  => 'month',
+            604800   => 'week',
+            86400    => 'day',
+            3600     => 'hour',
+            60       => 'minute',
+        ];
+
+        foreach ($intervals as $secs => $unit) {
+            if ($diff >= $secs) {
+                $count = (int) floor($diff / $secs);
+                return $count . ' ' . $unit . ($count > 1 ? 's' : '') . ' ago';
+            }
+        }
+
+        return 'just now';
+    }
+}

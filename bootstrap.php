@@ -105,11 +105,13 @@ use App\API\Turnstile;
 use App\API\StoryGrab;
 use App\API\TwinsOnIceLink;
 use App\API\GitHub;
+use App\Services\CacheService;
 
 // from now on using $api_ for better access ...
 $dnbx = new DomainBox();
 $turnstile = new Turnstile();
 $turnstileResult = null;
+$api_['cache'] = cache();
 $api_['icelink'] = new TwinsOnIceLink();
 $api_['github'] = new GitHub();
 
@@ -127,15 +129,24 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnsti
     }
 }
 
-$domains = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? []; // the ['data] at the end IMPORTANT ... (not to make this mistake again ...)
-// $domains = []; // Internet "problem" (was my fault with DHCP and co.)
+// Cache active domains for 10 minutes (600s)
+$domains = cache()->remember('dnbx_active_domains', 600, function() use ($dnbx) {
+    return $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? [];
+});
+
 $devices = config('devices', []);
 $hi = "Hello World!";
 
+// Cache StoryGrab stories for 5 minutes (300s)
 $storygrab_api = new StoryGrab(env('STORYGRAB_API_TOKEN'));
-$stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
+$stories = cache()->remember('storygrab_latest_stories', 300, function() use ($storygrab_api) {
+    return $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
+});
 
-$latest_commit = $api_['github']->getLastUserCommit();
+// Cache latest GitHub commit for 5 minutes (300s)
+$latest_commit = cache()->remember('github_latest_user_commit', 300, function() use ($api_) {
+    return $api_['github']->getLastUserCommit('fabianternis');
+});
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);
