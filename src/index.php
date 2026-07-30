@@ -12,11 +12,17 @@
                 <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">BASF&trade;</a></span>
             </div>
         </div>
+
+        <br><br>
+        <?php $cmt = $latest_commit; ?>
+        <!-- <div>My most recent commit: "<?= $cmt['message'] ?>" (at <?= $cmt['date'] ?>, id: <?= ($cmt['short_id']) ?>) on <code><?= $cmt['repo'] ?></code></div> -->
+        <div>My most recent commit: "<?= strlen($cmt['message'] > 10) ? substr($cmt['message'], 0, 10) . '...' : $cmt['message'] ?>" (at <?= $cmt['date'] ? (new DateTimeImmutable($cmt['date']))->format('M j, Y \a\t g:i A') : 'N/A' ?>, id: <?= ($cmt['short_id']) ?>) on <code><?= $cmt['repo'] ?></code></div>
     </section>
     
 
+
     <section id="other">
-        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a>.</h4>
+        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a> and <a href="http://twinsonice.link?from=fabian.ternis.dev&section=other">twinsonice.link</a>.</h4>
         
         <hr>
         Whenever I do a disclosure (in any way), I get no response (e.g., 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
@@ -25,10 +31,12 @@
     </section>
 
 
+
     <section id="contact">
         <h3>Still sad about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
         <p>You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')</p>
     </section>
+
 
 
     <section id="news">
@@ -45,6 +53,7 @@
         </ol>
     </section>
 
+<div class="has-newsbanner">
 
     <section id="homelab">
         <h2>What [software] I host on my HomeLab (I know, nobody asked):</h2>
@@ -67,9 +76,11 @@
                     </div>
                 </li>
             <?php endforeach; ?>
+
             <other>... and more ...</other>
         </ul>
     </section>
+
 
 
     <section id="devices">
@@ -80,21 +91,37 @@
             <pre><code class="fetch"><?= htmlspecialchars($device['fetch'], ENT_QUOTES, 'UTF-8') ?></code></pre>
         <?php endforeach; ?>
     </section>
+
     
 
     <section id="more_random">
         <h2>Some more <random>random</random> stuff</h2>
 
+        <div>
         <div>My mail is hosted on <a href="https://ternismail.de">TernisMail</a> (but not on my <a href="https://ternis.net">HomeLab</a>)</div>
+        </div>
+
+        <div>
+        <!-- <div class="commented-out">// I <hate>hate</hate> removing <code>Code</code> – (i always <code>// comment</code> it out).</div> -->
+        <div class="commented-out">// I <hate>hate</hate> removing <code>Code</code> – (i always <code class="commented-out">// comment</code> it out).</div>
+        <div>I <hate>hate</hate> deleting <code>Code</code> btw. (i always just <code class="commented-out">// comment</code> it out).</div>
+        </div>
+
+        <div>Just got <a href="http://web.tstatic.de">tstatic.de</a> for hosting static assets. (Most(currently all) of the assets on this site are still stored in the repo ...)</div>
     </section>
+
 
 
     <section>
         <h2>Some other projects I am currently not working on:</h2>
-        - Web-Search.org (Just another open-source Search engine)
-        - MTEX.dev (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))
-        ... way too many more ...
+
+        <ul>
+            <li><a href="http://Web-Search.org">Web-Search.org</a> (Just another open-source Search engine)</li>
+            <li><a href="http://MTEX.dev">MTEX.dev</a> (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))</li>
+            ... way too many more ...
+        </ul>
     </section>
+
 
 
     <section id="domains">
@@ -201,13 +228,18 @@
         </redacted>
     </section>
 
+
+
     <section id="buttons">
         <h2>Just <some>some</some> Buttons</h2>
 
-        <div>
+        <div class="buttons-container">
+            <button class="hover-moving-gradient_border">Hover me!</button>
 
         </div>
     </section>
+
+
 
     <section id="linkshorten">
         <h2>I <would>would</would> have a form to shorten a link with <a href="http://ternis.link" target="_blank">ternis.link</a> but i am still working on it.</h2>
@@ -239,6 +271,8 @@
             </script>
         <?php endif; ?>
     </section>
+
+
 
     <section id="spam_pervention">
         <h2>A Captcha just for <fun>fun</fun>!</h2>
@@ -276,6 +310,11 @@
     </section>
 
 
+
+    <section id="competitions">
+        <h2>Some <competitions>competitions</competitions>, i took part in.</h2>
+    </section>
+
     <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
     <div class="news-ticker bottom">
         <div class="ticker-content">
@@ -285,6 +324,7 @@
         </div>
     </div>
     <!-- </marquee> -->
+</div>
 </main>
 
 

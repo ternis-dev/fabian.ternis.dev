@@ -239,7 +239,7 @@ body {
 
                 &::after {
                     position: absolute;
-                    content: "...";
+                    /* content: "..."; */
                     /* color: red; */
                     /* color: var(--color-text-secondary); */
                     color: var(--color-text-tertiary);
@@ -264,8 +264,6 @@ body {
                         }*/
                     animation: rot-ate 2s ease-in-out infinite; 
 
-
-: set this the exact way ... */
                 }
 
                 /* @keyframes rot-ate {
@@ -1034,6 +1032,24 @@ body {
             }
         }
 
+        &#more_random {
+            .commented-out {
+                font-family: var(--font-code);
+                font-style: italic;
+                --a-color: var(--color-text-tertiary);
+            }
+        }
+
+        &#buttons {
+            .buttons-container {
+                button {
+                    &.hover-moving-gradient_border {
+                        /* TODO: actually do this ... */
+                    }
+                }
+            }
+        }
+
         ul {
             transform: translateX(2rem);
             /* ul,
@@ -1247,7 +1263,6 @@ body {
     }
 }
 
-
 #github-star-container {
     /* anyhow not functioniong if inside body ... */
     --a-background-color: var(--color-github-black);
@@ -1273,10 +1288,8 @@ body {
 }
 
 
-
 /* ToDo: move to right position */
-
-some, currently, random, fun, really, me, vibing, redacts, ai-note {
+some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, competitions {
     color: var(--color-text-tertiary);
     font-style: italic;
 }

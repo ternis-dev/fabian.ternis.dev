@@ -19,6 +19,7 @@ require_once __DIR__.'/src/API/base.php';
 require_once __DIR__.'/src/API/turnstile.php';
 require_once __DIR__.'/src/API/cloudflare.php';
 require_once __DIR__.'/src/API/twinsonicelink.php'; // should i do this ... ill keep it for now
+require_once __DIR__.'/src/API/github.php';
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $safePath = str_replace(['..', '//'], '', $requestPath);
@@ -103,12 +104,14 @@ use App\API\DomainBox;
 use App\API\Turnstile;
 use App\API\StoryGrab;
 use App\API\TwinsOnIceLink;
+use App\API\GitHub;
 
 // from now on using $api_ for better access ...
 $dnbx = new DomainBox();
 $turnstile = new Turnstile();
 $turnstileResult = null;
 $api_['icelink'] = new TwinsOnIceLink();
+$api_['github'] = new GitHub();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnstile-response'])) {
     $token = $_POST['cf-turnstile-response'] ?? '';
@@ -131,6 +134,8 @@ $hi = "Hello World!";
 
 $storygrab_api = new StoryGrab(env('STORYGRAB_API_TOKEN'));
 $stories = $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
+
+$latest_commit = $api_['github']->getLastUserCommit();
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);

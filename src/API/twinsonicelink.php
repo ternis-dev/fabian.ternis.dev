@@ -14,7 +14,8 @@ class TwinsOnIceLink extends Base
         parent::__construct([
             // 'base_uri' => 'https://icelnk.de/api/',
             // 'base_uri' => 'https://twinsonice.link/api/',
-            'base_uri' => 'https://api.twinsonice.link/',
+            // 'base_uri' => 'https://api.twinsonice.link/',
+            'base_uri' => 'https://api.twinsonice.link/v1/',
         ]);
     }
 
@@ -26,7 +27,7 @@ class TwinsOnIceLink extends Base
 
     public function getCommit(): string
     {
-        $response = $this->client->request('GET', 'v/commit', []);
+        $response = $this->client->request('GET', 'commit', []);
         
         // $data_raw = $response->getBody()->getContents();
         $data = json_decode($response->getBody()->getContents(), true) ?? [];
@@ -51,5 +52,14 @@ class TwinsOnIceLink extends Base
         ]);
 
         return json_decode($response->getBody()->getContents(), true) ?? [];
+    }
+
+    public function listLinks(): array
+    {
+        $response = $this->client->request('GET', 'links', []);
+        
+        $data = json_decode($response->getBody()->getContents(), true) ?? [];
+
+        return $data['links'] ?? null;
     }
 }
