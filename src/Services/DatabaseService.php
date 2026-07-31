@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use PDO;
-use PDOException;
-use Throwable;
+use PDO, PDOException, Throwable;
 
 class DatabaseService
 {

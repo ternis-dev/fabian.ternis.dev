@@ -318,12 +318,30 @@
         <h3>Upload an image (please nothing illegal) for others to see</h3>
 
         <?php
+        // Ensure uploads table exists
+        try {
+            $s_['db']->execute("
+                CREATE TABLE IF NOT EXISTS uploads (
+                    id VARCHAR(255) PRIMARY KEY,
+                    filename VARCHAR(255),
+                    url TEXT NOT NULL,
+                    size INT,
+                    content_type VARCHAR(100),
+                    username VARCHAR(255),
+                    description TEXT,
+                    created_at DATETIME,
+                    ip_address VARCHAR(45)
+                )
+            ");
+        } catch (\Throwable $e) {
+            // Log or handle schema creation exception if needed
+        }
+
         $uploadResult = null;
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['upload_submit']) && isset($_FILES['image']) && $api_['hackclub_cdn']->isConfigured())
         {
             // Basic Turnstile guard — re-use the already-verified $turnstileResult if present,
             // otherwise verify the token from this specific form submission.
-            
             $uploadTurnstileOk = false;
             if (isset($_POST['cf-turnstile-response'])) {
                 $uploadTurnstileVerify = $turnstile->verify($_POST['cf-turnstile-response'], $_SERVER['REMOTE_ADDR'] ?? null);
@@ -332,9 +350,45 @@
 
             if ($uploadTurnstileOk) {
                 $uploadResult = $api_['hackclub_cdn']->uploadFromFileEntry($_FILES['image']);
+
+                if (!isset($uploadResult['error']) && !empty($uploadResult['url'])) {
+                    $uploadId = $uploadResult['id'] ?? uniqid('up_');
+                    $username = !empty($_POST['username']) ? trim($_POST['username']) : 'Anonymous';
+                    $description = !empty($_POST['description']) ? trim($_POST['description']) : null;
+                    $createdAt = date('Y-m-d H:i:s');
+                    $ipAddress = $_SERVER['REMOTE_ADDR'] ?? null;
+
+                    try {
+                        $s_['db']->execute(
+                            "INSERT INTO uploads (id, filename, url, size, content_type, username, description, created_at, ip_address) 
+                             VALUES (:id, :filename, :url, :size, :content_type, :username, :description, :created_at, :ip_address)",
+                            [
+                                'id'           => $uploadId,
+                                'filename'     => $uploadResult['filename'] ?? ($_FILES['image']['name'] ?? 'image'),
+                                'url'          => $uploadResult['url'],
+                                'size'         => $uploadResult['size'] ?? ($_FILES['image']['size'] ?? 0),
+                                'content_type' => $uploadResult['content_type'] ?? ($_FILES['image']['type'] ?? null),
+                                'username'     => $username,
+                                'description'  => $description,
+                                'created_at'   => $createdAt,
+                                'ip_address'   => $ipAddress,
+                            ]
+                        );
+                    } catch (\Throwable $e) {
+                        // DB insertion failure logged if needed
+                    }
+                }
             } else {
                 $uploadResult = ['error' => 'Turnstile verification failed. Please complete the captcha.'];
             }
+        }
+
+        // Retrieve uploaded images stored in DB
+        $recentUploads = [];
+        try {
+            $recentUploads = $s_['db']->fetchAll("SELECT * FROM uploads ORDER BY created_at DESC LIMIT 30");
+        } catch (\Throwable $e) {
+            $recentUploads = [];
         }
         ?>
 
@@ -343,10 +397,10 @@
                 <?php if (isset($uploadResult['error'])): ?>
                     <strong>Upload failed:</strong> <?= htmlspecialchars($uploadResult['error']) ?>
                 <?php else: ?>
-                    <strong>Upload successful!</strong><br>
-                    CDN URL: <a href="<?= htmlspecialchars($uploadResult['url'] ?? '') ?>" target="_blank" rel="noopener">
+                    <strong>Upload successful & saved!</strong><br>
+                    <!-- CDN URL: <a href="<?= htmlspecialchars($uploadResult['url'] ?? '') ?>" target="_blank" rel="noopener">
                         <?= htmlspecialchars($uploadResult['url'] ?? '') ?>
-                    </a>
+                    </a> -->
                     <?php if (!empty($uploadResult['filename'])): ?>
                         <br><small>File: <?= htmlspecialchars($uploadResult['filename']) ?> (<?= number_format(($uploadResult['size'] ?? 0) / 1024, 1) ?> KB)</small>
                     <?php endif; ?>
@@ -372,6 +426,28 @@
                 <button type="submit" name="upload_submit" value="1" id="upload_submit_btn">Upload</button>
             </div>
         </form>
+
+        <?php if (!empty($recentUploads)): ?>
+            <div class="recent-uploads-container" style="margin-top: 2rem;">
+                <h3>Recently Uploaded Images</h3>
+                <div class="uploads-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <?php foreach ($recentUploads as $item): ?>
+                        <div class="upload-card" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.5rem; background: rgba(0,0,0,0.2);">
+                            <!-- <a href="<?= htmlspecialchars($item['url']) ?>" target="_blank" rel="noopener"> -->
+                                <img src="<?= htmlspecialchars($item['url']) ?>" alt="<?= htmlspecialchars($item['filename'] ?? 'Upload') ?>" style="width: 100%; height: 140px; object-fit: cover; border-radius: 4px;" loading="lazy">
+                            <!-- </a> -->
+                            <div style="font-size: 0.85rem; margin-top: 0.5rem; word-break: break-word;">
+                                <strong><?= htmlspecialchars($item['username'] ?: 'Anonymous') ?></strong>
+                                <?php if (!empty($item['description'])): ?>
+                                    <p style="margin: 0.25rem 0; font-size: 0.8rem; opacity: 0.8;"><?= htmlspecialchars($item['description']) ?></p>
+                                <?php endif; ?>
+                                <small style="display: block; opacity: 0.6; font-size: 0.75rem;"><?= time_ago($item['created_at'] ?? null) ?></small>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </section>
 
 </div>

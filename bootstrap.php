@@ -101,24 +101,23 @@ if (in_array($ext, $assetExtensions, true)) {
 
 
 
-use App\API\DomainBox;
-use App\API\Turnstile;
-use App\API\StoryGrab;
-use App\API\TwinsOnIceLink;
-use App\API\GitHub;
-use App\API\HackClubCDN;
-use App\Services\CacheService;
-use App\Services\DatabaseService;
+use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN};
+use App\Services\{CacheService, DatabaseService};
 
 // from now on using $api_ for better access ...
 $dnbx = new DomainBox();
 $turnstile = new Turnstile();
 $turnstileResult = null;
-$api_['cache'] = cache();
-$api_['db'] = db();
+// // // S:Service, API:self
+$s_['cache'] = cache();
+$s_['db'] = db();
+$api_['cache'] = $s_['cache'];
+$api_['db'] = $s_['db'];
 $api_['icelink'] = new TwinsOnIceLink();
 $api_['github'] = new GitHub();
 $api_['hackclub_cdn'] = new HackClubCDN();
+$api_['dnbx'] = $dnbx ?? new DomainBox();
+
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnstile-response'])) {
     $token = $_POST['cf-turnstile-response'] ?? '';
