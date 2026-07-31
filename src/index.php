@@ -30,7 +30,7 @@
 
 
     <section id="contact">
-        <h3>Still sad about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
+        <h3>Still <sad>sad</sad> about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
         <p>You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')</p>
     </section>
 
@@ -318,6 +318,9 @@
         <h3>Upload an image (please nothing illegal) for others to see</h3>
 
         <?php
+        // TODO: THIS(the following php) SHOULD BE IN ANOTEHR FILE!
+
+
         // Ensure uploads table exists
         try {
             $s_['db']->execute("
@@ -402,7 +405,7 @@
                         <?= htmlspecialchars($uploadResult['url'] ?? '') ?>
                     </a> -->
                     <?php if (!empty($uploadResult['filename'])): ?>
-                        <br><small>File: <?= htmlspecialchars($uploadResult['filename']) ?> (<?= number_format(($uploadResult['size'] ?? 0) / 1024, 1) ?> KB)</small>
+                        <!-- <br><small>File: <?= htmlspecialchars($uploadResult['filename']) ?> (<?= number_format(($uploadResult['size'] ?? 0) / 1024, 1) ?> KB)</small> -->
                     <?php endif; ?>
                 <?php endif; ?>
             </div>
@@ -422,12 +425,14 @@
                 <textarea name="description" id="upload_description" rows="3" placeholder="Say something about your image..."></textarea>
             </div>
             <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onUploadTurnstileSuccess" data-error-callback="onUploadTurnstileError" data-theme="auto"></div>
+            <div class="disclaimer note">This Image will be uploaded to HackClub's CDN(Hosted on CloudFlare r2). I (<a href="http://fabian.ternis.dev">Fabian Ternis</a>) have no direct control over the data-management.</div>
             <div class="form-buttons">
                 <button type="submit" name="upload_submit" value="1" id="upload_submit_btn">Upload</button>
             </div>
         </form>
 
         <?php if (!empty($recentUploads)): ?>
+            <!-- ToDo: move away from inline-styles (average AI is still not that good) -->
             <div class="recent-uploads-container" style="margin-top: 2rem;">
                 <h3>Recently Uploaded Images</h3>
                 <div class="uploads-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">
