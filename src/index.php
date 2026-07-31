@@ -13,14 +13,10 @@
             </div>
         </div>
 
-        <br><!--br-->
-        <?php
-            $cmt = $latest_commit;
-            $strlenpoint = 15;
-        ?>
+        <br>
+        <?php $cmt = $latest_commit; $strlenpoint = 15;?>
         <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>" (<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
     </section>
-    
 
 
     <section id="other">
@@ -33,12 +29,10 @@
     </section>
 
 
-
     <section id="contact">
         <h3>Still sad about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
         <p>You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')</p>
     </section>
-
 
 
     <section id="news">
@@ -84,7 +78,6 @@
     </section>
 
 
-
     <section id="devices">
         <h2>Device Specs (screenfetch)</h2>
 
@@ -94,7 +87,6 @@
         <?php endforeach; ?>
     </section>
 
-    
 
     <section id="more_random">
         <h2>Some more <random>random</random> stuff</h2>
@@ -113,7 +105,6 @@
     </section>
 
 
-
     <section>
         <h2>Some other projects I am currently not working on:</h2>
 
@@ -123,7 +114,6 @@
             ... way too many more ...
         </ul>
     </section>
-
 
 
     <section id="domains">
@@ -146,7 +136,6 @@
             </div>
         <?php endif; ?>
     </section>
-
 
 
     <section id="stories" tabindex="0" aria-label="Recent Instagram Stories Carousel">
@@ -231,7 +220,6 @@
     </section>
 
 
-
     <section id="buttons">
         <h2>Just <some>some</some> Buttons</h2>
 
@@ -240,7 +228,6 @@
 
         </div>
     </section>
-
 
 
     <section id="linkshorten">
@@ -273,7 +260,6 @@
             </script>
         <?php endif; ?>
     </section>
-
 
 
     <section id="spam_pervention">
@@ -312,7 +298,6 @@
     </section>
 
 
-
     <section id="competitions">
         <h2>Some <competitions>competitions</competitions>, i took part in.</h2>
     </section>
@@ -326,9 +311,27 @@
         </div>
     </div>
     <!-- </marquee> -->
+
+
+    <secton id="uploads">
+        <h2>Leave <something>something</something> here for others.</h2>
+        <h3>Upload an image (please nothing illegal) for others to see</h3>
+        <form>
+            <label for="image">Image</label>
+            <input type="file" name="image" id="image_input">
+            <label for="username">>our Name (optional)</label>
+            <input type="text" name="username">
+            <label for="description">Description (optional)</label>
+            <textarea name="description"></textarea>
+            <?php //<input type="submit" value="Upload"> ?>
+            <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onTurnstileSuccess" data-error-callback="onTurnstileError" data-theme="auto"></div>
+            <div class="captcha-controls">
+                <button type="submit" id="verify-captcha-btn" class="btn-verify">Verify Captcha</button>
+            </div>
+        </form>
+    </secton>
 </div>
 </main>
-
 
 <div class="footer-container">
     <footer>
