@@ -3,4 +3,4 @@ composer.lock
 vendor/
 .env
 storage/cache/
-storage/uploads.json
+storage/db.sqlite

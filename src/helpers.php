@@ -94,6 +94,21 @@ if (!function_exists('cache')) {
     }
 }
 
+if (!function_exists('db')) {
+    /**
+     * Get the DatabaseService instance.
+     * 
+     * @return \App\Services\DatabaseService
+     */
+    function db(): \App\Services\DatabaseService {
+        static $dbService = null;
+        if ($dbService === null) {
+            $dbService = new \App\Services\DatabaseService();
+        }
+        return $dbService;
+    }
+}
+
 if (!function_exists('time_ago')) {
     /**
      * Convert a datetime string, timestamp, or DateTime object into a human-readable "time ago" string.

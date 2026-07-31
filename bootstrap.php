@@ -108,12 +108,14 @@ use App\API\TwinsOnIceLink;
 use App\API\GitHub;
 use App\API\HackClubCDN;
 use App\Services\CacheService;
+use App\Services\DatabaseService;
 
 // from now on using $api_ for better access ...
 $dnbx = new DomainBox();
 $turnstile = new Turnstile();
 $turnstileResult = null;
 $api_['cache'] = cache();
+$api_['db'] = db();
 $api_['icelink'] = new TwinsOnIceLink();
 $api_['github'] = new GitHub();
 $api_['hackclub_cdn'] = new HackClubCDN();
