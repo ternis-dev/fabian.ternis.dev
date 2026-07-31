@@ -20,6 +20,7 @@ require_once __DIR__.'/src/API/turnstile.php';
 require_once __DIR__.'/src/API/cloudflare.php';
 require_once __DIR__.'/src/API/twinsonicelink.php'; // should i do this ... ill keep it for now
 require_once __DIR__.'/src/API/github.php';
+require_once __DIR__.'/src/API/hackclubcdn.php'; // still wondering ...
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $safePath = str_replace(['..', '//'], '', $requestPath);
@@ -105,6 +106,7 @@ use App\API\Turnstile;
 use App\API\StoryGrab;
 use App\API\TwinsOnIceLink;
 use App\API\GitHub;
+use App\API\HackClubCDN;
 use App\Services\CacheService;
 
 // from now on using $api_ for better access ...
@@ -114,6 +116,7 @@ $turnstileResult = null;
 $api_['cache'] = cache();
 $api_['icelink'] = new TwinsOnIceLink();
 $api_['github'] = new GitHub();
+$api_['hackclub_cdn'] = new HackClubCDN();
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnstile-response'])) {
     $token = $_POST['cf-turnstile-response'] ?? '';

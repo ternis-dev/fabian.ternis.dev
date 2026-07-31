@@ -313,23 +313,67 @@
     <!-- </marquee> -->
 
 
-    <secton id="uploads">
+    <section id="uploads">
         <h2>Leave <something>something</something> here for others.</h2>
         <h3>Upload an image (please nothing illegal) for others to see</h3>
-        <form>
-            <label for="image">Image</label>
-            <input type="file" name="image" id="image_input">
-            <label for="username">>our Name (optional)</label>
-            <input type="text" name="username">
-            <label for="description">Description (optional)</label>
-            <textarea name="description"></textarea>
-            <?php //<input type="submit" value="Upload"> ?>
-            <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onTurnstileSuccess" data-error-callback="onTurnstileError" data-theme="auto"></div>
-            <div class="captcha-controls">
-                <button type="submit" id="verify-captcha-btn" class="btn-verify">Verify Captcha</button>
+
+        <?php
+        $uploadResult = null;
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['upload_submit']) && isset($_FILES['image']) && $api_['hackclub_cdn']->isConfigured())
+        {
+            // Basic Turnstile guard — re-use the already-verified $turnstileResult if present,
+            // otherwise verify the token from this specific form submission.
+            
+            $uploadTurnstileOk = false;
+            if (isset($_POST['cf-turnstile-response'])) {
+                $uploadTurnstileVerify = $turnstile->verify($_POST['cf-turnstile-response'], $_SERVER['REMOTE_ADDR'] ?? null);
+                $uploadTurnstileOk = $uploadTurnstileVerify['success'] ?? false;
+            }
+
+            if ($uploadTurnstileOk) {
+                $uploadResult = $api_['hackclub_cdn']->uploadFromFileEntry($_FILES['image']);
+            } else {
+                $uploadResult = ['error' => 'Turnstile verification failed. Please complete the captcha.'];
+            }
+        }
+        ?>
+
+        <?php if ($uploadResult !== null): ?>
+            <div class="upload-result <?= isset($uploadResult['error']) ? 'result-error' : 'result-success' ?>">
+                <?php if (isset($uploadResult['error'])): ?>
+                    <strong>Upload failed:</strong> <?= htmlspecialchars($uploadResult['error']) ?>
+                <?php else: ?>
+                    <strong>Upload successful!</strong><br>
+                    CDN URL: <a href="<?= htmlspecialchars($uploadResult['url'] ?? '') ?>" target="_blank" rel="noopener">
+                        <?= htmlspecialchars($uploadResult['url'] ?? '') ?>
+                    </a>
+                    <?php if (!empty($uploadResult['filename'])): ?>
+                        <br><small>File: <?= htmlspecialchars($uploadResult['filename']) ?> (<?= number_format(($uploadResult['size'] ?? 0) / 1024, 1) ?> KB)</small>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
+        <form id="upload_form" method="post" action="#uploads" enctype="multipart/form-data">
+            <div class="form-field">
+                <label for="image_input">Image</label>
+                <input type="file" name="image" id="image_input" accept="image/*" required>
+            </div>
+            <div class="form-field">
+                <label for="upload_username">Your Name (optional)</label>
+                <input type="text" name="username" id="upload_username" placeholder="Anonymous">
+            </div>
+            <div class="form-field">
+                <label for="upload_description">Description (optional)</label>
+                <textarea name="description" id="upload_description" rows="3" placeholder="Say something about your image..."></textarea>
+            </div>
+            <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onUploadTurnstileSuccess" data-error-callback="onUploadTurnstileError" data-theme="auto"></div>
+            <div class="form-buttons">
+                <button type="submit" name="upload_submit" value="1" id="upload_submit_btn">Upload</button>
             </div>
         </form>
-    </secton>
+    </section>
+
 </div>
 </main>
 
