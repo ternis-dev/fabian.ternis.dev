@@ -1,9 +1,8 @@
 <?php 
+date_default_timezone_set('Europe/Berlin');
+
 if (($_SERVER['REQUEST_URI'] ?? '') === '/todo') { die('Seems like you found a part of this website that is not working (yet)'); }
 elseif (($_SERVER['REQUEST_URI'] ?? '') === '/wow') { die('Wow – you found a secret page'); }
-?>
-
-<?php
 
 require_once __DIR__.'/src/helpers.php';
 if (file_exists(__DIR__.'/vendor/autoload.php')) {
@@ -101,7 +100,8 @@ if (in_array($ext, $assetExtensions, true)) {
 
 
 
-use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN};
+use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter};
+use App\Docs\DocsController;
 use App\Services\{CacheService, DatabaseService};
 
 // from now on using $api_ for better access ...
@@ -117,6 +117,18 @@ $api_['icelink'] = new TwinsOnIceLink();
 $api_['github'] = new GitHub();
 $api_['hackclub_cdn'] = new HackClubCDN();
 $api_['dnbx'] = $dnbx ?? new DomainBox();
+
+// Handle API requests (production host api.fabian.ternis.dev or dev path /api)
+if (ApiRouter::isApiRequest()) {
+    $apiRouter = new ApiRouter($s_['cache'], $s_['db']);
+    $apiRouter->dispatch();
+}
+
+// Handle Documentation requests (/docs)
+if (DocsController::isDocsRequest()) {
+    $docsController = new DocsController($s_['cache']);
+    $docsController->handle($safePath);
+}
 
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnstile-response'])) {

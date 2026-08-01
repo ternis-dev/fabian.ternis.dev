@@ -38,7 +38,10 @@
     <section id="news">
         <h2>Latest Stuff ("news", not the banner):</h2>
 
+        <h3>I am too lazy for an Blog, so this is all I do.</h3>
         <ol>
+            <li><just>just</just> got My first PoE-Switch(from <a href="http://ugreen.com">Ugreen</a>) and a non-branded "PoE Extender"(turns one PoE in into two PoE out).</li>
+            <li>Bought a UGREEN-NAS (DXP4800) from <a href="http://ebay.de">Ebay<!-- Too: ebay.com + Y EBAY PROFILE --></a> for just about 400€ to then not have enough money to even afford ONE 4TB HDD (Thanks <a href="http://openai.com">OpenAI</a> and co.).</li>
             <li><currently>Currently</currently> have 30+ Side-Projects and about 50 unused domains. – What am i doing? (with my live and money)</li>
             <!-- Why not try a ordered-list? -->
             <li>I just registered my first <tld>.shop</tld><!-- ToDo (JS) each tld-tag should be a link to domains-section and auto-filter ofr all domains with taht tld ... --> Domain (<code>twinsonice.shop</code>)</li>

@@ -319,27 +319,27 @@ body {
             cursor: var(--cursor-pointer);
 
             &:not(&:has(img)) { /* direct image-links ... */
-            &::before {
-                content: "";
-                position: absolute;
-                bottom: 0px; /* font-dependant */
-                left: 0;
-                /* width: 101%; */
-                width: 0;
-                height: 2px;
-                background-color:var(--color-link); /* ::select ... ? */
-
-                /* transform: scaleX(0); */
-                transform-origin: left center;
-                transition: transform .2s ease-out, width .2s ease-out;
-            }
-
-            &:hover {
                 &::before {
-                    /* transform: scaleX(1); */
-                    width: 101%;
+                    content: "";
+                    position: absolute;
+                    bottom: 0px; /* font-dependant */
+                    left: 0;
+                    /* width: 101%; */
+                    width: 0;
+                    height: 2px;
+                    background-color:var(--color-link); /* ::select ... ? */
+
+                    /* transform: scaleX(0); */
+                    transform-origin: left center;
+                    transition: transform .2s ease-out, width .2s ease-out;
                 }
-            }
+
+                &:hover {
+                    &::before {
+                        /* transform: scaleX(1); */
+                        width: 101%;
+                    }
+                }
             }
             &[data-has-arrow=true] {
                 /* padding-right: 2rem; */
@@ -478,24 +478,26 @@ body {
 
             --tld-color: var(--color-text-secondary);
 
-            &.tld-de {  --tld-color: #000; }
-            &.tld-eu {  --tld-color: #001; }
-            &.tld-net { --tld-color: #010; }
-            &.tld-name {--tld-color: #100; }
-            &.tld-pics {--tld-color: #011; }
-            &.tld-dev { --rld-color: #110; }
-            &.tld-xyz { --tld-color: #111; }
-            &.tld-me {  --tld-color: #002; }
-            &.tld-ch {  --tld-color: #020; }
-            &.tld-app { --tld-color: #200; }
-            &.tld-blog {--tld-color: #012; }
-            &.tld-link {--tld-color: #022; }
-            &.tld-fyi { --tld-color: #120; }
-            &.tld-lol { --tld-color: #220; }
-            &.tld-media{--tld-color: #122; }
-            &.tld-org { --tld-color: #212; }
-            &.tld-site {--tld-color: #221; }
-            &.tld-re {  --tld-color: #222; }
+            &.tld-de {      --tld-color: #000; }
+            &.tld-eu {      --tld-color: #001; }
+            &.tld-net {     --tld-color: #010; }
+            &.tld-name {    --tld-color: #100; }
+            &.tld-pics {    --tld-color: #011; }
+            &.tld-dev {     --rld-color: #110; }
+            &.tld-xyz {     --tld-color: #111; }
+            &.tld-me {      --tld-color: #002; }
+            &.tld-ch {      --tld-color: #020; }
+            &.tld-app {     --tld-color: #200; }
+            &.tld-blog {    --tld-color: #012; }
+            &.tld-link {    --tld-color: #022; }
+            &.tld-fyi {     --tld-color: #120; }
+            &.tld-lol {     --tld-color: #220; }
+            &.tld-media {   --tld-color: #122; }
+            &.tld-org {     --tld-color: #212; }
+            &.tld-site {    --tld-color: #221; }
+            &.tld-re {      --tld-color: #222; }
+            &.tld-domains { --tld-color: #210; }
+            &.tld-uk {      --tld-color: #120; }
         }
 
         &#spam_pervention {
