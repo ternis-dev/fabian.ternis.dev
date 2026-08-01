@@ -73,7 +73,8 @@ class DocsBuilder
         $nav = [
             'guides' => [
                 ['slug' => 'overview', 'title' => 'Overview', 'icon' => 'book-open'],
-                ['slug' => 'authentication', 'title' => 'Authentication', 'icon' => 'shield']
+                ['slug' => 'authentication', 'title' => 'Authentication', 'icon' => 'shield'],
+                ['slug' => 'integrations', 'title' => 'Integrations & Stack', 'icon' => 'layers']
             ],
             'api_groups' => []
         ];

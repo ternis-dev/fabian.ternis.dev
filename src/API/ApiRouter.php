@@ -68,6 +68,7 @@ class ApiRouter
         // Router endpoints mapping
         try {
             switch ($path) {
+                // System & Health
                 case '/':
                 case '/v1':
                 case '/v1/':
@@ -79,26 +80,65 @@ class ApiRouter
                     $this->handleHealth();
                     break;
 
-                case '/v1/domains':
-                case '/domains':
-                    $this->handleDomains();
-                    break;
-
-                case '/v1/stories':
-                case '/stories':
-                    $this->handleStories();
-                    break;
-
-                case '/v1/commits':
-                case '/commits':
-                    $this->handleCommits();
-                    break;
-
                 case '/v1/system':
                 case '/system':
                     $this->handleSystem();
                     break;
 
+                case '/v1/devices':
+                case '/devices':
+                    $this->handleDevices();
+                    break;
+
+                // DomainBox
+                case '/v1/domains':
+                case '/domains':
+                    $this->handleDomains();
+                    break;
+
+                case '/v1/domains/stats':
+                case '/domains/stats':
+                    $this->handleDomainStats();
+                    break;
+
+                case '/v1/domains/tlds':
+                case '/domains/tlds':
+                    $this->handleDomainTlds();
+                    break;
+
+                // GitHub
+                case '/v1/commits':
+                case '/commits':
+                    $this->handleCommits();
+                    break;
+
+                case '/v1/github/user':
+                case '/github/user':
+                    $this->handleGithubUser();
+                    break;
+
+                case '/v1/github/repos':
+                case '/github/repos':
+                    $this->handleGithubRepos();
+                    break;
+
+                case '/v1/github/events':
+                case '/github/events':
+                    $this->handleGithubEvents();
+                    break;
+
+                // StoryGrab
+                case '/v1/stories':
+                case '/stories':
+                    $this->handleStories();
+                    break;
+
+                case '/v1/stories/profiles':
+                case '/stories/profiles':
+                    $this->handleStoryProfiles();
+                    break;
+
+                // TwinsOnIceLink URL Shortener
                 case '/v1/shorten':
                 case '/shorten':
                     if ($method === 'POST') {
@@ -108,6 +148,33 @@ class ApiRouter
                     }
                     break;
 
+                case '/v1/shorten/links':
+                case '/shorten/links':
+                    $this->handleShortenLinks();
+                    break;
+
+                // Cloudflare Turnstile
+                case '/v1/turnstile/config':
+                case '/turnstile/config':
+                    $this->handleTurnstileConfig();
+                    break;
+
+                case '/v1/turnstile/verify':
+                case '/turnstile/verify':
+                    if ($method === 'POST') {
+                        $this->handleTurnstileVerify();
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
+                    }
+                    break;
+
+                // HackClub CDN
+                case '/v1/cdn/me':
+                case '/cdn/me':
+                    $this->handleCdnMe();
+                    break;
+
+                // Docs Schema
                 case '/v1/docs':
                 case '/docs':
                     $this->handleDocsJson();
@@ -161,7 +228,6 @@ class ApiRouter
             $response['error'] = $data['error'] ?? ['code' => 'UNKNOWN_ERROR', 'message' => 'An unknown error occurred'];
         }
 
-        // Append standard meta info if not set
         if (!isset($response['meta'])) {
             $response['meta'] = [];
         }
@@ -231,6 +297,28 @@ class ApiRouter
         ]);
     }
 
+    protected function handleSystem(): void
+    {
+        $techs = config('homelab_techs', []);
+        $this->sendJson([
+            'data' => [
+                'homelab_techs' => $techs,
+                'count' => count($techs)
+            ]
+        ]);
+    }
+
+    protected function handleDevices(): void
+    {
+        $devices = config('devices', []);
+        $this->sendJson([
+            'data' => [
+                'devices' => $devices,
+                'count' => count($devices)
+            ]
+        ]);
+    }
+
     protected function handleDomains(): void
     {
         $domainbox = new DomainBox();
@@ -250,10 +338,30 @@ class ApiRouter
         ]);
     }
 
+    protected function handleDomainStats(): void
+    {
+        $domainbox = new DomainBox();
+        $stats = $this->cache->remember('dnbx_domain_stats', 600, function() use ($domainbox) {
+            return $domainbox->getStats();
+        });
+
+        $this->sendJson(['data' => $stats]);
+    }
+
+    protected function handleDomainTlds(): void
+    {
+        $domainbox = new DomainBox();
+        $tlds = $this->cache->remember('dnbx_domain_tlds', 600, function() use ($domainbox) {
+            return $domainbox->getTlds();
+        });
+
+        $this->sendJson(['data' => $tlds]);
+    }
+
     protected function handleStories(): void
     {
         $token = env('STORYGRAB_API_TOKEN');
-        $storygrab = new StoryGrab($token);
+        $storygrab = new StoryGrab($token ?: '');
         $stories = $this->cache->remember('storygrab_latest_stories', 300, function() use ($storygrab) {
             return $storygrab->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
         });
@@ -268,6 +376,17 @@ class ApiRouter
                 'ttl_seconds' => 300
             ]
         ]);
+    }
+
+    protected function handleStoryProfiles(): void
+    {
+        $token = env('STORYGRAB_API_TOKEN');
+        $storygrab = new StoryGrab($token ?: '');
+        $profiles = $this->cache->remember('storygrab_profiles', 600, function() use ($storygrab) {
+            return $storygrab->getProfiles();
+        });
+
+        $this->sendJson(['data' => $profiles]);
     }
 
     protected function handleCommits(): void
@@ -290,17 +409,37 @@ class ApiRouter
         ]);
     }
 
-    protected function handleSystem(): void
+    protected function handleGithubUser(): void
     {
-        $techs = config('homelab_techs', []);
-        $devices = config('devices', []);
+        $github = new GitHub();
+        $username = $_GET['user'] ?? 'fabianternis';
+        $user = $this->cache->remember('github_user_' . $username, 600, function() use ($github, $username) {
+            return $github->getUser($username);
+        });
 
-        $this->sendJson([
-            'data' => [
-                'homelab_techs' => $techs,
-                'devices_count' => count($devices)
-            ]
-        ]);
+        $this->sendJson(['data' => $user]);
+    }
+
+    protected function handleGithubRepos(): void
+    {
+        $github = new GitHub();
+        $username = $_GET['user'] ?? 'fabianternis';
+        $repos = $this->cache->remember('github_repos_' . $username, 600, function() use ($github, $username) {
+            return $github->getRepositories($username);
+        });
+
+        $this->sendJson(['data' => $repos]);
+    }
+
+    protected function handleGithubEvents(): void
+    {
+        $github = new GitHub();
+        $username = $_GET['user'] ?? 'fabianternis';
+        $events = $this->cache->remember('github_events_' . $username, 300, function() use ($github, $username) {
+            return $github->getUserEvents($username);
+        });
+
+        $this->sendJson(['data' => $events]);
     }
 
     protected function handleShorten(): void
@@ -316,16 +455,51 @@ class ApiRouter
         $icelink = new TwinsOnIceLink();
         $result = $icelink->createLink($url, $label);
 
+        $this->sendJson(['data' => $result]);
+    }
+
+    protected function handleShortenLinks(): void
+    {
+        $icelink = new TwinsOnIceLink();
+        $links = $icelink->listLinks();
+        $this->sendJson(['data' => $links]);
+    }
+
+    protected function handleTurnstileConfig(): void
+    {
+        $turnstile = new Turnstile();
         $this->sendJson([
-            'data' => $result
+            'data' => [
+                'site_key' => $turnstile->getSiteKey()
+            ]
         ]);
+    }
+
+    protected function handleTurnstileVerify(): void
+    {
+        $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+        $token = $input['cf-turnstile-response'] ?? $input['token'] ?? '';
+        $remoteIp = $_SERVER['REMOTE_ADDR'] ?? null;
+
+        $turnstile = new Turnstile();
+        $result = $turnstile->verify($token, $remoteIp);
+
+        $this->sendJson(['data' => $result]);
+    }
+
+    protected function handleCdnMe(): void
+    {
+        $cdn = new HackClubCDN();
+        $me = $this->cache->remember('hackclub_cdn_me', 300, function() use ($cdn) {
+            return $cdn->me();
+        });
+
+        $this->sendJson(['data' => $me]);
     }
 
     protected function handleDocsJson(): void
     {
         $config = $this->docsBuilder->getEndpointsConfig();
-        $this->sendJson([
-            'data' => $config
-        ]);
+        $this->sendJson(['data' => $config]);
     }
 }

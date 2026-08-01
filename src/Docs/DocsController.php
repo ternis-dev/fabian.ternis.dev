@@ -194,7 +194,13 @@ class DocsController
             </div>
             <div class="footer-right">
                 <span>Git Commit: <code><?= htmlspecialchars($commitHash, ENT_QUOTES, 'UTF-8') ?></code></span>
-                <span>Rendered at: <?= date('Y-m-d H:i:s') ?></span>
+                <?php 
+                $renderedAt = isset($pageData['meta']['rendered_at']) 
+                    ? date('Y-m-d H:i:s', strtotime($pageData['meta']['rendered_at'])) 
+                    : date('Y-m-d H:i:s');
+                $isCached = !empty($pageData['meta']['from_cache']);
+                ?>
+                <span>Rendered at: <?= $renderedAt ?><?= $isCached ? ' (Cached)' : ' (Fresh)' ?></span>
             </div>
         </footer>
     </div>
