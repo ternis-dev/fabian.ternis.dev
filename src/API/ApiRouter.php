@@ -168,11 +168,11 @@ class ApiRouter
                     }
                     break;
 
-                // HackClub CDN
-                case '/v1/cdn/me':
-                case '/cdn/me':
-                    $this->handleCdnMe();
-                    break;
+                // HackClub CDN (Disabled for public API)
+                // case '/v1/cdn/me':
+                // case '/cdn/me':
+                //     $this->handleCdnMe();
+                //     break;
 
                 // Docs Schema
                 case '/v1/docs':

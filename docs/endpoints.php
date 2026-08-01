@@ -386,31 +386,6 @@ return [
                     ]
                 ]
             ]
-        ],
-        [
-            'name' => 'HackClub CDN Uploads',
-            'slug' => 'cdn',
-            'description' => 'High speed asset uploads via HackClub CDN (v4 API).',
-            'endpoints' => [
-                [
-                    'id' => 'get-cdn-me',
-                    'name' => 'Get CDN Account Quota',
-                    'method' => 'GET',
-                    'path' => '/v1/cdn/me',
-                    'description' => 'Retrieves quota usage and account metadata for HackClub CDN.',
-                    'headers' => ['Accept' => 'application/json'],
-                    'parameters' => [],
-                    'response_example' => [
-                        'success' => true,
-                        'status' => 200,
-                        'data' => [
-                            'username' => 'fabianternis',
-                            'storage_used' => 104857600,
-                            'storage_limit' => 5368709120
-                        ]
-                    ]
-                ]
-            ]
         ]
     ]
 ];
