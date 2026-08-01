@@ -8,7 +8,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('docs-search-input');
             if (searchInput) {
                 searchInput.focus();
+                searchInput.select();
             }
+        }
+    });
+
+    // Close search panel when clicking outside search wrapper
+    document.addEventListener('click', function (e) {
+        const searchWrapper = document.querySelector('.docs-search-wrapper');
+        const resultsPanel = document.getElementById('search-results-panel');
+        if (searchWrapper && resultsPanel && !searchWrapper.contains(e.target)) {
+            resultsPanel.classList.add('hidden');
         }
     });
 });
@@ -73,26 +83,43 @@ function filterDocsSearch(query) {
     }
 
     const items = [];
-    // Collect links from sidebar
+    
+    // 1. Search sidebar links
     const sidebarLinks = document.querySelectorAll('.sidebar-link');
     sidebarLinks.forEach(link => {
-        const title = link.innerText.trim();
+        const text = link.innerText.trim();
         const href = link.getAttribute('href');
-        if (title.toLowerCase().includes(q)) {
-            items.push({ title: title, href: href, type: 'Page' });
+        const badge = link.querySelector('.method-badge-sm');
+        const method = badge ? badge.innerText.trim() : null;
+
+        if (text.toLowerCase().includes(q) || (method && method.toLowerCase().includes(q))) {
+            items.push({
+                title: text.replace(/^(GET|POST|PUT|DELETE)\s*/, ''),
+                href: href,
+                type: method ? 'Endpoint' : 'Guide',
+                method: method
+            });
         }
     });
 
     if (items.length > 0 && resultsPanel && resultsList) {
-        resultsList.innerHTML = items.map(item =>
-            `<div class="search-result-item" onclick="window.location.href='${item.href}'">
-                <span class="search-result-title">${escapeHtml(item.title)}</span>
-                <span class="search-result-type">${item.type}</span>
-            </div>`
-        ).join('');
+        resultsList.innerHTML = items.map(item => {
+            const methodBadgeHtml = item.method 
+                ? `<span class="method-badge-sm method-${item.method.toLowerCase()}">${escapeHtml(item.method)}</span>` 
+                : '';
+            return `
+            <div class="search-result-item" onclick="window.location.href='${item.href}'">
+                <div class="search-result-left">
+                    ${methodBadgeHtml}
+                    <span class="search-result-title">${escapeHtml(item.title)}</span>
+                </div>
+                <span class="search-result-type">${escapeHtml(item.type)}</span>
+            </div>`;
+        }).join('');
         resultsPanel.classList.remove('hidden');
-    } else if (resultsPanel) {
-        resultsPanel.classList.add('hidden');
+    } else if (resultsPanel && resultsList) {
+        resultsList.innerHTML = '<div class="search-no-results">No matching documentation found.</div>';
+        resultsPanel.classList.remove('hidden');
     }
 }
 

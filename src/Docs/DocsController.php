@@ -98,6 +98,12 @@ class DocsController
                     <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     <input type="text" id="docs-search-input" placeholder="Search documentation & endpoints... (Ctrl+K)" oninput="filterDocsSearch(this.value)">
                     <kbd class="search-kbd">⌘K</kbd>
+
+                    <!-- Search Results Overlay -->
+                    <div id="search-results-panel" class="search-results-panel hidden">
+                        <div class="search-results-header">Search Results</div>
+                        <div id="search-results-list" class="search-results-list"></div>
+                    </div>
                 </div>
             </div>
 
@@ -160,12 +166,6 @@ class DocsController
             <!-- Main Documentation Content -->
             <main class="docs-main-content">
                 <div class="content-wrapper">
-                    <!-- Search Results Overlay -->
-                    <div id="search-results-panel" class="search-results-panel hidden">
-                        <div class="search-results-header">Search Results</div>
-                        <div id="search-results-list" class="search-results-list"></div>
-                    </div>
-
                     <div id="doc-render-area">
                         <?= $pageData['html'] ?? '<p>No content available.</p>' ?>
                     </div>
