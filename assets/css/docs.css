@@ -43,6 +43,13 @@ body.docs-body {
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+
+    /* Those Scrollbar-styles just for now
+        https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scrollbars_styling
+    */
+    overflow: scroll;
+    scrollbar-color: var(--primary) var(--border-color);
+    scrollbar-width: thin;
 }
 
 /* App Container */
@@ -649,7 +656,7 @@ code.inline-code {
 }
 
 .try-endpoint-btn {
-    background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+    background-color: var(--primary);
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -660,7 +667,7 @@ code.inline-code {
 }
 
 .try-endpoint-btn:hover {
-    transform: translateY(-1px);
+    /* transform: translateY(-1px); */
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 

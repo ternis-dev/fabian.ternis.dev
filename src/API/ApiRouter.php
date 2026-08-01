@@ -5,18 +5,21 @@ namespace App\API;
 use App\Services\CacheService;
 use App\Services\DatabaseService;
 use App\Services\DocsBuilder;
+use App\Services\RateLimiter;
 
 class ApiRouter
 {
     protected CacheService $cache;
     protected DatabaseService $db;
     protected DocsBuilder $docsBuilder;
+    protected RateLimiter $rateLimiter;
 
     public function __construct(?CacheService $cache = null, ?DatabaseService $db = null)
     {
         $this->cache = $cache ?? cache();
         $this->db = $db ?? db();
         $this->docsBuilder = new DocsBuilder($this->cache);
+        $this->rateLimiter = new RateLimiter($this->cache);
     }
 
     /**
@@ -27,12 +30,10 @@ class ApiRouter
         $host = strtolower($_SERVER['HTTP_HOST'] ?? '');
         $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 
-        // Check if host is api.fabian.ternis.dev or starts with api.
         if ($host === 'api.fabian.ternis.dev' || str_starts_with($host, 'api.')) {
             return true;
         }
 
-        // Check if URI path starts with /api
         if ($uri === '/api' || str_starts_with($uri, '/api/')) {
             return true;
         }
@@ -49,7 +50,7 @@ class ApiRouter
         $host = strtolower($_SERVER['HTTP_HOST'] ?? '');
         $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
 
-        // Normalize path: strip leading /api if present on dev-env
+        // Normalize path: strip leading /api if present
         $path = $uri;
         if (str_starts_with($path, '/api')) {
             $path = substr($path, 4);
@@ -65,7 +66,6 @@ class ApiRouter
             exit;
         }
 
-        // Router endpoints mapping
         try {
             switch ($path) {
                 // System & Health
@@ -88,6 +88,56 @@ class ApiRouter
                 case '/v1/devices':
                 case '/devices':
                     $this->handleDevices();
+                    break;
+
+                // Cache Refresh Trigger Endpoints (Rate Limited)
+                case '/v1/cache/refresh':
+                case '/v1/cache/update':
+                case '/cache/refresh':
+                case '/cache/update':
+                    if ($method === 'POST') {
+                        $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+                        $target = $input['target'] ?? $_GET['target'] ?? 'all';
+                        $this->handleCacheRefresh($target);
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required for cache update']], 405);
+                    }
+                    break;
+
+                case '/v1/domains/refresh':
+                case '/domains/refresh':
+                    if ($method === 'POST') {
+                        $this->handleCacheRefresh('domains');
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
+                    }
+                    break;
+
+                case '/v1/stories/refresh':
+                case '/stories/refresh':
+                    if ($method === 'POST') {
+                        $this->handleCacheRefresh('stories');
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
+                    }
+                    break;
+
+                case '/v1/commits/refresh':
+                case '/commits/refresh':
+                    if ($method === 'POST') {
+                        $this->handleCacheRefresh('commits');
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
+                    }
+                    break;
+
+                case '/v1/docs/refresh':
+                case '/docs/refresh':
+                    if ($method === 'POST') {
+                        $this->handleCacheRefresh('docs');
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
+                    }
                     break;
 
                 // DomainBox
@@ -168,12 +218,6 @@ class ApiRouter
                     }
                     break;
 
-                // HackClub CDN (Disabled for public API)
-                // case '/v1/cdn/me':
-                // case '/cdn/me':
-                //     $this->handleCdnMe();
-                //     break;
-
                 // Docs Schema
                 case '/v1/docs':
                 case '/docs':
@@ -197,6 +241,103 @@ class ApiRouter
                 ]
             ], 500);
         }
+    }
+
+    /**
+     * Handle rate-limited cache refresh trigger.
+     */
+    protected function handleCacheRefresh(string $target = 'all'): void
+    {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $rateLimitKey = 'cache_refresh_' . $ip;
+        $rateCheck = $this->rateLimiter->check($rateLimitKey, 5, 60);
+
+        header('X-RateLimit-Limit: ' . $rateCheck['limit']);
+        header('X-RateLimit-Remaining: ' . $rateCheck['remaining']);
+        header('X-RateLimit-Reset: ' . $rateCheck['reset_at']);
+
+        if (!$rateCheck['allowed']) {
+            header('Retry-After: ' . $rateCheck['retry_after']);
+            $this->sendJson([
+                'error' => [
+                    'code' => 'TOO_MANY_REQUESTS',
+                    'message' => 'Rate limit exceeded for cache refresh. Max ' . $rateCheck['limit'] . ' refresh requests allowed per 60 seconds. Please retry after ' . $rateCheck['retry_after'] . ' seconds.',
+                    'retry_after' => $rateCheck['retry_after']
+                ]
+            ], 429);
+        }
+
+        $refreshed = [];
+
+        if ($target === 'domains' || $target === 'all') {
+            $domainbox = new DomainBox();
+            $this->cache->forget('dnbx_active_domains');
+            $domains = $this->cache->remember('dnbx_active_domains', 600, function() use ($domainbox) {
+                return $domainbox->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? [];
+            });
+            $refreshed['domains'] = [
+                'count' => count($domains),
+                'ttl_seconds' => 600,
+                'items' => $domains
+            ];
+        }
+
+        if ($target === 'stories' || $target === 'all') {
+            $token = env('STORYGRAB_API_TOKEN');
+            $storygrab = new StoryGrab($token ?: '');
+            $this->cache->forget('storygrab_latest_stories');
+            $stories = $this->cache->remember('storygrab_latest_stories', 300, function() use ($storygrab) {
+                return $storygrab->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
+            });
+            $refreshed['stories'] = [
+                'count' => count($stories),
+                'ttl_seconds' => 300,
+                'items' => $stories
+            ];
+        }
+
+        if ($target === 'commits' || $target === 'all') {
+            $github = new GitHub();
+            $user = $_POST['user'] ?? $_GET['user'] ?? 'fabianternis';
+            $cacheKey = 'github_latest_user_commit_' . $user;
+            $this->cache->forget($cacheKey);
+            $commit = $this->cache->remember($cacheKey, 300, function() use ($github, $user) {
+                return $github->getLastUserCommit($user);
+            });
+            $refreshed['commits'] = [
+                'user' => $user,
+                'ttl_seconds' => 300,
+                'latest_commit' => $commit
+            ];
+        }
+
+        if ($target === 'docs' || $target === 'all') {
+            $commit = $this->docsBuilder->getCommitHash();
+            $slugs = ['overview', 'authentication', 'integrations', 'api-reference'];
+            foreach ($slugs as $s) {
+                $this->cache->forget('docs_page_render_' . $commit . '_' . $s);
+                $this->docsBuilder->renderPage($s, true);
+            }
+            $refreshed['docs'] = [
+                'status' => 're-rendered',
+                'commit' => $commit
+            ];
+        }
+
+        $this->sendJson([
+            'data' => [
+                'status' => 'cache_updated',
+                'target' => $target,
+                'refreshed_at' => date('c'),
+                'results' => $refreshed
+            ],
+            'meta' => [
+                'rate_limit' => [
+                    'remaining' => $rateCheck['remaining'],
+                    'limit' => $rateCheck['limit']
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -485,16 +626,6 @@ class ApiRouter
         $result = $turnstile->verify($token, $remoteIp);
 
         $this->sendJson(['data' => $result]);
-    }
-
-    protected function handleCdnMe(): void
-    {
-        $cdn = new HackClubCDN();
-        $me = $this->cache->remember('hackclub_cdn_me', 300, function() use ($cdn) {
-            return $cdn->me();
-        });
-
-        $this->sendJson(['data' => $me]);
     }
 
     protected function handleDocsJson(): void

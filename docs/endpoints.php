@@ -110,6 +110,95 @@ return [
             ]
         ],
         [
+            'name' => 'Cache Management & Refresh',
+            'slug' => 'cache-refresh',
+            'description' => 'Trigger rate-limited cache updates from upstream APIs before reading cached data.',
+            'endpoints' => [
+                [
+                    'id' => 'post-cache-refresh',
+                    'name' => 'Trigger Cache Refresh',
+                    'method' => 'POST',
+                    'path' => '/v1/cache/refresh',
+                    'description' => 'Triggers an upstream update for specified cache targets (domains, stories, commits, docs, or all) and stores updated data in cache. Rate limited to 5 requests per 60 seconds per IP.',
+                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                    'parameters' => [
+                        ['name' => 'target', 'type' => 'string', 'required' => false, 'default' => 'all', 'description' => 'Target cache to refresh: domains, stories, commits, docs, or all.']
+                    ],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'status' => 'cache_updated',
+                            'target' => 'domains',
+                            'refreshed_at' => '2026-08-01T22:02:00+02:00',
+                            'results' => [
+                                'domains' => ['count' => 12, 'ttl_seconds' => 600]
+                            ]
+                        ],
+                        'meta' => [
+                            'rate_limit' => ['remaining' => 4, 'limit' => 5]
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'post-domains-refresh',
+                    'name' => 'Refresh Domains Cache',
+                    'method' => 'POST',
+                    'path' => '/v1/domains/refresh',
+                    'description' => 'Direct shortcut to force-refresh DomainBox active domains from dnbx.de.',
+                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'status' => 'cache_updated',
+                            'target' => 'domains',
+                            'refreshed_at' => '2026-08-01T22:02:00+02:00'
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'post-stories-refresh',
+                    'name' => 'Refresh Stories Cache',
+                    'method' => 'POST',
+                    'path' => '/v1/stories/refresh',
+                    'description' => 'Direct shortcut to force-refresh Instagram profile stories from StoryGrab.',
+                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'status' => 'cache_updated',
+                            'target' => 'stories',
+                            'refreshed_at' => '2026-08-01T22:02:00+02:00'
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'post-commits-refresh',
+                    'name' => 'Refresh Commits Cache',
+                    'method' => 'POST',
+                    'path' => '/v1/commits/refresh',
+                    'description' => 'Direct shortcut to force-refresh latest GitHub commits.',
+                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                    'parameters' => [
+                        ['name' => 'user', 'type' => 'string', 'required' => false, 'default' => 'fabianternis', 'description' => 'GitHub username.']
+                    ],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'status' => 'cache_updated',
+                            'target' => 'commits',
+                            'refreshed_at' => '2026-08-01T22:02:00+02:00'
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        [
             'name' => 'DomainBox Portfolio',
             'slug' => 'domains',
             'description' => 'Domain portfolio management, status inspection, and stats via DomainBox (dnbx.de) integration.',
