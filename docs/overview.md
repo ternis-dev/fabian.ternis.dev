@@ -2,26 +2,28 @@
 
 Welcome to the **Ternis Developer API** documentation. The Ternis API system provides high-performance endpoints for inspecting system metrics, homelab infrastructure, DomainBox domains, GitHub activity feeds, and link shortening capabilities.
 
-> [!NOTE]
-> In production environments, the API system is hosted on **`api.fabian.ternis.dev`**. In development environments, endpoints are available under the **/api** routing path (e.g. `/api/v1/...`).
+> [!IMPORTANT]
+> **Domain Routing Rule**: When accessing the API via **`api.fabian.ternis.dev`**, the `/api` prefix is **not required**. Endpoints should be called directly under `/v1/...` (e.g. `https://api.fabian.ternis.dev/v1/health`).
+> In development environments without the `api.` subdomain, endpoints are accessed under the `/api` path prefix (e.g. `http://localhost/api/v1/health`).
 
 ---
 
 ## Key Features
 
-- **Production & Dev Environment Support**: Dual domain and subpath endpoint dispatching.
+- **Direct Subdomain Routing**: When on `api.fabian.ternis.dev`, `/api` is omitted and clean `/v1/...` routes are preferred.
+- **Dual Environment Support**: Seamless path resolution across production domains and local dev paths.
 - **Commit-Aware Caching**: Rendered documentation and cached responses automatically synchronize with your latest git commit.
 - **RESTful standard**: JSON payloads, structured error codes, standard HTTP status codes, and cross-origin (CORS) header support.
-- **Interactive Documentation**: Test live endpoints directly from this interactive documentation console!
+- **Interactive Documentation**: Test live endpoints directly from this interactive documentation console.
 
 ---
 
-## Base URLs
+## Preferred Base URLs
 
-| Environment | Base URL |
-| :--- | :--- |
-| **Production Domain** | `https://api.fabian.ternis.dev` |
-| **Development Path** | `http://localhost/api` (or relative `/api`) |
+| Environment | Host Header / Domain | Preferred Base URL | Example Endpoint |
+| :--- | :--- | :--- | :--- |
+| **Production (Domain)** | `api.fabian.ternis.dev` | `https://api.fabian.ternis.dev` *(no `/api` required)* | `https://api.fabian.ternis.dev/v1/health` |
+| **Development (Local)** | `localhost` / dev server | `http://localhost/api` | `http://localhost/api/v1/health` |
 
 ---
 
@@ -36,8 +38,8 @@ All API endpoints return responses encapsulated in a uniform JSON envelope:
   "data": { ... },
   "meta": {
     "version": "1.0.0",
-    "commit": "054e1de",
-    "timestamp": "2026-08-01T21:20:00+02:00"
+    "commit": "2272d2e",
+    "timestamp": "2026-08-01T21:28:00+02:00"
   }
 }
 ```
@@ -53,8 +55,9 @@ If an error occurs, the standard envelope structure is maintained:
     "message": "The requested endpoint or resource was not found."
   },
   "meta": {
-    "commit": "054e1de",
-    "timestamp": "2026-08-01T21:20:00+02:00"
+    "version": "1.0.0",
+    "commit": "2272d2e",
+    "timestamp": "2026-08-01T21:28:00+02:00"
   }
 }
 ```
