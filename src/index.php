@@ -200,7 +200,7 @@
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <h4>Seems like there was an Error loading the stories from <a href="<?= 'https://storygrab.net/@'. ($_ENV['STORYGRAB_USERNAME'] ?? 'ternisfabian') ?>" target="_blank">My Profile</a></h4>
+            <h4>Seems like there was an Error loading the stories from <a href="<?= 'https://storygrab.net/@'. ($_ENV['STORYGRAB_USERNAME'] ?? 'ternisfabian') ?>" target="_blank">My Profile</a>.</h4>
         <?php endif; ?>
     </section>
 
@@ -221,7 +221,7 @@
 
 
     <section id="buttons">
-        <h2>Just <some>some</some> Buttons</h2>
+        <h2>Just <some>some</some> Buttons ...</h2>
 
         <div class="buttons-container">
             <button class="hover-moving-gradient_border">Hover me!</button>
@@ -318,6 +318,7 @@
         <h3>Upload an image (please nothing illegal) for others to see</h3>
 
         <?php
+
         // TODO: THIS(the following php) SHOULD BE IN ANOTEHR FILE!
 
 
@@ -433,20 +434,20 @@
 
         <?php if (!empty($recentUploads)): ?>
             <!-- ToDo: move away from inline-styles (average AI is still not that good) -->
-            <div class="recent-uploads-container" style="margin-top: 2rem;">
+            <div class="recent-uploads-container">
                 <h3>Recently Uploaded Images</h3>
-                <div class="uploads-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div class="uploads-grid">
                     <?php foreach ($recentUploads as $item): ?>
-                        <div class="upload-card" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.5rem; background: rgba(0,0,0,0.2);">
+                        <div class="upload-card">
                             <!-- <a href="<?= htmlspecialchars($item['url']) ?>" target="_blank" rel="noopener"> -->
-                                <img src="<?= htmlspecialchars($item['url']) ?>" alt="<?= htmlspecialchars($item['filename'] ?? 'Upload') ?>" style="width: 100%; height: 140px; object-fit: cover; border-radius: 4px;" loading="lazy">
+                                <img src="<?= htmlspecialchars($item['url']) ?>" alt="<?= htmlspecialchars($item['filename'] ?? 'Upload') ?>" loading="lazy">
                             <!-- </a> -->
-                            <div style="font-size: 0.85rem; margin-top: 0.5rem; word-break: break-word;">
+                            <div clas="info">
                                 <strong><?= htmlspecialchars($item['username'] ?: 'Anonymous') ?></strong>
                                 <?php if (!empty($item['description'])): ?>
-                                    <p style="margin: 0.25rem 0; font-size: 0.8rem; opacity: 0.8;"><?= htmlspecialchars($item['description']) ?></p>
+                                    <p><?= htmlspecialchars($item['description']) ?></p>
                                 <?php endif; ?>
-                                <small style="display: block; opacity: 0.6; font-size: 0.75rem;"><?= time_ago($item['created_at'] ?? null) ?></small>
+                                <small><?= time_ago($item['created_at'] ?? null) ?></small>
                             </div>
                         </div>
                     <?php endforeach; ?>
