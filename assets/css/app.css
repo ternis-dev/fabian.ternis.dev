@@ -1229,7 +1229,11 @@ body {
                     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
                     gap: 1rem;
                     margin-top: 1rem;
-
+                }
+            }
+            
+                .upload-preview,
+                .recent-uploads-container .uploads-grid {
                     .upload-card {
                         border: 1px solid rgba(255,255,255,0.1);
                         border-radius: 8px;
@@ -1263,7 +1267,6 @@ body {
                         --a-color: var(--color-bg-secondary);
                     }
                 }
-            }
         }
 
         ul {

@@ -417,8 +417,8 @@
 
         <form id="upload_form" method="post" action="#uploads" enctype="multipart/form-data">
             <div class="form-field">
-                <label for="image_input">Image</label>
-                <input type="file" name="image" id="image_input" accept="image/*" required>
+                <label for="upload_image">Image</label>
+                <input type="file" name="image" id="upload_image" accept="image/*" required>
             </div>
             <div class="form-field">
                 <label for="upload_username">Your Name (optional)</label>
@@ -429,11 +429,24 @@
                 <textarea name="description" id="upload_description" rows="3" placeholder="Say something about your image..."></textarea>
             </div>
             <div class="cf-turnstile" data-sitekey="<?= htmlspecialchars($turnstile->getSiteKey()) ?>" data-callback="onUploadTurnstileSuccess" data-error-callback="onUploadTurnstileError" data-theme="auto"></div>
-            <div class="disclaimer note">This Image will be uploaded to HackClub's CDN(Hosted on CloudFlare r2). I (<a href="http://fabian.ternis.dev">Fabian Ternis</a>) have no direct control over the data-management.</div>
+            <div class="disclaimer note">This Image will be uploaded to HackClub's CDN (Hosted on Cloudflare R2). I (<a href="http://fabian.ternis.dev">Fabian Ternis</a>) have no direct control over the data management.</div>
             <div class="form-buttons">
-                <button type="submit" name="upload_submit" value="1" id="upload_submit_btn">Upload</button>
+                <button type="submit" name="upload_submit" value="1" id="upload_submit_btn" disabled>Upload</button>
+            </div>
+
+            <div class="upload-preview">
+                <div class="upload-card">
+                    <img id="upload_preview_img" alt="Preview">
+                    <div class="info">
+                        <strong id="upload_preview_username"></strong>
+                        <p id="upload_preview_description"></p>
+                        <small id="upload_preview_created_at"></small>
+                    </div>
+                </div>
             </div>
         </form>
+
+        <script src="uploads.js"></script>
 
         <?php if (!empty($recentUploads)): ?>
             <!-- ToDo: move away from inline-styles (average AI is still not that good) -->
