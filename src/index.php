@@ -144,6 +144,23 @@
         <?php endif; ?>
     </section>
 
+    <section id="ai_chat">
+        <h2>Yes, i made this functional and <pay>pay</pay> for this</h2>
+
+        <div class="chat-container">
+            <div class="messages-container">
+                <?php foreach([] as $todo): ?>
+                <!-- ToDo: Do Stuff -->
+                <?php endforeach; ?>
+            </div>
+
+            <form id="ai_chat_form">
+                <textarea name="prompt" id="ai_chat_prompt"></textarea>
+                <input type="submit" value="Send" id="ai_chat_send">
+            </form>
+        </div>
+    </section>
+
 
     <section id="stories" tabindex="0" aria-label="Recent Instagram Stories Carousel">
         <h2>Stories I <some>recently</some> posted</h2>
