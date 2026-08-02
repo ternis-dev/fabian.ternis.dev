@@ -84,7 +84,7 @@ class Turnstile extends Base
                 'error-codes' => ['invalid-json-response'],
                 'message' => 'Failed to parse JSON response from Cloudflare Turnstile API.'
             ];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [
                 'success' => false,
                 'error-codes' => ['request-exception'],

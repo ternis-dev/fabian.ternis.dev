@@ -273,8 +273,9 @@ class ApiRouter
             $domainbox = new DomainBox();
             $this->cache->forget('dnbx_active_domains');
             $domains = $this->cache->remember('dnbx_active_domains', 600, function() use ($domainbox) {
-                return $domainbox->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? [];
-            });
+                $res = $domainbox->getMyDomain(['status' => 'active', 'limit' => 999]);
+                return is_array($res) ? ($res['data'] ?? []) : [];
+            }) ?? [];
             $refreshed['domains'] = [
                 'count' => count($domains),
                 'ttl_seconds' => 600,
@@ -287,8 +288,9 @@ class ApiRouter
             $storygrab = new StoryGrab($token ?: '');
             $this->cache->forget('storygrab_latest_stories');
             $stories = $this->cache->remember('storygrab_latest_stories', 300, function() use ($storygrab) {
-                return $storygrab->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
-            });
+                $res = $storygrab->getLatestStoriesFromProfile('ternisfabian', 999);
+                return is_array($res) ? ($res['data'] ?? []) : [];
+            }) ?? [];
             $refreshed['stories'] = [
                 'count' => count($stories),
                 'ttl_seconds' => 300,
@@ -303,7 +305,7 @@ class ApiRouter
             $this->cache->forget($cacheKey);
             $commit = $this->cache->remember($cacheKey, 300, function() use ($github, $user) {
                 return $github->getLastUserCommit($user);
-            });
+            }) ?? [];
             $refreshed['commits'] = [
                 'user' => $user,
                 'ttl_seconds' => 300,
@@ -464,8 +466,9 @@ class ApiRouter
     {
         $domainbox = new DomainBox();
         $domains = $this->cache->remember('dnbx_active_domains', 600, function() use ($domainbox) {
-            return $domainbox->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? [];
-        });
+            $res = $domainbox->getMyDomain(['status' => 'active', 'limit' => 999]);
+            return is_array($res) ? ($res['data'] ?? []) : [];
+        }) ?? [];
 
         $this->sendJson([
             'data' => [

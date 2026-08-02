@@ -19,7 +19,8 @@ abstract class Base
     public function __construct(array $config = [], ?CacheService $cache = null)
     {
         $defaultConfig = [
-            'timeout' => 10.0,
+            'timeout' => 5.0,
+            'connect_timeout' => 3.0,
             'headers' => [
                 'Accept' => 'application/json',
             ],
@@ -30,6 +31,27 @@ abstract class Base
 
         $this->client = new Client($mergedConfig);
         $this->cache = $cache ?? new CacheService();
+    }
+
+    /**
+     * Perform a Guzzle request safely with error catching.
+     * 
+     * @param string $method
+     * @param string $uri
+     * @param array $options
+     * @return array
+     */
+    protected function safeRequest(string $method, string $uri = '', array $options = []): array
+    {
+        try {
+            $response = $this->client->request($method, $uri, $options);
+            $contents = $response->getBody()->getContents();
+            $data = json_decode($contents, true);
+            return is_array($data) ? $data : [];
+        } catch (\Throwable $e) {
+            error_log(get_class($this) . " request error [{$method} {$uri}]: " . $e->getMessage());
+            return [];
+        }
     }
 
     /**

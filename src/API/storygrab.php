@@ -28,8 +28,7 @@ class StoryGrab extends Base
      */
     public function getProfiles(): array
     {
-        $response = $this->client->request('GET', 'profiles');
-        return json_decode($response->getBody()->getContents(), true) ?? [];
+        return $this->safeRequest('GET', 'profiles');
     }
 
     /**
@@ -43,14 +42,12 @@ class StoryGrab extends Base
      */
     public function getProfilePosts(string $username, $page = 1, $perPage = 30): array
     {
-        $response = $this->client->request('GET', "profile/{$username}/posts", [
+        return $this->safeRequest('GET', "profile/{$username}/posts", [
             'query' => [
                 'page' => $page,
                 'per_page' => $perPage,
             ]
         ]);
-        
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 
     /**
@@ -62,13 +59,11 @@ class StoryGrab extends Base
      */
     public function getLatestStories(int $limit = 20): array
     {
-        $response = $this->client->request('GET', 'stories/latest', [
+        return $this->safeRequest('GET', 'stories/latest', [
             'query' => [
                 'limit' => $limit,
             ]
         ]);
-        
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 
     /**
@@ -86,13 +81,11 @@ class StoryGrab extends Base
             $username = 'ternisfabian';
         }
 
-        $response = $this->client->request('GET', "profile/{$username}/stories", [
+        return $this->safeRequest('GET', "profile/{$username}/stories", [
             'query' => [
                 'limit' => $limit,
             ]
         ]);
-
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 
     /**
@@ -113,11 +106,9 @@ class StoryGrab extends Base
         if ($cssStyles !== null) $payload['css_styles'] = $cssStyles;
         if ($jsScripts !== null) $payload['js_scripts'] = $jsScripts;
 
-        $response = $this->client->request('POST', 'embed-templates', [
+        return $this->safeRequest('POST', 'embed-templates', [
             'json' => $payload
         ]);
-
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 
     /**
@@ -136,10 +127,8 @@ class StoryGrab extends Base
         if ($templateId !== null) $payload['template_id'] = $templateId;
         if ($expiresIn !== null) $payload['expires_in'] = $expiresIn;
 
-        $response = $this->client->request('POST', 'embeds', [
+        return $this->safeRequest('POST', 'embeds', [
             'json' => $payload
         ]);
-
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 }

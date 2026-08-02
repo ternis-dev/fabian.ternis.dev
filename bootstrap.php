@@ -147,8 +147,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnsti
 
 // Cache active domains for 10 minutes (600s)
 $domains = cache()->remember('dnbx_active_domains', 600, function() use ($dnbx) {
-    return $dnbx->getMyDomain(['status' => 'active', 'limit' => 999])['data'] ?? [];
-});
+    $res = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999]);
+    return is_array($res) ? ($res['data'] ?? []) : [];
+}) ?? [];
 
 $devices = config('devices', []);
 $hi = "Hello World!";
@@ -156,13 +157,14 @@ $hi = "Hello World!";
 // Cache StoryGrab stories for 5 minutes (300s)
 $storygrab_api = new StoryGrab(env('STORYGRAB_API_TOKEN'));
 $stories = cache()->remember('storygrab_latest_stories', 300, function() use ($storygrab_api) {
-    return $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999)['data'] ?? [];
-});
+    $res = $storygrab_api->getLatestStoriesFromProfile('ternisfabian', 999);
+    return is_array($res) ? ($res['data'] ?? []) : [];
+}) ?? [];
 
 // Cache latest GitHub commit for 5 minutes (300s)
 $latest_commit = cache()->remember('github_latest_user_commit', 300, function() use ($api_) {
     return $api_['github']->getLastUserCommit('fabianternis');
-});
+}) ?? [];
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);

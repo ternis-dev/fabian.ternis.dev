@@ -82,7 +82,7 @@ class HackClubCDN extends Base
             ]);
 
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return ['error' => $e->getMessage()];
         }
     }
@@ -148,7 +148,7 @@ class HackClubCDN extends Base
             $response = $this->client->request('POST', 'api/v4/upload_from_url', $requestOptions);
 
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return ['error' => $e->getMessage()];
         }
     }
@@ -168,7 +168,7 @@ class HackClubCDN extends Base
         try {
             $response = $this->client->request('DELETE', 'api/v4/upload/' . $id);
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return ['error' => $e->getMessage()];
         }
     }
@@ -194,7 +194,7 @@ class HackClubCDN extends Base
         try {
             $response = $this->client->request('GET', 'api/v4/me');
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return ['error' => $e->getMessage()];
         }
     }

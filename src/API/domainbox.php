@@ -20,8 +20,7 @@ class DomainBox extends Base
      */
     public function ping(): array
     {
-        $response = $this->client->request('GET', 'ping');
-        return json_decode($response->getBody()->getContents(), true) ?? [];
+        return $this->safeRequest('GET', 'ping');
     }
 
     /**
@@ -32,11 +31,9 @@ class DomainBox extends Base
      */
     public function getDomains(array $params = []): array
     {
-        $response = $this->client->request('GET', 'domains', [
+        return $this->safeRequest('GET', 'domains', [
             'query' => $params
         ]);
-        
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 
     /**
@@ -46,8 +43,7 @@ class DomainBox extends Base
      */
     public function getStats(): array
     {
-        $response = $this->client->request('GET', 'stats');
-        return json_decode($response->getBody()->getContents(), true) ?? [];
+        return $this->safeRequest('GET', 'stats');
     }
 
     /**
@@ -57,11 +53,10 @@ class DomainBox extends Base
      */
     public function getTlds(): array
     {
-        $response = $this->client->request('GET', 'tlds');
-        return json_decode($response->getBody()->getContents(), true) ?? [];
+        return $this->safeRequest('GET', 'tlds');
     }
 
-    public function getMyDomain(array $params = []):array
+    public function getMyDomain(array $params = []): array
     {
         $params['owner_id'] = 1;
         return $this->getDomains($params);

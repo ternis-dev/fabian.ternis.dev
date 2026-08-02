@@ -1,21 +1,25 @@
 <main>
     <section id="hero">
-        <h1>Hello, I'm <me>Fabian Ternis</me></h1>
-        <h2>A Student and developer from Germany.</h2>
-        <div class="some-container">
-            <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
-            <h3>Web development @ <span class="font-code">(<a href="http://xpsystems.eu" target="_blank">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
-            <h3>Links via <a href="http://fabian-ternis-dev.ternis.link" target="_blank">ternis.link</a></h3>
-            <h3>I just own too many domains (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a> and/or <a href="#domains">this</a>)</h3>
+        <div class="hero-item">
+            <h1>Hello, I'm <me>Fabian Ternis</me></h1>
+            <h2>A Student and developer from Germany.</h2>
+            <div class="some-container">
+                <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
+                <h3>Web development @ <span class="font-code">(<a href="http://xpsystems.eu" target="_blank">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
+                <h3>Links via <a href="http://fabian-ternis-dev.ternis.link" target="_blank">ternis.link</a></h3>
+                <h3>I just own too many domains (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a> and/or <a href="#domains">this</a>)</h3>
+            </div>
+            
+            <br>
+            <?php $cmt = $latest_commit; $strlenpoint = 62;?>
+            <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>" (<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
+        </div>
+        <div class="hero-item">
             <div class="img-container">
                 <img src="/BASF_2026.jpg" class="me" alt="Fabian Ternis at BASF SE in Ludwigshafen during the Jugend Forscht State Competition / Landeswettbewerb Rheinland-Pfalz">
                 <span class="copyright-note">Image by <a href="https://basf.com" target="_blank">BASF&trade;</a></span>
             </div>
         </div>
-
-        <br>
-        <?php $cmt = $latest_commit; $strlenpoint = 15;?>
-        <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>" (<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
     </section>
 
 
@@ -161,15 +165,16 @@
                         $createdTimestamp = $story['created_at'] ?? $story['creation_unixtimestamp'] ?? null;
                         $createdDate = $createdTimestamp ? (is_numeric($createdTimestamp) ? date('M j, Y', $createdTimestamp) : date('M j, Y', strtotime($createdTimestamp))) : '';
                     ?>
-                        <div class="story story-container" 
-                             data-index="<?= $index ?>"
-                             data-type="<?= $isVideo ? 'video' : 'image' ?>"
-                             data-src="<?= htmlspecialchars($mediaUrl, ENT_QUOTES) ?>"
-                             data-poster="<?= htmlspecialchars($posterUrl, ENT_QUOTES) ?>"
-                             data-date="<?= htmlspecialchars($createdDate, ENT_QUOTES) ?>"
-                             tabindex="0"
-                             role="button"
-                             aria-label="Story <?= $index + 1 ?>">
+                        <div 
+                            class="story story-container" 
+                            data-index="<?= $index ?>"
+                            data-type="<?= $isVideo ? 'video' : 'image' ?>"
+                            data-src="<?= htmlspecialchars($mediaUrl, ENT_QUOTES) ?>"
+                            data-poster="<?= htmlspecialchars($posterUrl, ENT_QUOTES) ?>"
+                            data-date="<?= htmlspecialchars($createdDate, ENT_QUOTES) ?>"
+                            tabindex="0"
+                            role="button"
+                            aria-label="Story <?= $index + 1 ?>">
                             <div class="story-card-inner">
                                 <div class="story-media-box">
                                     <?php if($isVideo): ?>
@@ -228,7 +233,6 @@
 
         <div class="buttons-container">
             <button class="hover-moving-gradient_border">Hover me!</button>
-
         </div>
     </section>
 
@@ -269,7 +273,6 @@
         <h2>A Captcha just for <fun>fun</fun>!</h2>
 
         <h3>You can check the captcha (from <a href="https://cloudflare.com" target="_blank">CloudFlare</a>'s <a href="https://www.cloudflare.com/products/turnstile/" target="_blank">Turnstile</a> <a href="https://turnstile.pages.dev/" target="_blank">()</a>)</h3>
-        
 
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 

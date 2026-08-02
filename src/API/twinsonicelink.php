@@ -21,17 +21,12 @@ class TwinsOnIceLink extends Base
 
     public function ping(): array
     {
-        $response = $this->client->request('GET', 'ping');
-        return json_decode($response->getBody()->getContents(), true) ?? [];
+        return $this->safeRequest('GET', 'ping');
     }
 
-    public function getCommit(): string
+    public function getCommit(): ?string
     {
-        $response = $this->client->request('GET', 'commit', []);
-        
-        // $data_raw = $response->getBody()->getContents();
-        $data = json_decode($response->getBody()->getContents(), true) ?? [];
-
+        $data = $this->safeRequest('GET', 'commit');
         return $data['commit_id'] ?? ($data['git_commit'] ?? null);
     }
 
@@ -47,19 +42,14 @@ class TwinsOnIceLink extends Base
             $payload['label'] = $label;
         }
 
-        $response = $this->client->request('POST', 'shorten', [
+        return $this->safeRequest('POST', 'shorten', [
             'json' => $payload,
         ]);
-
-        return json_decode($response->getBody()->getContents(), true) ?? [];
     }
 
     public function listLinks(): array
     {
-        $response = $this->client->request('GET', 'links', []);
-        
-        $data = json_decode($response->getBody()->getContents(), true) ?? [];
-
-        return $data['links'] ?? null;
+        $data = $this->safeRequest('GET', 'links');
+        return $data['links'] ?? [];
     }
 }

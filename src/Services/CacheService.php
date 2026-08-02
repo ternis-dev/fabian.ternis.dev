@@ -25,6 +25,7 @@ class CacheService
 
     /**
      * Retrieve an item from the cache, or execute the given callback and store the result.
+     * If the callback fails or throws an exception, returns stale cached data if available.
      * 
      * @param string $key Cache key
      * @param int|null $ttlSeconds Time to live in seconds
@@ -40,16 +41,59 @@ class CacheService
             return $value;
         }
 
-        $freshValue = $callback();
+        $freshValue = null;
+        $hasException = false;
 
-        // Don't cache empty results unless explicitly allowed
-        if (!$cacheEmpty && $this->isEmptyValue($freshValue)) {
+        try {
+            $freshValue = $callback();
+        } catch (\Throwable $e) {
+            error_log("CacheService remember exception for key [{$key}]: " . $e->getMessage());
+            $hasException = true;
+        }
+
+        // If callback threw an exception or produced an empty value when not allowed
+        if ($hasException || (!$cacheEmpty && $this->isEmptyValue($freshValue))) {
+            $staleValue = $this->getStale($key);
+            if ($staleValue !== null) {
+                return $staleValue;
+            }
+            if ($hasException) {
+                return null;
+            }
             return $freshValue;
         }
 
         $this->put($key, $freshValue, $ttlSeconds ?? $this->defaultTtl);
 
         return $freshValue;
+    }
+
+    /**
+     * Retrieve an item from the cache even if expired (stale data fallback).
+     * 
+     * @param string $key Cache key
+     * @param mixed $default Default value if key is not found
+     * @return mixed
+     */
+    public function getStale(string $key, mixed $default = null): mixed
+    {
+        $filePath = $this->getFilePath($key);
+
+        if (!file_exists($filePath)) {
+            return $default;
+        }
+
+        $content = @file_get_contents($filePath);
+        if ($content === false) {
+            return $default;
+        }
+
+        $data = @json_decode($content, true);
+        if (!is_array($data)) {
+            return $default;
+        }
+
+        return $data['value'] ?? $default;
     }
 
     /**
@@ -80,7 +124,6 @@ class CacheService
 
         // Check expiration (0 means infinite)
         if ($data['expires_at'] !== 0 && time() > $data['expires_at']) {
-            @unlink($filePath);
             return $default;
         }
 

@@ -42,7 +42,7 @@ class GitHub extends Base
         try {
             $response = $this->client->request('GET', "users/{$username}");
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
@@ -61,7 +61,7 @@ class GitHub extends Base
                 'query' => $params
             ]);
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
@@ -90,7 +90,7 @@ class GitHub extends Base
         try {
             $response = $this->client->request('GET', "repos/{$owner}/{$repo}");
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
@@ -125,7 +125,7 @@ class GitHub extends Base
                 ]
             ]);
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
@@ -157,7 +157,7 @@ class GitHub extends Base
                     ]
                 ]);
                 return json_decode($response->getBody()->getContents(), true) ?? [];
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // Fallback to public user events if /user/events fails
                 $response = $this->client->request('GET', "users/{$username}/events", [
                     'query' => [
@@ -166,7 +166,7 @@ class GitHub extends Base
                 ]);
                 return json_decode($response->getBody()->getContents(), true) ?? [];
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
@@ -182,7 +182,7 @@ class GitHub extends Base
         try {
             $response = $this->client->request('GET', "users/{$username}/gists");
             return json_decode($response->getBody()->getContents(), true) ?? [];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
@@ -262,7 +262,7 @@ class GitHub extends Base
                             if (empty($date)) {
                                 $date = $commitData['commit']['committer']['date'] ?? $commitData['commit']['author']['date'] ?? null;
                             }
-                        } catch (\Exception $e) {
+                        } catch (\Throwable $e) {
                             // Ignore detail fetch failure
                         }
                     }
