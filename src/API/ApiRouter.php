@@ -218,6 +218,16 @@ class ApiRouter
                     }
                     break;
 
+                // HackClub AI Chat
+                case '/v1/ai/chat':
+                case '/ai/chat':
+                    if ($method === 'POST') {
+                        $this->handleAiChat();
+                    } else {
+                        $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
+                    }
+                    break;
+
                 // Docs Schema
                 case '/v1/docs':
                 case '/docs':
@@ -390,6 +400,99 @@ class ApiRouter
     }
 
     // Endpoint handlers
+
+    /**
+     * Handle POST /api/v1/ai/chat
+     * Accepts JSON body: { messages: [{role, content}, ...] } or { prompt: "string" }
+     * Returns: { data: { reply: "string", model: "string" } }
+     */
+    protected function handleAiChat(): void
+    {
+        // Rate limit: 10 requests per minute per IP
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $rateLimitKey = 'ai_chat_' . md5($ip);
+        $rateCheck = $this->rateLimiter->check($rateLimitKey, 10, 60);
+
+        header('X-RateLimit-Limit: ' . $rateCheck['limit']);
+        header('X-RateLimit-Remaining: ' . $rateCheck['remaining']);
+        header('X-RateLimit-Reset: ' . $rateCheck['reset_at']);
+
+        if (!$rateCheck['allowed']) {
+            header('Retry-After: ' . $rateCheck['retry_after']);
+            $this->sendJson([
+                'error' => [
+                    'code'        => 'TOO_MANY_REQUESTS',
+                    'message'     => 'Rate limit exceeded. Max ' . $rateCheck['limit'] . ' AI chat requests per minute.',
+                    'retry_after' => $rateCheck['retry_after'],
+                ]
+            ], 429);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+
+        // Support both a full messages array and a simple prompt string
+        if (!empty($input['messages']) && is_array($input['messages'])) {
+            $messages = $input['messages'];
+        } elseif (!empty($input['prompt']) && is_string($input['prompt'])) {
+            $messages = [['role' => 'user', 'content' => trim($input['prompt'])]];
+        } else {
+            $this->sendJson([
+                'error' => [
+                    'code'    => 'BAD_REQUEST',
+                    'message' => 'Request body must include "messages" (array) or "prompt" (string).'
+                ]
+            ], 400);
+            return;
+        }
+
+        // Sanitise: strip any blank messages
+        $messages = array_values(array_filter($messages, fn($m) => !empty($m['content']) && !empty($m['role'])));
+
+        if (empty($messages)) {
+            $this->sendJson([
+                'error' => [
+                    'code'    => 'BAD_REQUEST',
+                    'message' => 'No valid messages provided.'
+                ]
+            ], 400);
+            return;
+        }
+
+        $model = $input['model'] ?? null;
+
+        $hackAI = new hackAI();
+        $result = $hackAI->chat($messages, $model);
+
+        if (isset($result['error'])) {
+            $this->sendJson([
+                'error' => [
+                    'code'    => 'AI_ERROR',
+                    'message' => $result['error'],
+                ]
+            ], 502);
+            return;
+        }
+
+        $reply = $result['choices'][0]['message']['content'] ?? null;
+
+        if ($reply === null) {
+            $this->sendJson([
+                'error' => [
+                    'code'    => 'AI_ERROR',
+                    'message' => 'Unexpected response format from AI provider.',
+                ]
+            ], 502);
+            return;
+        }
+
+        $this->sendJson([
+            'data' => [
+                'reply' => $reply,
+                'model' => $result['model'] ?? $hackAI->freeModels[0],
+            ]
+        ]);
+    }
 
     protected function handleRoot(): void
     {

@@ -178,7 +178,8 @@ $latest_commit = cache()->remember('github_latest_user_commit', 300, function() 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fabian Ternis – Personal Website</title>
+    <title>Fabian Ternis - Personal Website</title>
+    <!-- Whyever this is anotehr unicode ... ? ... -->
     <link rel="stylesheet" href="app.css">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=7">  ???-->
     <meta name="keywords" content="Fabian Ternis, ternis.dev, Web developer, StoryGrab, twins-on-ice Website, twinsonice website, ternis.net, Ternis HomeLab">
