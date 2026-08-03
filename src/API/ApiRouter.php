@@ -6,6 +6,7 @@ use App\Services\CacheService;
 use App\Services\DatabaseService;
 use App\Services\DocsBuilder;
 use App\Services\RateLimiter;
+use App\Services\AiChatLogger;
 
 class ApiRouter
 {
@@ -228,6 +229,11 @@ class ApiRouter
                     }
                     break;
 
+                case '/v1/ai/models':
+                case '/ai/models':
+                    $this->handleAiModels();
+                    break;
+
                 // Docs Schema
                 case '/v1/docs':
                 case '/docs':
@@ -403,8 +409,8 @@ class ApiRouter
 
     /**
      * Handle POST /api/v1/ai/chat
-     * Accepts JSON body: { messages: [{role, content}, ...] } or { prompt: "string" }
-     * Returns: { data: { reply: "string", model: "string" } }
+     * Body: { session_id?: string, model?: string, messages: [{role, content}] | prompt: string }
+     * Returns: { data: { reply, model, session_id } }
      */
     protected function handleAiChat(): void
     {
@@ -431,7 +437,13 @@ class ApiRouter
 
         $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
-        // Support both a full messages array and a simple prompt string
+        // ── Session ID (client-generated UUID, or we mint one) ────────────
+        $sessionId = preg_replace('/[^a-zA-Z0-9\-_]/', '', $input['session_id'] ?? '');
+        if (strlen($sessionId) < 8) {
+            $sessionId = bin2hex(random_bytes(16));
+        }
+
+        // ── Messages ─────────────────────────────────────────────────────
         if (!empty($input['messages']) && is_array($input['messages'])) {
             $messages = $input['messages'];
         } elseif (!empty($input['prompt']) && is_string($input['prompt'])) {
@@ -446,7 +458,7 @@ class ApiRouter
             return;
         }
 
-        // Sanitise: strip any blank messages
+        // Sanitise: strip blank messages
         $messages = array_values(array_filter($messages, fn($m) => !empty($m['content']) && !empty($m['role'])));
 
         if (empty($messages)) {
@@ -459,12 +471,20 @@ class ApiRouter
             return;
         }
 
-        $model = $input['model'] ?? null;
+        $hackAI    = new hackAI();
+        $model     = $input['model'] ?? array_key_first($hackAI->freeModels);
+        $logger    = new AiChatLogger($this->db);
 
-        $hackAI = new hackAI();
+        // Upsert session row
+        $logger->upsertSession($sessionId, $model, $ip);
+
+        // ── Call the AI ───────────────────────────────────────────────────
+        $t0     = microtime(true);
         $result = $hackAI->chat($messages, $model);
+        $ms     = (microtime(true) - $t0) * 1000;
 
         if (isset($result['error'])) {
+            $logger->logRequest($sessionId, $model, $messages, '', false, $ms, 502);
             $this->sendJson([
                 'error' => [
                     'code'    => 'AI_ERROR',
@@ -477,6 +497,7 @@ class ApiRouter
         $reply = $result['choices'][0]['message']['content'] ?? null;
 
         if ($reply === null) {
+            $logger->logRequest($sessionId, $model, $messages, '', false, $ms, 502);
             $this->sendJson([
                 'error' => [
                     'code'    => 'AI_ERROR',
@@ -486,12 +507,33 @@ class ApiRouter
             return;
         }
 
+        $usedModel = $result['model'] ?? $model;
+
+        // ── Log success ───────────────────────────────────────────────────
+        $logger->logRequest($sessionId, $usedModel, $messages, $reply, true, $ms, 200);
+
         $this->sendJson([
             'data' => [
-                'reply' => $reply,
-                'model' => $result['model'] ?? $hackAI->freeModels[0],
+                'reply'      => $reply,
+                'model'      => $usedModel,
+                'session_id' => $sessionId,
+                'duration_ms'=> round($ms, 1),
             ]
         ]);
+    }
+
+    /**
+     * Handle GET /api/v1/ai/models
+     * Returns the list of available free models as {slug, name} objects.
+     */
+    protected function handleAiModels(): void
+    {
+        $hackAI = new hackAI();
+        $models = [];
+        foreach ($hackAI->getModels() as $slug => $name) {
+            $models[] = ['slug' => $slug, 'name' => $name];
+        }
+        $this->sendJson(['data' => ['models' => $models]]);
     }
 
     protected function handleRoot(): void

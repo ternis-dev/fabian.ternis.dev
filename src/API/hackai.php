@@ -11,7 +11,17 @@ class hackAI extends Base
     protected ?string $apiKey;
 
     public $freeModels = [
-        'qwen/qwen3-32b' => 'Qwen 32B',
+        'qwen/qwen3-32b' => [
+            'name' => 'Qwen 32B',
+            'type' => 'text'
+        ],
+
+        'inclusionai/ling-3.0-flash:free' => [
+            // 'name' => 'Ling-3.0-flash (free)',
+            'name' => 'Ling-3.0-flash',
+            'type' => 'text'
+        ],
+
         // ToDo: Add more, cheap models from hackAI
         // gemini 3.5 flash lite
         // some OSS/OW models
@@ -38,17 +48,25 @@ class hackAI extends Base
         ]);
     }
 
-    public function promptFree(string $prompt, $model = /*$this->freeModels[0]*/ null)
+    public function promptFree(string $prompt, $model = null)
     {
-        $selectedModel = $model ?? ($this->freeModels[0] ?? null);
+        $selectedModel = $model ?? array_key_first($this->freeModels);
 
-        if ($selectedModel === null || !in_array($selectedModel, $this->freeModels, true)) {
+        if ($selectedModel === null || !array_key_exists($selectedModel, $this->freeModels)) {
             return ['error' => sprintf('Invalid model specified: "%s"', $model ?? 'null')];
         }
 
         return $this->chat([
             ['role' => 'user', 'content' => $prompt],
         ], $selectedModel);
+    }
+
+    /**
+     * Return all available models as slug => display-name map.
+     */
+    public function getModels(): array
+    {
+        return $this->freeModels;
     }
 
     /**
@@ -60,9 +78,9 @@ class hackAI extends Base
      */
     public function chat(array $messages, ?string $model = null): array
     {
-        $selectedModel = $model ?? ($this->freeModels[0] ?? null);
+        $selectedModel = $model ?? array_key_first($this->freeModels);
 
-        if ($selectedModel === null || !in_array($selectedModel, $this->freeModels, true)) {
+        if ($selectedModel === null || !array_key_exists($selectedModel, $this->freeModels)) {
             return ['error' => sprintf('Invalid model specified: "%s"', $model ?? 'null')];
         }
 

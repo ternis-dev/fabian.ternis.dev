@@ -1306,6 +1306,8 @@ body {
 
                 border-radius: var(--radius-one);
                 padding: var(--padding-one);
+                /* padding-top: 0px; */
+                padding-top: 4px;
                 font-family: var(--font-chat);
                 margin-top: 1.2rem;
                 border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1350,6 +1352,66 @@ body {
                     width: 100%;
                     position: relative;
                     display: block;
+
+                    /* ── Input row: stacks select on top of textarea+button ── */
+                    .chat-input-row {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.6rem;
+                    }
+
+                    /* ── Model select ── */
+                    #ai_chat_model {
+                        appearance: none;
+                        -webkit-appearance: none;
+                        background-color: #1a1a1a;
+                        color: #cccccc;
+                        font-family: inherit;
+                        font-size: 0.8rem;
+                        font-weight: 500;
+                        letter-spacing: 0.02em;
+                        padding: 0.45rem 2.4rem 0.45rem 0.9rem;
+                        border: 1px solid #333333;
+                        border-radius: var(--radius-two);
+                        width: fit-content;
+                        max-width: 100%;
+                        cursor: pointer;
+                        outline: none;
+                        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.15s ease;
+
+                        /* Custom chevron arrow */
+                        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+                        background-repeat: no-repeat;
+                        background-position: right 0.75rem center;
+                        background-size: 0.9rem;
+
+                        &:hover {
+                            background-color: #222222;
+                            border-color: #555555;
+                        }
+
+                        &:focus {
+                            border-color: var(--color-primary);
+                            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+                            background-color: #222222;
+                        }
+
+                        &:disabled {
+                            opacity: 0.45;
+                            cursor: not-allowed;
+                        }
+
+                        option {
+                            background-color: #1a1a1a;
+                            color: #cccccc;
+                        }
+                    }
+
+                    /* ── Textarea + send button wrapper ── */
+                    .chat-textarea-wrap {
+                        position: relative;
+                        display: block;
+                    }
                 }
 
                 #ai_chat_prompt {

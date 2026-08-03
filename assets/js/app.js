@@ -127,11 +127,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const aiChatPrompt    = document.getElementById('ai_chat_prompt');
     const aiChatSend      = document.getElementById('ai_chat_send');
     const aiChatMessages  = document.getElementById('ai_chat_messages');
+    const aiChatModelEl   = document.getElementById('ai_chat_model');  // <select> or <input hidden>
 
     if (aiChatForm && aiChatPrompt && aiChatSend && aiChatMessages) {
 
+        // ── Session UUID ──────────────────────────────────────────────────────
+        // One UUID per browser tab/session; stored in sessionStorage so it resets
+        // when the user opens a new tab (= fresh conversation).
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+                const r = crypto.getRandomValues(new Uint8Array(1))[0] % 16;
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+        }
+        let sessionId = sessionStorage.getItem('ai_chat_session_id');
+        if (!sessionId) {
+            sessionId = generateUUID();
+            sessionStorage.setItem('ai_chat_session_id', sessionId);
+        }
+
         /** Full conversation history kept in memory (for multi-turn context). */
-        const conversationHistory = [];
+        let conversationHistory = [];
+
+        /** Current model slug */
+        function getSelectedModel() {
+            return aiChatModelEl ? aiChatModelEl.value : null;
+        }
+
+        // Reset history + session when model changes (different model = new session)
+        if (aiChatModelEl && aiChatModelEl.tagName === 'SELECT') {
+            aiChatModelEl.addEventListener('change', () => {
+                conversationHistory = [];
+                sessionId = generateUUID();
+                sessionStorage.setItem('ai_chat_session_id', sessionId);
+                // Visual hint
+                const hint = document.createElement('div');
+                hint.classList.add('message', 'by-error');
+                hint.style.cssText = 'background:rgba(99,102,241,.15);color:#a5b4fc;border-color:rgba(99,102,241,.35)';
+                hint.textContent = `↺ Model changed to "${aiChatModelEl.options[aiChatModelEl.selectedIndex]?.text}" — new session started.`;
+                aiChatMessages.appendChild(hint);
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+            });
+        }
 
         /** Auto-grow textarea height */
         function autoResizeTextarea() {
@@ -189,6 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
         function setLoading(loading) {
             aiChatSend.disabled   = loading;
             aiChatPrompt.disabled = loading;
+            if (aiChatModelEl && aiChatModelEl.tagName === 'SELECT') {
+                aiChatModelEl.disabled = loading;
+            }
         }
 
         aiChatForm.addEventListener('submit', async (e) => {
@@ -196,6 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const prompt = aiChatPrompt.value.trim();
             if (!prompt) return;
+
+            const model = getSelectedModel();
 
             // Clear & reset textarea
             aiChatPrompt.value = '';
@@ -217,7 +259,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                     },
-                    body: JSON.stringify({ messages: conversationHistory }),
+                    body: JSON.stringify({
+                        session_id: sessionId,
+                        model:      model,
+                        messages:   conversationHistory,
+                    }),
                 });
 
                 removeTyping();
@@ -240,6 +286,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 const reply = data.data?.reply ?? '(no reply)';
+
+                // Sync session_id if the server minted one
+                if (data.data?.session_id && data.data.session_id !== sessionId) {
+                    sessionId = data.data.session_id;
+                    sessionStorage.setItem('ai_chat_session_id', sessionId);
+                }
 
                 // Push assistant reply for next-turn context
                 conversationHistory.push({ role: 'assistant', content: reply });

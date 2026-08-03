@@ -4,3 +4,4 @@ vendor/
 .env
 storage/cache/
 storage/db.sqlite
+storage/ai_logs/
