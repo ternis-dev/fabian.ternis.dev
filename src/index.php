@@ -162,6 +162,15 @@
             </div>
 
             <form id="ai_chat_form">
+                <?php if(count($api_['hackclub_ai']->freeModels) > 1): ?>
+                    <select>
+                        <?php //foreach($api_['hackclub_ai']->getModelsList() as $model =>):
+                                // foreach($api_['hackclub_ai']->getModelsList() as $ident => $name):
+                                foreach($api_['hackclub_ai']->freeModels as $ident => $name): ?>
+                            <option value="<?= $ident ?>"><?= $name ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php endif; ?>
                 <textarea name="prompt" id="ai_chat_prompt" placeholder="Type a message..." rows="1"></textarea>
                 <button type="submit" id="ai_chat_send" aria-label="Send message">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send">

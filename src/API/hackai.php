@@ -11,7 +11,7 @@ class hackAI extends Base
     protected ?string $apiKey;
 
     public $freeModels = [
-        'qwen/qwen3-32b',
+        'qwen/qwen3-32b' => 'Qwen 32B',
         // ToDo: Add more, cheap models from hackAI
         // gemini 3.5 flash lite
         // some OSS/OW models
@@ -94,4 +94,9 @@ class hackAI extends Base
 
         // ToDo: rate-limiting and "bot protection" ...
     }
+
+    // public function getModelsList()
+    // {
+    //     return $this->freeModels;
+    // }
 }

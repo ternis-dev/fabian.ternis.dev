@@ -1287,6 +1287,8 @@ body {
         }
 
         &#ai_chat {
+            max-height: 90dvh;
+
             --radius-one: 2.5rem;
             --padding-one: 1.75rem;
             --radius-two: calc(var(--radius-one) - 0.75rem);
@@ -1295,7 +1297,7 @@ body {
             --padding-three: .6rem;
             --radius-four: calc(var(--radius-tree) - 0.5rem);
             /* SHomehow the LLM seems to have messed up ... */
-            
+
             .chat-container {
                 --a-background-color: none;
                 --a-color: none;

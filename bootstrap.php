@@ -100,7 +100,7 @@ if (in_array($ext, $assetExtensions, true)) {
 
 
 
-use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter};
+use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter, hackAI};
 use App\Docs\DocsController;
 use App\Services\{CacheService, DatabaseService};
 
@@ -117,6 +117,7 @@ $api_['icelink'] = new TwinsOnIceLink();
 $api_['github'] = new GitHub();
 $api_['hackclub_cdn'] = new HackClubCDN();
 $api_['dnbx'] = $dnbx ?? new DomainBox();
+$api_['hackclub_ai'] = new hackAI();
 
 // Handle API requests (production host api.fabian.ternis.dev or dev path /api)
 if (ApiRouter::isApiRequest()) {
