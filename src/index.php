@@ -13,6 +13,15 @@
             <br>
             <?php $cmt = $latest_commit; $strlenpoint = 62;?>
             <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>" (<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
+
+            <!-- <div class="socials-container"><h3>My Socials</h3><ul><li class="social mastodon"><a rel="me" href="https://chaos.social/@ternis">Mastodon</a> (@ternis<a href="http://chaos.social">@chaos.social</a>)</li></ul></div> -->
+            <div class="socials-container"><h3>My Socials</h3><ul>
+                <!-- ToDo: Add svg-icosn ... -->
+                <li class="social mastodon"><a rel="me" href="https://chaos.social/@ternis">Mastodon</a> (<a rel="me" href="https://chaos.social/@ternis">@ternis</a><a href="http://chaos.social">@chaos.social</a>)</li>
+                <li class="social codeberg"><a href="https://codeberg.org/fabianternis">Codeberg</a></li>
+                <li class="social codeberg"><a href="https://codeberg.org/ternis">Codeberg</a> (ORG <code><u>ternis</u></code>)</li>
+            </ul></div>
+
         </div>
         <div class="hero-item">
             <div class="img-container">
@@ -145,18 +154,27 @@
     </section>
 
     <section id="ai_chat">
-        <h2>Yes, i made this functional and <pay>pay</pay> for this</h2>
+        <h2>Yes, i made this functional and <pay>pay</pay> for this <commet>// but not yet (Thanks to <a href="http://ai.hackclub.com">HackAI</a>)</commet></h2>
 
         <div class="chat-container">
             <div class="messages-container">
-                <?php foreach([] as $todo): ?>
+                <?php $ai_chat_messages = [] ?? null ?>
+                <?php foreach($ai_chat_messages as $todo): ?>
                 <!-- ToDo: Do Stuff -->
+                    <div class="message by-<?= $message->todo == 'todo' ? 'llm' : 'user' ?>"><?= $message->alsoToDo ?></div>
                 <?php endforeach; ?>
             </div>
 
             <form id="ai_chat_form">
-                <textarea name="prompt" id="ai_chat_prompt"></textarea>
-                <input type="submit" value="Send" id="ai_chat_send">
+                <textarea name="prompt" id="ai_chat_prompt" placeholder="Type a message..."></textarea>
+                <!-- <input type="submit" value="Send" id="ai_chat_send"> -->
+                 <button type="submit" id="ai_chat_send">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-icon lucide-send">
+                        <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+                        <path d="m21.854 2.147-10.94 10.939"/>
+                    </svg>
+                </button>
+                <todo><!-- File-upload --></todo>
             </form>
         </div>
     </section>

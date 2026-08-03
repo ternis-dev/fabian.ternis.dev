@@ -41,7 +41,7 @@ class HackClubCDN extends Base
         }
 
         parent::__construct([
-            'base_uri' => 'https://cdn.hackclub.com/',
+            'base_uri' => 'https://cdn.hackclub.com/api/v4/',
             'headers'  => $headers,
         ]);
     }
@@ -71,7 +71,7 @@ class HackClubCDN extends Base
         }
 
         try {
-            $response = $this->client->request('POST', 'api/v4/upload', [
+            $response = $this->client->request('POST', 'upload', [
                 'multipart' => [
                     [
                         'name'     => 'file',
@@ -145,7 +145,7 @@ class HackClubCDN extends Base
                 unset($requestOptions['headers']);
             }
 
-            $response = $this->client->request('POST', 'api/v4/upload_from_url', $requestOptions);
+            $response = $this->client->request('POST', 'upload_from_url', $requestOptions);
 
             return json_decode($response->getBody()->getContents(), true) ?? [];
         } catch (\Throwable $e) {
@@ -166,7 +166,7 @@ class HackClubCDN extends Base
     public function delete(string $id): array
     {
         try {
-            $response = $this->client->request('DELETE', 'api/v4/upload/' . $id);
+            $response = $this->client->request('DELETE', 'upload/' . $id);
             return json_decode($response->getBody()->getContents(), true) ?? [];
         } catch (\Throwable $e) {
             return ['error' => $e->getMessage()];
@@ -192,7 +192,7 @@ class HackClubCDN extends Base
     public function me(): array
     {
         try {
-            $response = $this->client->request('GET', 'api/v4/me');
+            $response = $this->client->request('GET', 'me');
             return json_decode($response->getBody()->getContents(), true) ?? [];
         } catch (\Throwable $e) {
             return ['error' => $e->getMessage()];

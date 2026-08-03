@@ -1287,79 +1287,138 @@ body {
         }
 
         &#ai_chat {
-            /* --a-background-color: none;
-            --a-color: none; */
-/* 
-            background-color: #111;
-            color: #eee; */
-            --radius-one: 5rem;
-            --padding-one: 2rem;
-            --radius-two: calc(var(--radius-one) - var(--padding-one));
+            --radius-one: 2.5rem;
+            --padding-one: 1.75rem;
+            --radius-two: calc(var(--radius-one) - 0.75rem);
             --padding-two: 1rem;
-            --radius-three: calc(var(--radius-two) - var(--padding-two));
-            /* border-radius: var(--radius-one);
-            padding: var(--padding-one);
-            font-family: var(--font-chat); */
+            --radius-three: calc(var(--radius-two) - 0.5rem);
+            --padding-three: .6rem;
+            --radius-four: calc(var(--radius-tree) - 0.5rem);
+            /* SHomehow the LLM seems to have messed up ... */
+            
             .chat-container {
                 --a-background-color: none;
                 --a-color: none;
-                background-color: #111;
-                color: #eee;
+                background-color: #111111;
+                color: #eeeeee;
 
                 border-radius: var(--radius-one);
                 padding: var(--padding-one);
                 font-family: var(--font-chat);
                 margin-top: 1.2rem;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
                 .messages-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.75rem;
+                    margin-bottom: 1rem;
+                    max-height: 350px;
+                    overflow-y: auto;
+                    padding-right: 0.25rem;
+
                     .message {
+                        padding: 0.75rem 1.1rem;
+                        border-radius: var(--radius-three);
+                        max-width: 80%;
+                        line-height: 1.5;
+                        font-size: 0.95rem;
+                        word-break: break-word;
+
                         &.by-user {
-                            /* TodO */
+                            align-self: flex-end;
+                            background-color: var(--color-primary);
+                            color: #ffffff;
+                            border-bottom-right-radius: 0.25rem;
                         }
+
                         &.by-llm {
-                            /* ToDo */
+                            align-self: flex-start;
+                            background-color: #222222;
+                            color: #e5e5e5;
+                            border: 1px solid #333333;
+                            border-bottom-left-radius: 0.25rem;
                         }
                     }
                 }
 
+                #ai_chat_form,
                 #ai-chat-form {
-                    /* submit INSIDE textarea ... */
-
-                    /* textarea#ai_chat_prompt { */
-                    /* #ai_chat_prompt { */
-                    /* textarea[name="prompt"] {
-                        background-color: #fff;
-                    } */
-
-                    /* input#ai_chat_send 8 */
-                    /* #ai_chat_send { */
-                    /* input[type="submit"]
-
-                    } */
-
                     width: 100%;
                     position: relative;
-                    display: inline-block;
+                    display: block;
                 }
 
                 #ai_chat_prompt {
-                    background-color: #444;
+                    background-color: #242424;
+                    color: #ffffff;
+                    font-family: inherit;
+                    font-size: 0.95rem;
+                    line-height: 1.5;
 
                     width: 100%;
                     box-sizing: border-box;
-                    padding-right: var(--todo);
-                    padding-bottom: var(--padding-three);
-                    margin-bottom: var(--padding-two);
-                    resize: vertical;
                     resize: none;
+                    border: 1px solid #383838;
                     border-radius: var(--radius-two);
-                    padding: var(--padding-three);
+                    padding: 1rem 5.5rem 1rem 1.25rem;
+                    min-height: 3.5rem;
+                    outline: none;
+                    display: block;
+                    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+                    &:focus {
+                        border-color: var(--color-primary);
+                        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+                        background-color: #2a2a2a;
+                    }
+
+                    &::placeholder {
+                        color: #888888;
+                    }
                 }
 
                 #ai_chat_send {
-                    position: TODO;
-                    right: 10px;
-                    bottom: 10px;
-                    z-index: 200;
+                    position: absolute;
+                    right: var(--padding-three);
+                    bottom: var(--padding-three);
+                    z-index: 10;
+                    background-color: var(--color-primary);
+                    color: #ffffff;
+                    border: none;
+                    border-radius: var(--radius-three);
+                    padding: 0.5rem 1.25rem;
+                    font-weight: 600;
+                    font-size: 0.875rem;
+                    cursor: pointer;
+                    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+                    
+                    /* Structural addition: Aligns the SVG center */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    &:hover {
+                        background-color: var(--color-primary-hover);
+                    }
+
+                    &:active {
+                        transform: translateY(0) scale(0.97);
+                    }
+
+                    &:disabled {
+                        background-color: var(--color-disabled);
+                        cursor: not-allowed;
+                        opacity: 0.6;
+                    }
+
+                    /* Structural addition: Enforces correct SVG scaling */
+                    svg {
+                        width: 1.25rem;
+                        height: 1.25rem;
+                        display: block;
+                    }
                 }
             }
         }

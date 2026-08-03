@@ -185,6 +185,9 @@ $latest_commit = cache()->remember('github_latest_user_commit', 300, function() 
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
 <body>
+
+    <!-- <a rel="me" href="https://chaos.social/@ternis">Mastodon</a> -->
+
     <div class="theme-select-container">
         <select name="theme" id="theme-select">
         </select>
