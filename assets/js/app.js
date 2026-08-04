@@ -121,193 +121,68 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ─── AI Chat ─────────────────────────────────────────────────────────────
-
-    const aiChatForm      = document.getElementById('ai_chat_form');
-    const aiChatPrompt    = document.getElementById('ai_chat_prompt');
-    const aiChatSend      = document.getElementById('ai_chat_send');
-    const aiChatMessages  = document.getElementById('ai_chat_messages');
-    const aiChatModelEl   = document.getElementById('ai_chat_model');  // <select> or <input hidden>
-
-    if (aiChatForm && aiChatPrompt && aiChatSend && aiChatMessages) {
-
-        // ── Session UUID ──────────────────────────────────────────────────────
-        // One UUID per browser tab/session; stored in sessionStorage so it resets
-        // when the user opens a new tab (= fresh conversation).
-        function generateUUID() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-                const r = crypto.getRandomValues(new Uint8Array(1))[0] % 16;
-                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-            });
-        }
-        let sessionId = sessionStorage.getItem('ai_chat_session_id');
-        if (!sessionId) {
-            sessionId = generateUUID();
-            sessionStorage.setItem('ai_chat_session_id', sessionId);
+    // ─── Toast Notifications ──────────────────────────────────────────────────
+    
+    /**
+     * Global Toast Notification Helper
+     * @param {string} message - Message to display
+     * @param {'success'|'error'|'info'|'warning'} type - Toast type
+     * @param {number} duration - Duration in milliseconds (default: 3000ms)
+     */
+    function showToast(message, type = 'info', duration = 3000) {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container dont-use-attibut-color-variables';
+            document.body.appendChild(container);
         }
 
-        /** Full conversation history kept in memory (for multi-turn context). */
-        let conversationHistory = [];
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
 
-        /** Current model slug */
-        function getSelectedModel() {
-            return aiChatModelEl ? aiChatModelEl.value : null;
+        let iconSvg = '';
+        switch (type) {
+            case 'success':
+                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+                break;
+            case 'error':
+                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>`;
+                break;
+            case 'warning':
+                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+                break;
+            case 'info':
+            default:
+                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`;
+                break;
         }
 
-        // Reset history + session when model changes (different model = new session)
-        if (aiChatModelEl && aiChatModelEl.tagName === 'SELECT') {
-            aiChatModelEl.addEventListener('change', () => {
-                conversationHistory = [];
-                sessionId = generateUUID();
-                sessionStorage.setItem('ai_chat_session_id', sessionId);
-                // Visual hint
-                const hint = document.createElement('div');
-                hint.classList.add('message', 'by-error');
-                hint.style.cssText = 'background:rgba(99,102,241,.15);color:#a5b4fc;border-color:rgba(99,102,241,.35)';
-                hint.textContent = `↺ Model changed to "${aiChatModelEl.options[aiChatModelEl.selectedIndex]?.text}" — new session started.`;
-                aiChatMessages.appendChild(hint);
-                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
-            });
+        toast.innerHTML = `
+            <span class="toast-icon dont-use-attibut-color-variables">${iconSvg}</span>
+            <span class="toast-message dont-use-attibut-color-variables">${message}</span>
+            <button type="button" class="toast-close dont-use-attibut-color-variables" aria-label="Close notification">
+                <svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        `;
+
+        const closeBtn = toast.querySelector('.toast-close');
+        const dismiss = () => {
+            if (toast.classList.contains('toast-hiding')) return;
+            toast.classList.add('toast-hiding');
+            toast.addEventListener('animationend', () => toast.remove());
+        };
+
+        closeBtn.addEventListener('click', dismiss);
+
+        container.appendChild(toast);
+
+        if (duration > 0) {
+            setTimeout(dismiss, duration);
         }
-
-        /** Auto-grow textarea height */
-        function autoResizeTextarea() {
-            aiChatPrompt.style.height = 'auto';
-            aiChatPrompt.style.height = Math.min(aiChatPrompt.scrollHeight, 200) + 'px';
-        }
-        aiChatPrompt.addEventListener('input', autoResizeTextarea);
-
-        /** Send on Enter, newline on Shift+Enter */
-        aiChatPrompt.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                aiChatForm.requestSubmit();
-            }
-        });
-
-        /** Scroll the messages pane to the bottom */
-        function scrollToBottom() {
-            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
-        }
-
-        /**
-         * Append a message bubble to the chat pane.
-         * @param {'user'|'llm'|'error'} role
-         * @param {string} text
-         * @returns {HTMLElement} the created element
-         */
-        function appendMessage(role, text) {
-            const div = document.createElement('div');
-            div.classList.add('message', `by-${role}`);
-
-            // Render newlines as <br>, escape HTML
-            div.innerHTML = text
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/\n/g, '<br>');
-
-            aiChatMessages.appendChild(div);
-            scrollToBottom();
-            return div;
-        }
-
-        /** Show an animated "thinking…" bubble; returns a remove() function */
-        function showTypingIndicator() {
-            const div = document.createElement('div');
-            div.classList.add('message', 'by-llm', 'typing-indicator');
-            div.innerHTML = '<span></span><span></span><span></span>';
-            aiChatMessages.appendChild(div);
-            scrollToBottom();
-            return () => div.remove();
-        }
-
-        /** Lock / unlock the send button and textarea */
-        function setLoading(loading) {
-            aiChatSend.disabled   = loading;
-            aiChatPrompt.disabled = loading;
-            if (aiChatModelEl && aiChatModelEl.tagName === 'SELECT') {
-                aiChatModelEl.disabled = loading;
-            }
-        }
-
-        aiChatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const prompt = aiChatPrompt.value.trim();
-            if (!prompt) return;
-
-            const model = getSelectedModel();
-
-            // Clear & reset textarea
-            aiChatPrompt.value = '';
-            aiChatPrompt.style.height = 'auto';
-
-            // Show the user message immediately
-            appendMessage('user', prompt);
-
-            // Push to conversation history
-            conversationHistory.push({ role: 'user', content: prompt });
-
-            setLoading(true);
-            const removeTyping = showTypingIndicator();
-
-            try {
-                const response = await fetch('/api/v1/ai/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        session_id: sessionId,
-                        model:      model,
-                        messages:   conversationHistory,
-                    }),
-                });
-
-                removeTyping();
-
-                const data = await response.json();
-
-                if (!response.ok || !data.success) {
-                    const errMsg = data?.error?.message ?? `HTTP ${response.status}`;
-
-                    if (response.status === 429) {
-                        const retryAfter = data?.error?.retry_after ?? '60';
-                        appendMessage('error', `⏳ Too many messages! Please wait ${retryAfter}s before trying again.`);
-                    } else {
-                        appendMessage('error', `⚠️ ${errMsg}`);
-                    }
-
-                    // Roll back user message so it can be retried
-                    conversationHistory.pop();
-                    return;
-                }
-
-                const reply = data.data?.reply ?? '(no reply)';
-
-                // Sync session_id if the server minted one
-                if (data.data?.session_id && data.data.session_id !== sessionId) {
-                    sessionId = data.data.session_id;
-                    sessionStorage.setItem('ai_chat_session_id', sessionId);
-                }
-
-                // Push assistant reply for next-turn context
-                conversationHistory.push({ role: 'assistant', content: reply });
-
-                appendMessage('llm', reply);
-
-            } catch (err) {
-                removeTyping();
-                appendMessage('error', `⚠️ Network error: ${err.message}`);
-                conversationHistory.pop();
-            } finally {
-                setLoading(false);
-                aiChatPrompt.focus();
-            }
-        });
     }
+
+    window.showToast = showToast;
 });
 
 // Global callbacks for Turnstile widget

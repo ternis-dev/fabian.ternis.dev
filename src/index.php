@@ -157,8 +157,34 @@
         <h2>Yes, i made this functional and <pay>pay</pay> for this <commet>// well, not quite — thanks to <a href="http://ai.hackclub.com" target="_blank">Hack Club AI</a> 🎉</commet></h2>
 
         <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-header-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot">
+                        <path d="M12 8V4H8"/>
+                        <rect width="16" height="12" x="4" y="8" rx="2"/>
+                        <path d="M2 14h2"/>
+                        <path d="M20 14h2"/>
+                        <path d="M15 13v2"/>
+                        <path d="M9 13v2"/>
+                    </svg>
+                    <span>AI Assistant</span>
+                </div>
+                <div class="chat-header-actions">
+                    <button type="button" id="ai_chat_copy_session" class="chat-action-btn" title="Copy entire chat session" aria-label="Copy entire chat session">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-copy">
+                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-check" style="display:none;">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        <span>Copy Session</span>
+                    </button>
+                </div>
+            </div>
+
             <div class="messages-container" id="ai_chat_messages">
-                <!-- Messages are injected here by app.js -->
+                <!-- Messages are injected here by ai_chat.js -->
             </div>
 
             <form id="ai_chat_form">
@@ -311,6 +337,25 @@
                 window.link_shortening_response = <?= json_encode($new_link) ?>;
             </script>
         <?php endif; ?>
+    </section>
+
+
+    <section id="toasts">
+        <h2>Trigger <some>some</some> Toasts</h2>
+
+        <div>
+            <button onClick="showToast('Hello World!', 'info', 369)">Hello World!</button>
+            <button onClick="showToast('That seems to not have worked!', 'error', 2000)">WHAT?</button>
+            <button onClick="showToast('Try again ...', 'warning', 3210)">May malfunction</button>
+            <!-- <button onClick="showToast('Your IP is: 132.45.76.89' , 'warning', 3); sleep(2); showToast('No, it isn\'t' , 'success', 3456)">DO NOT PRESS</button> -->
+            <!-- <button onClick="showToast('Your IP is: 132.45.76.89', 'warning', 3); setTimeout(() => showToast(&quot;No, it isn't&quot;, 'success', 3456), 2000);">DO NOT PRESS</button> -->
+            <button onClick="showToast('Your IP is: 132.45.76.89', 'warning', 123); setTimeout(() => showToast(&quot;No, it isn't&quot;, 'success', 3456), 500);">DO NOT PRESS</button>
+            <!-- ToDo: Add styles, the "customToastForm" and co .... -->
+        </div>
+
+        <form id ="customToastForm">
+
+        </form>
     </section>
 
 

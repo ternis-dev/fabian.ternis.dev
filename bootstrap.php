@@ -210,7 +210,10 @@ $latest_commit = cache()->remember('github_latest_user_commit', 300, function() 
     <!--code>
         sudo apt install sl -y && sl
     </code-->
+
+    
     <script src="app.js"></script>
+    <script src="ai_chat.js" defer></script>
     <script src="stories.js" defer></script>
     <script src="linkshorten.js" defer></script>
 </body>

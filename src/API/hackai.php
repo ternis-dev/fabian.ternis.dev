@@ -19,9 +19,23 @@ class hackAI extends Base
         'inclusionai/ling-3.0-flash:free' => [
             // 'name' => 'Ling-3.0-flash (free)',
             'name' => 'Ling-3.0-flash',
-            'type' => 'text'
+            'type' => 'text',
+            'pricing' => [
+                'in' => 0.00,
+                'out' => 0.00,
+            ],
         ],
 
+        '~deepseek/deepseek-v4-flash-latest' => [
+            'name' => 'DeepSeek V4 Flash Latest',
+            'type' => 'text',
+            'pricing' => [
+                'in' => 0.09,
+                'out' => 0.18,
+            ],
+        ],
+
+        
         // ToDo: Add more, cheap models from hackAI
         // gemini 3.5 flash lite
         // some OSS/OW models
