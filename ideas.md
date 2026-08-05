@@ -18,6 +18,8 @@ ONLY LOAD TURNSTILE IF USER ALLOWED EXTERNAL COOKIES ...
 - indicator of Ai working: like e.g. claude and gemini: just some words ... ("Reshaping teh universe", "Breaking the internet", ...)
 - self-made AI (markDown) parser
 - "fullscreen mode" for ".chat-container" ...
-- DONE: copy llm-responses
-- DONE: copy entire "chat session"
-- make "copy-btn" sticky ...
+- ~~DONE: copy llm-responses~~
+- ~~DONE: copy entire "chat session"~~
+- ~~DONE: make "copy-btn" sticky~~
+
+- Update dnbx.de api to also return registration and expiary dates ... and update the "latest registration" data on hero-section

@@ -61,4 +61,43 @@ class DomainBox extends Base
         $params['owner_id'] = 1;
         return $this->getDomains($params);
     }
+
+    /**
+     * Get the most recently registered domain.
+     * 
+     * @return array|null
+     */
+    public function getLatestDomain(): ?array
+    {
+        $res = $this->getMyDomain(['status' => 'active', 'limit' => 999]);
+        $domains = is_array($res) ? ($res['data'] ?? []) : [];
+        if (empty($domains)) {
+            return null;
+        }
+
+        $hasDates = false;
+        foreach ($domains as $d) {
+            if (!empty($d['registered_at']) || !empty($d['created_at']) || !empty($d['registration_date']) || !empty($d['date'])) {
+                $hasDates = true;
+                break;
+            }
+        }
+
+        if ($hasDates) {
+            usort($domains, function ($a, $b) {
+                $dateA = $a['registered_at'] ?? $a['created_at'] ?? $a['registration_date'] ?? $a['created'] ?? $a['date'] ?? 0;
+                $dateB = $b['registered_at'] ?? $b['created_at'] ?? $b['registration_date'] ?? $b['created'] ?? $b['date'] ?? 0;
+                return strtotime($dateB) <=> strtotime($dateA);
+            });
+            $latest = $domains[0] ?? null;
+        } else {
+            $latest = end($domains) ?: null;
+        }
+        if ($latest) {
+            $domainName = !empty($latest['name']) ? ($latest['name'] . (!empty($latest['tld']) ? '.' . $latest['tld'] : '')) : ($latest['domain'] ?? null);
+            $latest['full_domain'] = $domainName;
+        }
+
+        return $latest;
+    }
 }

@@ -152,6 +152,11 @@ $domains = cache()->remember('dnbx_active_domains', 600, function() use ($dnbx) 
     return is_array($res) ? ($res['data'] ?? []) : [];
 }) ?? [];
 
+// Cache latest registered domain for 10 minutes (600s)
+$latest_domain = cache()->remember('dnbx_latest_domain', 600, function() use ($api_) {
+    return $api_['dnbx']->getLatestDomain();
+}) ?? [];
+
 $devices = config('devices', []);
 $hi = "Hello World!";
 

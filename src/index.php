@@ -11,8 +11,24 @@
             </div>
             
             <br>
-            <?php $cmt = $latest_commit; $strlenpoint = 62;?>
-            <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>" (<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
+            <?php 
+            $cmt = $latest_commit; 
+            $strlenpoint = 55;
+            $latest_dom = $latest_domain ?? ($api_['dnbx']->getLatestDomain() ?? []);
+            $latest_dom_date = $latest_dom['registered_at'] 
+                ?? $latest_dom['created_at'] 
+                ?? $latest_dom['registration_date'] 
+                ?? $latest_dom['created'] 
+                ?? $latest_dom['date'] 
+                ?? null;
+            $latest_dom_name = $latest_dom['full_domain'] 
+                ?? (!empty($latest_dom['name']) ? ($latest_dom['name'] . (!empty($latest_dom['tld']) ? '.' . $latest_dom['tld'] : '')) : ($latest_dom['domain'] ?? null));
+            $latest_dom_time_str = !empty($latest_dom_date) ? time_ago($latest_dom_date) : null;
+            ?>
+            <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>"<br>(<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
+            <div>Most recent domain-registration: <?= !empty($latest_dom_name) ? '<code>' . htmlspecialchars($latest_dom_name) . '</code>' : 'N/A' ?><?= (!empty($latest_dom_time_str) && $latest_dom_time_str !== 'N/A') ? ' (' . $latest_dom_time_str . ')' : '' ?></div>
+
+            <br>
 
             <!-- <div class="socials-container"><h3>My Socials</h3><ul><li class="social mastodon"><a rel="me" href="https://chaos.social/@ternis">Mastodon</a> (@ternis<a href="http://chaos.social">@chaos.social</a>)</li></ul></div> -->
             <div class="socials-container"><h3>My Socials</h3><ul>
@@ -353,8 +369,21 @@
             <!-- ToDo: Add styles, the "customToastForm" and co .... -->
         </div>
 
-        <form id ="customToastForm">
+        <form id="customToastForm">
+            <label for="toast_message_input">Message</label>
+            <input type="text" name="message" id="toast_message_input">
 
+            <label for="toast_type_input">Type</label>
+            <select name="type" id="toast_type_input">
+            <?php foreach(['info', 'warning', 'error', 'success'] as $type): ?>
+                <option value="<?= $type ?>"><?= $type ?></option>
+            <?php endforeach; ?>
+            </select>
+
+            <label for="toast_duration_input">Duration</label>
+            <input type="number" name="duration" id="toast_duration_input" value="3000">
+
+            <input type="submit" value="Show">
         </form>
     </section>
 

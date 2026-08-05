@@ -183,6 +183,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.showToast = showToast;
+
+    // const customToastForm = document.getElementById('customToastForm');
+    // const toast_typ
+
+    const customToastForm = document.getElementById('customToastForm');
+    if (customToastForm) {
+        customToastForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const messageInput = document.getElementById('toast_message_input');
+            const typeInput = document.getElementById('toast_type_input');
+            const durationInput = document.getElementById('toast_duration_input');
+
+            const message = messageInput && messageInput.value.trim() !== '' ? messageInput.value : 'Custom Toast';
+            const type = typeInput ? typeInput.value : 'info';
+            const parsedDuration = durationInput ? parseInt(durationInput.value, 10) : 3000;
+            const duration = isNaN(parsedDuration) ? 3000 : parsedDuration;
+
+            showToast(message, type, duration);
+        });
+    }
 });
 
 // Global callbacks for Turnstile widget
