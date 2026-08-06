@@ -231,6 +231,87 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ── Fullscreen Toggle ─────────────────────────────────────────────────────
+    const aiChatFullscreenToggle = document.getElementById('ai_chat_fullscreen_toggle');
+    const chatContainer = document.querySelector('.chat-container');
+
+    function updateFullscreenUI(isFullscreen) {
+        if (!aiChatFullscreenToggle || !chatContainer) return;
+        const iconMax = aiChatFullscreenToggle.querySelector('.icon-maximize');
+        const iconMin = aiChatFullscreenToggle.querySelector('.icon-minimize');
+        const textSpan = aiChatFullscreenToggle.querySelector('.fullscreen-text');
+
+        if (isFullscreen) {
+            chatContainer.classList.add('is-fullscreen');
+            document.body.classList.add('chat-fullscreen-active');
+            if (iconMax) iconMax.style.display = 'none';
+            if (iconMin) iconMin.style.display = 'inline-block';
+            if (textSpan) textSpan.textContent = 'Exit Fullscreen';
+            aiChatFullscreenToggle.setAttribute('title', 'Exit Fullscreen');
+        } else {
+            chatContainer.classList.remove('is-fullscreen');
+            document.body.classList.remove('chat-fullscreen-active');
+            if (iconMax) iconMax.style.display = 'inline-block';
+            if (iconMin) iconMin.style.display = 'none';
+            if (textSpan) textSpan.textContent = 'Fullscreen';
+            aiChatFullscreenToggle.setAttribute('title', 'Toggle Fullscreen');
+        }
+        setTimeout(scrollToBottom, 50);
+    }
+
+    if (aiChatFullscreenToggle && chatContainer) {
+        aiChatFullscreenToggle.addEventListener('click', async () => {
+            const isNativeFS = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+            const isClassFS  = chatContainer.classList.contains('is-fullscreen');
+            const isFS       = isNativeFS || isClassFS;
+
+            if (!isFS) {
+                updateFullscreenUI(true);
+                try {
+                    if (chatContainer.requestFullscreen) {
+                        await chatContainer.requestFullscreen();
+                    } else if (chatContainer.webkitRequestFullscreen) {
+                        await chatContainer.webkitRequestFullscreen();
+                    }
+                } catch (err) {
+                    // Fallback to pure CSS fullscreen
+                }
+            } else {
+                updateFullscreenUI(false);
+                try {
+                    if (document.fullscreenElement && document.exitFullscreen) {
+                        await document.exitFullscreen();
+                    } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+                        await document.webkitExitFullscreen();
+                    }
+                } catch (err) {
+                    // Ignored
+                }
+            }
+        });
+
+        // Listen for native escape / exit fullscreen events
+        const syncNativeFS = () => {
+            const isNativeFS = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+            if (!isNativeFS && chatContainer.classList.contains('is-fullscreen')) {
+                updateFullscreenUI(false);
+            }
+        };
+
+        document.addEventListener('fullscreenchange', syncNativeFS);
+        document.addEventListener('webkitfullscreenchange', syncNativeFS);
+
+        // ESC key listener fallback for CSS fullscreen mode
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && chatContainer.classList.contains('is-fullscreen')) {
+                if (document.fullscreenElement && document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+                updateFullscreenUI(false);
+            }
+        });
+    }
+
     // ── Form Submit / Send Message ────────────────────────────────────────────
     aiChatForm.addEventListener('submit', async (e) => {
         e.preventDefault();

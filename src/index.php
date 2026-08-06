@@ -15,19 +15,14 @@
             $cmt = $latest_commit; 
             $strlenpoint = 55;
             $latest_dom = $latest_domain ?? ($api_['dnbx']->getLatestDomain() ?? []);
-            $latest_dom_date = $latest_dom['registered_at'] 
-                ?? $latest_dom['created_at'] 
-                ?? $latest_dom['registration_date'] 
-                ?? $latest_dom['created'] 
-                ?? $latest_dom['date'] 
-                ?? null;
-            $latest_dom_name = $latest_dom['full_domain'] 
-                ?? (!empty($latest_dom['name']) ? ($latest_dom['name'] . (!empty($latest_dom['tld']) ? '.' . $latest_dom['tld'] : '')) : ($latest_dom['domain'] ?? null));
+            $latest_dom_date = $latest_dom['registered_at'] ?? $latest_dom['created_at'] ?? $latest_dom['registration_date'] ?? $latest_dom['created'] ?? $latest_dom['date'] ?? null;
+            $latest_dom_name = $latest_dom['full_domain'] ?? (!empty($latest_dom['name']) ? ($latest_dom['name'] . (!empty($latest_dom['tld']) ? '.' . $latest_dom['tld'] : '')) : ($latest_dom['domain'] ?? null));
             $latest_dom_time_str = !empty($latest_dom_date) ? time_ago($latest_dom_date) : null;
             ?>
             <div>My most recent commit: "<span data-content="<?= $cmt['message'] ?>"><?= (strlen($cmt['message'] ?? '') > $strlenpoint) ? substr($cmt['message'], 0, $strlenpoint) . '...' : ($cmt['message'] ?? '') ?></span>"<br>(<?= time_ago($cmt['date'] ?? null) ?><!--, id: <?= ($cmt['short_id'] ?? 'N/A') ?>-->) on <a href="<?= ($cmt['url'] ?? '/wow') ?>"><code><?= ($cmt['repo'] ?? 'N/A') ?></code></a></div>
             <div>Most recent domain-registration: <?= !empty($latest_dom_name) ? '<code>' . htmlspecialchars($latest_dom_name) . '</code>' : 'N/A' ?><?= (!empty($latest_dom_time_str) && $latest_dom_time_str !== 'N/A') ? ' (' . $latest_dom_time_str . ')' : '' ?></div>
 
+            <!-- <hr> -->
             <br>
 
             <!-- <div class="socials-container"><h3>My Socials</h3><ul><li class="social mastodon"><a rel="me" href="https://chaos.social/@ternis">Mastodon</a> (@ternis<a href="http://chaos.social">@chaos.social</a>)</li></ul></div> -->
@@ -37,6 +32,8 @@
                 <li class="social codeberg"><a href="https://codeberg.org/fabianternis">Codeberg</a></li>
                 <li class="social codeberg"><a href="https://codeberg.org/ternis">Codeberg</a> (ORG <code><u>ternis</u></code>)</li>
             </ul></div>
+
+            <br>
 
         </div>
         <div class="hero-item">
@@ -88,7 +85,7 @@
 
         <ul class="tech-list">
             <?php foreach(config('homelab_techs') as $tech): ?>
-                <li>
+                <li class="technology">
                     <div class="name"><?= htmlspecialchars($tech['name']) ?></div>
                     <div class="comment"><?= htmlspecialchars($tech['comment']) ?></div>
                     <img src="<?= htmlspecialchars($tech['image'] ?? '/homelab/tech/'.strtolower($tech['name']).'.unknown.image.mime') ?>" alt="<?= htmlspecialchars($tech['image_alt'] ?? $tech['name'] . ' Logo') ?>" class="tech-logo">
@@ -195,6 +192,15 @@
                             <path d="M20 6 9 17l-5-5"/>
                         </svg>
                         <span>Copy Session</span>
+                    </button>
+                    <button type="button" id="ai_chat_fullscreen_toggle" class="chat-action-btn" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-maximize">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-minimize" style="display:none;">
+                            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+                        </svg>
+                        <span class="fullscreen-text">Fullscreen</span>
                     </button>
                 </div>
             </div>
