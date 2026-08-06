@@ -1,4 +1,8 @@
-<?php 
+<?php
+// Buffer all output from byte 0 so stray PHP warnings/notices don't corrupt
+// JSON API responses. ApiRouter::sendJson() calls ob_end_clean() before writing.
+ob_start();
+
 date_default_timezone_set('Europe/Berlin');
 
 if (($_SERVER['REQUEST_URI'] ?? '') === '/todo') { die('Seems like you found a part of this website that is not working (yet)'); }
@@ -218,6 +222,7 @@ $latest_commit = cache()->remember('github_latest_user_commit', 300, function() 
 
     
     <script src="app.js"></script>
+    <script src="helpers.js"></script>
     <script src="ai_chat.js" defer></script>
     <script src="stories.js" defer></script>
     <script src="linkshorten.js" defer></script>

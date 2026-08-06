@@ -106,11 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const contentDiv = document.createElement('div');
         contentDiv.classList.add('message-content');
-        contentDiv.innerHTML = text
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/\n/g, '<br>');
+
+        if (role === 'llm' && window.parseMarkdown) {
+            // LLM replies: render rich Markdown (parseMarkdown handles XSS escaping internally)
+            contentDiv.innerHTML = window.parseMarkdown(text);
+            contentDiv.classList.add('markdown-body');
+        } else {
+            // User messages and errors: plain-text, safely escaped
+            contentDiv.textContent = text;
+        }
+
         div.appendChild(contentDiv);
 
         // Add copy button to message (except system/error hint if wanted, but useful for user/llm)
