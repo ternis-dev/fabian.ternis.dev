@@ -23,3 +23,6 @@ ONLY LOAD TURNSTILE IF USER ALLOWED EXTERNAL COOKIES ...
 - ~~DONE: make "copy-btn" sticky~~
 
 - Update dnbx.de api to also return registration and expiary dates ... and update the "latest registration" data on hero-section
+- use $_SESSION[] to keep ai-sessions
+- Additional "copy-btn" on code ... (inside ai-chat, sticky)
+- rework parts of teh UI on chat-container ...

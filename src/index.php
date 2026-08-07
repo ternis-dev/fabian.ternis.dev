@@ -11,6 +11,7 @@
             </div>
             
             <br>
+
             <?php 
             $cmt = $latest_commit; 
             $strlenpoint = 55;
@@ -65,7 +66,10 @@
         <h2>Latest Stuff ("news", not the banner):</h2>
 
         <h3>I am too lazy for an Blog, so this is all I do.</h3>
+        <h4>Just a few Senences that may not make any sense at all.</h4>
         <ol>
+            <!-- ToDo: Get this from a .json file ... (later maybe even sql) -->
+            <li>Anyhow a Github-token(or something like that) got compromised on August 6th 2026, compromising 11 of my Reposetories hosted on GitHub. Luckely no compromised commits got deployed. But i still have no Clue which System is compromised and resonsilbe for the compromisation(or however it is called) of the GitHub-token</li>
             <li><just>just</just> got My first PoE-Switch(from <a href="http://ugreen.com">Ugreen</a>) and a non-branded "PoE Extender"(turns one PoE in into two PoE out).</li>
             <li>Bought a UGREEN-NAS (DXP4800) from <a href="http://ebay.de">Ebay<!-- Too: ebay.com + Y EBAY PROFILE --></a> for just about 400€ to then not have enough money to even afford ONE 4TB HDD (Thanks <a href="http://openai.com">OpenAI</a> and co.).</li>
             <li><currently>Currently</currently> have 30+ Side-Projects and about 50 unused domains. – What am i doing? (with my live and money)</li>
@@ -165,6 +169,7 @@
             </div>
         <?php endif; ?>
     </section>
+
 
     <section id="ai_chat">
         <h2>Yes, i made this functional and <pay>pay</pay> for this <commet>// well, not quite — thanks to <a href="http://ai.hackclub.com" target="_blank">Hack Club AI</a> 🎉</commet></h2>
@@ -429,6 +434,9 @@
     </section>
 
 
+    <section if="fingerprinting"></section>
+
+
     <section id="competitions">
         <h2>Some <competitions>competitions</competitions>, i took part in.</h2>
     </section>
@@ -647,8 +655,10 @@
 
             <div>
                 <div>Current Time: < ToDo ></div>
-               <div>Time Spent: < Hacka Time ></div>
+               <div>Time Spent: < Hack A Time ></div>
             </div>
+
+            I have way too many outlinks on this website and may use ternis.link(once it is finally finished (or eventually begun)).
         </div>
     </footer>
 </div>
