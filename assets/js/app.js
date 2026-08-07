@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
+    // Automatically apply 'dont-use-attibut-color-variables' to containers with data-auto-no-color-vars="true" / .auto-no-color-vars and all child tags
+    function applyNoColorVars() {
+        const containers = document.querySelectorAll('[data-auto-no-color-vars="true"], .auto-no-color-vars');
+        containers.forEach(container => {
+            container.classList.add('dont-use-attibut-color-variables');
+            const descendants = container.querySelectorAll('*');
+            descendants.forEach(el => el.classList.add('dont-use-attibut-color-variables'));
+        });
+    }
+    applyNoColorVars();
+
     let theme = localStorage.getItem('theme') ?? 'system';
     const themeInput = document.getElementById('theme-select');
     // const apiData = document.getElementById(apiDataElementId ?? 'apiData'); // The Back-end creates the element-id (may be unique)

@@ -28,6 +28,30 @@ require_once __DIR__.'/src/API/hackclubcdn.php'; // still wondering ...
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $safePath = str_replace(['..', '//'], '', $requestPath);
 
+// Feed routes
+if ($safePath === '/feed/news' || $safePath === '/feed/news/') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: /feed/news/xml");
+    exit;
+} elseif ($safePath === '/feed/news/xml') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: application/rss+xml; charset=UTF-8');
+    echo \App\Services\NewsFeedService::renderXmlFeed();
+    exit;
+} elseif ($safePath === '/feed/news/json') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: application/json; charset=UTF-8');
+    echo \App\Services\NewsFeedService::renderJsonFeed();
+    exit;
+}
+
 $getMimeType = function($path) {
     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
     return match($ext) {
@@ -150,6 +174,16 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnsti
     }
 }
 
+// 404 route handler for unknown page requests
+if ($safePath !== '/' && $safePath !== '/index.php') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    $errorCode = 404;
+    include __DIR__ . '/src/error.php';
+    exit;
+}
+
 // Cache active domains for 10 minutes (600s)
 $domains = cache()->remember('dnbx_active_domains', 600, function() use ($dnbx) {
     $res = $dnbx->getMyDomain(['status' => 'active', 'limit' => 999]);
@@ -191,6 +225,8 @@ $latest_commit = cache()->remember('github_latest_user_commit', 300, function() 
     <title>Fabian Ternis - Personal Website</title>
     <!-- Whyever this is anotehr unicode ... ? ... -->
     <link rel="stylesheet" href="app.css">
+    <link rel="alternate" type="application/rss+xml" title="Fabian Ternis - News (RSS Feed)" href="/feed/news/xml">
+    <link rel="alternate" type="application/json" title="Fabian Ternis - News (JSON Feed)" href="/feed/news/json">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=7">  ???-->
     <meta name="keywords" content="Fabian Ternis, ternis.dev, Web developer, StoryGrab, twins-on-ice Website, twinsonice website, ternis.net, Ternis HomeLab">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">

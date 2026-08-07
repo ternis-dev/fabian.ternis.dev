@@ -1,0 +1,88 @@
+@font-face {
+    font-family: 'Libre Baskerville';
+    src: url('/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Libre Baskerville';
+    src: url('/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-Regular.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-Italic.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-Bold.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Anonymous Pro';
+    src: url('/Anonymous_Pro/AnonymousPro-BoldItalic.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: bolditalic;
+    font-display: swap;
+}
+
+:root {
+    /* Base Colors */
+    --color-bg: #eaeaea;
+    --color-bg-secondary: #e0e0e0;
+    --color-text-primary: #1c1c1c;
+    --color-text-secondary: #313131;
+    --color-text-tertiary: #545454;
+    --color-link: #199cf3;
+    --color-github-black: black;
+    --color-github-white: white;
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-active: var(--color-primary-hover); /* for now */
+    --color-disabled: #9ca3af;
+    
+    --theme-dark-bg: #1a1a1a;
+    --theme-light-bg: #eaeaea;
+    --theme-catppuccin-bg: #302d41;
+    --theme-dracula-bg: #282a36;
+
+    --a-background-color: var(--color-bg);
+    --a-color: var(--color-text-primary);
+
+    --font-main: 'Libre Baskerville', Georgia, serif;
+    --font-code: 'Anonymous Pro', monospace;
+    --font-time: system-ui, -apple-system, sans-serif;
+    --font-size-main: 1rem;
+    --font-footer: system-ui, -apple-system, sans-serif;
+    --font-chat: system-ui, -apple-system, sans-serif;
+
+    --cursor-pointer: pointer;
+    --cusrsor-default: default;
+
+    --transition-one: .2345s cubic-bezier(.5,-0.36,0,1.27); 
+
+    --max-width: 999px;
+
+    --string-my-name: 'Fabian Ternis';
+    --string-copyright-holder: var(--string-my-name);
+}

@@ -62,7 +62,7 @@
     </section>
 
 
-    <section id="news">
+    <section id="news" data-auto-no-color-vars="true">
         <h2>Latest Stuff ("news", not the banner):</h2>
 
         <h3>I am too lazy for an Blog, so this is all I do.</h3>

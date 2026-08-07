@@ -1,7 +1,12 @@
 [
     {
-        "id": 8,
+        "id": 9,
         "date": "2026-08-06",
+        "content": "Just wondered, why the commit-indicator was not showing any data ... then i realized that i revoked all tokens following the compromised something ..."
+    },
+    {
+        "id": 8,
+        "date": "2026-08-05",
         "content": "Anyhow a Github-token(or something like that) got compromised on August 6th 2026, compromising 11 of my Reposetories hosted on GitHub. Luckely no compromised commits got deployed. But i still have no Clue which System is compromised and resonsilbe for the compromisation(or however it is called) of the GitHub-token"
     },
     {
