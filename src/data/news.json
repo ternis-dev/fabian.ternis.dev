@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "date": "2026-08-06",
+        "content": "Anyhow a Github-token(or something like that) got compromised on August 6th 2026, compromising 11 of my Reposetories hosted on GitHub. Luckely no compromised commits got deployed. But i still have no Clue which System is compromised and resonsilbe for the compromisation(or however it is called) of the GitHub-token"
+    },
+    {
+        "id": 2,
+        "date": null,
+        "content": "<just>just</just> got My first PoE-Switch(from <a href=\"http://ugreen.com\">Ugreen</a>) and a non-branded \"PoE Extender\"(turns one PoE in into two PoE out)."
+    },
+    {
+        "id": 3,
+        "date": null,
+        "content": "Bought a UGREEN-NAS (DXP4800) from <a href=\"http://ebay.de\">Ebay<!-- Too: ebay.com + Y EBAY PROFILE --></a> for just about 400€ to then not have enough money to even afford ONE 4TB HDD (Thanks <a href=\"http://openai.com\">OpenAI</a> and co.)."
+    },
+    {
+        "id": 4,
+        "date": null,
+        "content": "<currently>Currently</currently> have 30+ Side-Projects and about 50 unused domains. – What am i doing? (with my live and money)"
+    },
+    {
+        "id": 5,
+        "date": null,
+        "content": "I just registered my first <tld>.shop</tld><!-- ToDo (JS) each tld-tag should be a link to domains-section and auto-filter ofr all domains with taht tld ... --> Domain (<code>twinsonice.shop</code>)"
+    },
+    {
+        "id": 6,
+        "date": null,
+        "content": "I might get shipped a <a href=\"http://\" target=\"_blank\" class=\"wiki-link knowledge-link\">Floppy Disk</a> from <a href=\"http://\" target=\"_blank\" class=\"wiki-link knowledge-link\">HackClub</a> for participating in \"<a href=\"http://99.hackclub.com\">Its like 1999</a>\". View my submittion <a href=\"https://projects.fabianternis.de/99site/\" target=\"_blank\">here</a> and the source <a href=\"https://github.com/fabianternis/99site\" target=\"_blank\">here</a>. <span class=\"note\">note: This was my first EVER HackClub-submission</span>"
+    },
+    {
+        "id": 7,
+        "date": null,
+        "content": "Started my <a href=\"http://\" target=\"_blank\" class=\"wiki-link knowledge-link\">HomeLab</a> ..."
+    },
+    {
+        "id": 8,
+        "date": "2026-07",
+        "content": "<really>really</really> joined HackClub in July 2026"
+    },
+    {
+        "id": 9,
+        "date": null,
+        "content": "Order is \"reversed\" btw."
+    }
+]

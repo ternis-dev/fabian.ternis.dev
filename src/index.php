@@ -68,17 +68,9 @@
         <h3>I am too lazy for an Blog, so this is all I do.</h3>
         <h4>Just a few Senences that may not make any sense at all.</h4>
         <ol>
-            <!-- ToDo: Get this from a .json file ... (later maybe even sql) -->
-            <li>Anyhow a Github-token(or something like that) got compromised on August 6th 2026, compromising 11 of my Reposetories hosted on GitHub. Luckely no compromised commits got deployed. But i still have no Clue which System is compromised and resonsilbe for the compromisation(or however it is called) of the GitHub-token</li>
-            <li><just>just</just> got My first PoE-Switch(from <a href="http://ugreen.com">Ugreen</a>) and a non-branded "PoE Extender"(turns one PoE in into two PoE out).</li>
-            <li>Bought a UGREEN-NAS (DXP4800) from <a href="http://ebay.de">Ebay<!-- Too: ebay.com + Y EBAY PROFILE --></a> for just about 400€ to then not have enough money to even afford ONE 4TB HDD (Thanks <a href="http://openai.com">OpenAI</a> and co.).</li>
-            <li><currently>Currently</currently> have 30+ Side-Projects and about 50 unused domains. – What am i doing? (with my live and money)</li>
-            <!-- Why not try a ordered-list? -->
-            <li>I just registered my first <tld>.shop</tld><!-- ToDo (JS) each tld-tag should be a link to domains-section and auto-filter ofr all domains with taht tld ... --> Domain (<code>twinsonice.shop</code>)</li>
-            <li>I might get shipped a <a href="http://" target="_blank" class="wiki-link knowledge-link">Floppy Disk</a> from <a href="http://" target="_blank" class="wiki-link knowledge-link">HackClub</a> for participating in "<a href="http://99.hackclub.com">Its like 1999</a>". View my submittion <a href="https://projects.fabianternis.de/99site/" target="_blank">here</a> and the source <a href="https://github.com/fabianternis/99site" target="_blank">here</a>. <span class="note">note: This was my first EVER HackClub-submission</span></li>
-            <li>Started my <a href="http://" target="_blank" class="wiki-link knowledge-link">HomeLab</a> ...</li>
-            <li><really>really</really> joined HackClub in July 2026</li>
-            <li>Order is "reversed" btw.</li>
+            <?php foreach (get_news() as $item): ?>
+                <li<?= !empty($item['date']) ? ' data-date="' . htmlspecialchars($item['date']) . '"' : '' ?>><?= $item['content'] ?></li>
+            <?php endforeach; ?>
         </ol>
     </section>
 
@@ -434,7 +426,11 @@
     </section>
 
 
-    <section if="fingerprinting"></section>
+    <section id="fingerprinting">
+        <h2>Beowser Fingerprinting <stuff>stuff</stuff> ...</h2>
+
+        <div>"stuff" about Browser-Fingerprinting, Tracking and co.</div>
+    </section>
 
 
     <section id="competitions">

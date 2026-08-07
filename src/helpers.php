@@ -388,3 +388,21 @@ if (!function_exists('parse_markdown_to_html')) {
         return $text;
     }
 }
+
+if (!function_exists('get_news')) {
+    /**
+     * Load news items from src/data/news.json
+     * 
+     * @return array
+     */
+    function get_news(): array {
+        $filePath = __DIR__ . '/data/news.json';
+        if (!file_exists($filePath)) {
+            return [];
+        }
+        $content = file_get_contents($filePath);
+        $data = json_decode($content, true);
+        return is_array($data) ? $data : [];
+    }
+}
+
