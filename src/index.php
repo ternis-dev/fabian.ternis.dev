@@ -67,9 +67,14 @@
 
         <h3>I am too lazy for an Blog, so this is all I do.</h3>
         <h4>Just a few Senences that may not make any sense at all.</h4>
-        <ol>
+        <ol class="news-list">
             <?php foreach (get_news() as $item): ?>
-                <li<?= !empty($item['date']) ? ' data-date="' . htmlspecialchars($item['date']) . '"' : '' ?>><?= $item['content'] ?></li>
+                <li class="news-item"<?= !empty($item['date']) ? ' data-date="' . htmlspecialchars($item['date']) . '"' : '' ?>>
+                    <?php if (!empty($item['date'])): ?>
+                        <time class="news-date" datetime="<?= htmlspecialchars($item['date']) ?>"><?= htmlspecialchars($item['date']) ?></time>
+                    <?php endif; ?>
+                    <span class="news-content"><?= $item['content'] ?></span>
+                </li>
             <?php endforeach; ?>
         </ol>
     </section>
