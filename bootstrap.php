@@ -128,7 +128,7 @@ if (in_array($ext, $assetExtensions, true)) {
 
 
 
-use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter, hackAI};
+use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter, hackAI, Hackatime};
 use App\Docs\DocsController;
 use App\Services\{CacheService, DatabaseService};
 
@@ -146,6 +146,7 @@ $api_['github'] = new GitHub();
 $api_['hackclub_cdn'] = new HackClubCDN();
 $api_['dnbx'] = $dnbx ?? new DomainBox();
 $api_['hackclub_ai'] = new hackAI();
+$api_['hackatime'] = new Hackatime();
 
 // Handle API requests (production host api.fabian.ternis.dev or dev path /api)
 if (ApiRouter::isApiRequest()) {
@@ -209,6 +210,11 @@ $stories = cache()->remember('storygrab_latest_stories', 300, function() use ($s
 $latest_commit = cache()->remember('github_latest_user_commit', 300, function() use ($api_) {
     return $api_['github']->getLastUserCommit('fabianternis');
 }) ?? [];
+
+require_once __DIR__ . '/src/uploads.php';
+$uploadsData = handle_uploads($s_, $api_, $turnstile);
+$uploadResult = $uploadsData['uploadResult'];
+$recentUploads = $uploadsData['recentUploads'];
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);
