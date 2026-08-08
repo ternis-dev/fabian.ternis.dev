@@ -475,6 +475,107 @@ return [
                     ]
                 ]
             ]
+        ],
+        [
+            'name' => 'Hackatime Time Tracking',
+            'slug' => 'hackatime',
+            'description' => 'Hackatime API integration providing coding statistics, leaderboards, streaks, and heartbeat data (WakaTime compatible).',
+            'endpoints' => [
+                [
+                    'id' => 'get-hackatime-currently-hacking',
+                    'name' => 'Currently Hacking Users',
+                    'method' => 'GET',
+                    'path' => '/v1/hackatime/currently-hacking',
+                    'description' => 'Retrieves users who have logged coding activity within the last 5 minutes.',
+                    'headers' => ['Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'count' => 1,
+                            'users' => [
+                                [
+                                    'display_name' => 'Fabian',
+                                    'avatar_url' => 'https://hackatime.hackclub.com/images/athena.png',
+                                    'country_code' => 'DE',
+                                    'working_on' => ['project_name' => 'fabian.ternis.dev', 'repo_url' => 'https://github.com/ternis-dev/fabian.ternis.dev']
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'get-hackatime-leaderboard-daily',
+                    'name' => 'Daily Hacking Leaderboard',
+                    'method' => 'GET',
+                    'path' => '/v1/hackatime/leaderboard/daily',
+                    'description' => 'Fetches the current daily coding leaderboard.',
+                    'headers' => ['Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'period' => 'daily',
+                            'entries' => []
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'get-hackatime-leaderboard-weekly',
+                    'name' => 'Weekly Hacking Leaderboard',
+                    'method' => 'GET',
+                    'path' => '/v1/hackatime/leaderboard/weekly',
+                    'description' => 'Fetches the weekly coding leaderboard for the last 7 days.',
+                    'headers' => ['Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'period' => 'last_7_days',
+                            'entries' => []
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'get-hackatime-summary',
+                    'name' => 'User Coding Summary',
+                    'method' => 'GET',
+                    'path' => '/v1/hackatime/summary',
+                    'description' => 'WakaTime-compatible summary endpoint for a user (public stats must be enabled).',
+                    'headers' => ['Accept' => 'application/json'],
+                    'parameters' => [
+                        ['name' => 'user_id', 'type' => 'string', 'required' => true, 'default' => '', 'description' => 'Target user Slack UID, username, or numeric ID.'],
+                        ['name' => 'interval', 'type' => 'string', 'required' => false, 'default' => 'all_time', 'description' => 'Time interval (today, week, month, etc.).']
+                    ],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'user_id' => 'fabian',
+                            'projects' => [],
+                            'languages' => []
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'get-hackatime-streak',
+                    'name' => 'Authenticated Coding Streak',
+                    'method' => 'GET',
+                    'path' => '/v1/hackatime/streak',
+                    'description' => 'Retrieves consecutive coding days streak for authenticated account.',
+                    'headers' => ['Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => ['streak_days' => 7]
+                    ]
+                ]
+            ]
         ]
     ]
 ];
+

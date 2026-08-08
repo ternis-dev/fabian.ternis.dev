@@ -234,6 +234,68 @@ class ApiRouter
                     $this->handleAiModels();
                     break;
 
+                // Hackatime
+                case '/v1/hackatime/currently-hacking':
+                case '/hackatime/currently-hacking':
+                    $this->handleHackatimeCurrentlyHacking();
+                    break;
+
+                case '/v1/hackatime/leaderboard/daily':
+                case '/hackatime/leaderboard/daily':
+                    $this->handleHackatimeDailyLeaderboard();
+                    break;
+
+                case '/v1/hackatime/leaderboard/weekly':
+                case '/hackatime/leaderboard/weekly':
+                    $this->handleHackatimeWeeklyLeaderboard();
+                    break;
+
+                case '/v1/hackatime/summary':
+                case '/hackatime/summary':
+                    $this->handleHackatimeSummary();
+                    break;
+
+                case '/v1/hackatime/stats/last-7-days':
+                case '/hackatime/stats/last-7-days':
+                    $this->handleHackatimeLast7Days();
+                    break;
+
+                case '/v1/hackatime/statusbar/today':
+                case '/hackatime/statusbar/today':
+                    $this->handleHackatimeStatusbarToday();
+                    break;
+
+                case '/v1/hackatime/my/heartbeats/most-recent':
+                case '/hackatime/my/heartbeats/most-recent':
+                    $this->handleHackatimeMostRecentHeartbeat();
+                    break;
+
+                case '/v1/hackatime/my/heartbeats':
+                case '/hackatime/my/heartbeats':
+                    $this->handleHackatimeMyHeartbeats();
+                    break;
+
+                case '/v1/hackatime/me':
+                case '/hackatime/me':
+                    $this->handleHackatimeMe();
+                    break;
+
+                case '/v1/hackatime/hours':
+                case '/hackatime/hours':
+                    $this->handleHackatimeHours();
+                    break;
+
+                case '/v1/hackatime/streak':
+                case '/hackatime/streak':
+                    $this->handleHackatimeStreak();
+                    break;
+
+                case '/v1/hackatime/projects':
+                case '/hackatime/projects':
+                    $this->handleHackatimeProjects();
+                    break;
+
+
                 // Docs Schema
                 case '/v1/docs':
                 case '/docs':
@@ -535,6 +597,176 @@ class ApiRouter
         }
         $this->sendJson(['data' => ['models' => $models]]);
     }
+
+    // ── Hackatime Endpoints ───────────────────────────────────────────
+
+    protected function handleHackatimeCurrentlyHacking(): void
+    {
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_currently_hacking', 300, function() use ($hackatime) {
+            return $hackatime->getCurrentlyHacking();
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeDailyLeaderboard(): void
+    {
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_leaderboard_daily', 600, function() use ($hackatime) {
+            return $hackatime->getDailyLeaderboard();
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeWeeklyLeaderboard(): void
+    {
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_leaderboard_weekly', 600, function() use ($hackatime) {
+            return $hackatime->getWeeklyLeaderboard();
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeSummary(): void
+    {
+        $userId = $_GET['user_id'] ?? $_GET['user'] ?? '';
+        if (empty($userId)) {
+            $this->sendJson([
+                'error' => [
+                    'code' => 'BAD_REQUEST',
+                    'message' => 'Parameter "user_id" (or "user") is required for Hackatime summary lookup.'
+                ]
+            ], 400);
+            return;
+        }
+
+        $params = array_filter([
+            'start' => $_GET['start'] ?? $_GET['from'] ?? null,
+            'end'   => $_GET['end']   ?? $_GET['to']   ?? null,
+            'interval' => $_GET['interval'] ?? $_GET['range'] ?? null,
+        ]);
+
+        $cacheKey = 'hackatime_summary_' . md5($userId . '_' . serialize($params));
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember($cacheKey, 300, function() use ($hackatime, $userId, $params) {
+            return $hackatime->getSummary($userId, $params);
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeLast7Days(): void
+    {
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_stats_last_7_days', 600, function() use ($hackatime) {
+            return $hackatime->getLast7DaysStats();
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeStatusbarToday(): void
+    {
+        $userId = $_GET['user_id'] ?? 'current';
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_statusbar_today_' . $userId, 180, function() use ($hackatime, $userId) {
+            return $hackatime->getStatusbarToday($userId);
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeMostRecentHeartbeat(): void
+    {
+        $hackatime = new Hackatime();
+        $params = array_filter([
+            'source_type' => $_GET['source_type'] ?? null,
+            'editor'      => $_GET['editor'] ?? null,
+        ]);
+
+        $cacheKey = 'hackatime_most_recent_heartbeat_' . md5(serialize($params));
+        $data = $this->cache->remember($cacheKey, 60, function() use ($hackatime, $params) {
+            return $hackatime->getMostRecentHeartbeat($params);
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeMyHeartbeats(): void
+    {
+        $hackatime = new Hackatime();
+        $params = array_filter([
+            'start_time' => $_GET['start_time'] ?? null,
+            'end_time'   => $_GET['end_time'] ?? null,
+        ]);
+
+        $cacheKey = 'hackatime_my_heartbeats_' . md5(serialize($params));
+        $data = $this->cache->remember($cacheKey, 120, function() use ($hackatime, $params) {
+            return $hackatime->getMyHeartbeats($params);
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeMe(): void
+    {
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_authenticated_me', 600, function() use ($hackatime) {
+            return $hackatime->getAuthenticatedMe();
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeHours(): void
+    {
+        $hackatime = new Hackatime();
+        $params = array_filter([
+            'start_date' => $_GET['start_date'] ?? null,
+            'end_date'   => $_GET['end_date'] ?? null,
+        ]);
+
+        $cacheKey = 'hackatime_authenticated_hours_' . md5(serialize($params));
+        $data = $this->cache->remember($cacheKey, 300, function() use ($hackatime, $params) {
+            return $hackatime->getAuthenticatedHours($params);
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeStreak(): void
+    {
+        $hackatime = new Hackatime();
+        $data = $this->cache->remember('hackatime_authenticated_streak', 600, function() use ($hackatime) {
+            return $hackatime->getAuthenticatedStreak();
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
+    protected function handleHackatimeProjects(): void
+    {
+        $hackatime = new Hackatime();
+        $params = array_filter([
+            'include_archived' => $_GET['include_archived'] ?? null,
+            'projects'         => $_GET['projects'] ?? null,
+            'start'            => $_GET['start'] ?? $_GET['start_date'] ?? null,
+            'end'              => $_GET['end'] ?? $_GET['end_date'] ?? null,
+            'since'            => $_GET['since'] ?? null,
+            'until'            => $_GET['until'] ?? $_GET['until_date'] ?? null,
+        ]);
+
+        $cacheKey = 'hackatime_authenticated_projects_' . md5(serialize($params));
+        $data = $this->cache->remember($cacheKey, 300, function() use ($hackatime, $params) {
+            return $hackatime->getAuthenticatedProjects($params);
+        });
+
+        $this->sendJson(['data' => $data]);
+    }
+
 
     protected function handleRoot(): void
     {
