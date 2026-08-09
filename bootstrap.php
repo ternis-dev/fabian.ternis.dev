@@ -52,6 +52,44 @@ if ($safePath === '/feed/news' || $safePath === '/feed/news/') {
     exit;
 }
 
+// Robots, Sitemap, and LLMs routes
+if ($safePath === '/robots.txt') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo \App\Services\SeoService::renderRobotsTxt();
+    exit;
+} elseif ($safePath === '/sitemap.xml') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: application/xml; charset=UTF-8');
+    echo \App\Services\SeoService::renderSitemapXml();
+    exit;
+} elseif ($safePath === '/stiemap.xml') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: /sitemap.xml");
+    exit;
+} elseif ($safePath === '/llms.txt') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo \App\Services\SeoService::renderLlmsTxt();
+    exit;
+} elseif ($safePath === '/llms.text') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: /llms.txt");
+    exit;
+}
+
 $getMimeType = function($path) {
     $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
     return match($ext) {
@@ -176,7 +214,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['cf-turnsti
 }
 
 // 404 route handler for unknown page requests
-if ($safePath !== '/' && $safePath !== '/index.php') {
+if ($safePath !== '/' && $safePath !== '/index.php' && $safePath !== '/links' && $safePath !== '/links/') {
     while (ob_get_level()) {
         ob_end_clean();
     }
@@ -215,6 +253,22 @@ require_once __DIR__ . '/src/uploads.php';
 $uploadsData = handle_uploads($s_, $api_, $turnstile);
 $uploadResult = $uploadsData['uploadResult'];
 $recentUploads = $uploadsData['recentUploads'];
+
+// Handle /links route dynamically
+if ($safePath === '/links' || $safePath === '/links/') {
+    ob_start();
+    include __DIR__ . '/src/index.php';
+    $mainHtml = ob_get_clean();
+
+    $extractedLinks = \App\Services\LinkExtractorService::extractLinksFromHtml($mainHtml);
+
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+
+    include __DIR__ . '/src/links.php';
+    exit;
+}
 
 // usort($domains, function($a, $b) {
 //     return strtotime($a['expires_at']) <=> strtotime($b['expires_at']);

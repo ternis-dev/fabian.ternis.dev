@@ -37,6 +37,7 @@ http_response_code($errorCode);
     <link rel="stylesheet" href="/assets/css/404.css">
 </head>
 <body class="dont-use-attibut-color-variables">
+    <div class="bg-error-code dont-use-attibut-color-variables" aria-hidden="true"><?= htmlspecialchars($errorCode) ?></div>
     <main class="error-container dont-use-attibut-color-variables">
         <h1 class="error-code dont-use-attibut-color-variables"><?= htmlspecialchars($errorCode) ?></h1>
         <h2 class="error-title dont-use-attibut-color-variables"><?= htmlspecialchars($title) ?></h2>
