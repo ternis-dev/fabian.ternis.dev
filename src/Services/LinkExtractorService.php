@@ -5,6 +5,32 @@ namespace App\Services;
 class LinkExtractorService
 {
     /**
+     * Human-friendly section titles mapping.
+     */
+    protected static array $sectionNames = [
+        'hero' => 'Hero & Overview',
+        'other' => 'Projects & Domains',
+        'contact' => 'Contact',
+        'news' => 'Latest News',
+        'homelab' => 'HomeLab Tech Stack',
+        'devices' => 'Device Specs',
+        'more_random' => 'Random Projects',
+        'domains' => 'Owned Domains',
+        'ai_chat' => 'AI Assistant',
+        'stories' => 'Instagram Stories',
+        'redaction' => 'Redaction',
+        'buttons' => 'Interactive Elements',
+        'linkshorten' => 'Link Shortener',
+        'toasts' => 'Toasts',
+        'spam_pervention' => 'Turnstile Captcha',
+        'fingerprinting' => 'Fingerprinting',
+        'competitions' => 'Competitions',
+        'uploads' => 'Community Uploads',
+        'footer' => 'Footer',
+        'general' => 'General Content'
+    ];
+
+    /**
      * Extract all links dynamically from the rendered HTML of the main page.
      * 
      * @param string $html
@@ -45,25 +71,21 @@ class LinkExtractorService
 
             // Find section context
             $sectionId = 'general';
-            $sectionTitle = 'General';
 
             $curr = $node->parentNode;
             while ($curr && $curr->nodeName !== 'body' && $curr->nodeName !== '#document') {
                 if ($curr->nodeName === 'section' && $curr->hasAttribute('id')) {
                     $sectionId = $curr->getAttribute('id');
-                    $headingNode = (new \DOMXPath($doc))->query('.//h1|.//h2|.//h3|.//h4', $curr)->item(0);
-                    if ($headingNode) {
-                        $sectionTitle = trim(preg_replace('/\s+/', ' ', $headingNode->textContent));
-                    }
                     break;
                 }
                 if ($curr->nodeName === 'footer') {
                     $sectionId = 'footer';
-                    $sectionTitle = 'Footer';
                     break;
                 }
                 $curr = $curr->parentNode;
             }
+
+            $sectionTitle = self::$sectionNames[$sectionId] ?? ucwords(str_replace(['_', '-'], ' ', $sectionId));
 
             // Categorize URL
             $parsed = parse_url($href);
@@ -93,7 +115,7 @@ class LinkExtractorService
                 'type' => $type,
                 'domain' => $domain,
                 'section_id' => $sectionId,
-                'section_title' => $sectionTitle ?: ucfirst($sectionId),
+                'section_title' => $sectionTitle,
                 'target' => $target,
                 'rel' => $rel,
             ];
