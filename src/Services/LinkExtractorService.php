@@ -31,6 +31,16 @@ class LinkExtractorService
     ];
 
     /**
+     * Get base URL for resolving relative links.
+     */
+    public static function getSiteUrl(): string
+    {
+        $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? 'fabian.ternis.dev';
+        return "{$scheme}://{$host}";
+    }
+
+    /**
      * Extract all links dynamically from the rendered HTML of the main page.
      * 
      * @param string $html
@@ -51,6 +61,7 @@ class LinkExtractorService
         $anchors = $xpath->query('//a[@href]');
 
         $links = [];
+        $siteUrl = self::getSiteUrl();
         $siteHost = strtolower($_SERVER['HTTP_HOST'] ?? 'fabian.ternis.dev');
 
         foreach ($anchors as $index => $node) {
@@ -87,30 +98,36 @@ class LinkExtractorService
 
             $sectionTitle = self::$sectionNames[$sectionId] ?? ucwords(str_replace(['_', '-'], ' ', $sectionId));
 
-            // Categorize URL
+            // Categorize and resolve URL
             $parsed = parse_url($href);
             $host = strtolower($parsed['host'] ?? '');
 
             if (str_starts_with($href, 'mailto:')) {
                 $type = 'email';
                 $domain = 'email';
+                $fullUrl = $href;
             } elseif (str_starts_with($href, 'tel:')) {
                 $type = 'phone';
                 $domain = 'phone';
+                $fullUrl = $href;
             } elseif (str_starts_with($href, '#')) {
                 $type = 'anchor';
                 $domain = 'internal';
+                $fullUrl = $siteUrl . '/' . $href;
             } elseif (empty($host) || $host === $siteHost) {
                 $type = 'internal';
                 $domain = 'internal';
+                $fullUrl = str_starts_with($href, '/') ? ($siteUrl . $href) : ($siteUrl . '/' . $href);
             } else {
                 $type = 'external';
                 $domain = preg_replace('/^www\./', '', $host);
+                $fullUrl = $href;
             }
 
             $links[] = [
                 'id' => 'link-' . ($index + 1),
                 'raw_href' => $href,
+                'full_url' => $fullUrl,
                 'text' => $text,
                 'type' => $type,
                 'domain' => $domain,

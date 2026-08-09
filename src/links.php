@@ -120,7 +120,7 @@ foreach ($extractedLinks as $link) {
                                  data-type="<?= htmlspecialchars($link['type']) ?>"
                                  data-domain="<?= htmlspecialchars($link['domain']) ?>"
                                  data-text="<?= htmlspecialchars(strtolower($link['text'])) ?>"
-                                 data-href="<?= htmlspecialchars(strtolower($link['raw_href'])) ?>">
+                                 data-href="<?= htmlspecialchars(strtolower($link['full_url'])) ?>">
                                 
                                 <div class="link-meta">
                                     <span class="type-badge type-<?= htmlspecialchars($link['type']) ?>"><?= htmlspecialchars($link['type']) ?></span>
@@ -128,7 +128,7 @@ foreach ($extractedLinks as $link) {
                                 </div>
 
                                 <div class="link-content">
-                                    <a href="<?= htmlspecialchars($link['raw_href']) ?>" 
+                                    <a href="<?= htmlspecialchars($link['full_url']) ?>" 
                                        class="link-title"
                                        <?= !empty($link['target']) ? 'target="' . htmlspecialchars($link['target']) . '"' : '' ?>
                                        <?= !empty($link['rel']) ? 'rel="' . htmlspecialchars($link['rel']) . '"' : '' ?>>
@@ -138,18 +138,18 @@ foreach ($extractedLinks as $link) {
                                         <?php endif; ?>
                                     </a>
                                     
-                                    <code class="link-url"><?= htmlspecialchars($link['raw_href']) ?></code>
+                                    <code class="link-url"><?= htmlspecialchars($link['full_url']) ?></code>
                                 </div>
 
                                 <div class="link-actions">
-                                    <a href="<?= htmlspecialchars($link['raw_href']) ?>" 
+                                    <a href="<?= htmlspecialchars($link['full_url']) ?>" 
                                        class="btn-act btn-open"
                                        <?= !empty($link['target']) ? 'target="' . htmlspecialchars($link['target']) . '"' : '' ?>>
                                         Open
                                     </a>
                                     <button type="button" 
                                             class="btn-act btn-copy" 
-                                            onclick="copyToClipboard(<?= htmlspecialchars(json_encode($link['raw_href']), ENT_QUOTES, 'UTF-8') ?>, this)">
+                                            onclick="copyToClipboard(<?= htmlspecialchars(json_encode($link['full_url']), ENT_QUOTES, 'UTF-8') ?>, this)">
                                         Copy
                                     </button>
                                 </div>
