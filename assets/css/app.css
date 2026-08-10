@@ -75,6 +75,84 @@ body {
     font-family: var(--font-main);
 
     section {
+        &#competitions {
+            /* margin-bottom: -5rem; */
+            margin-bottom: 3rem;
+        }
+
+        &#packages {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+
+            h2 {
+                font-size: 1.5rem;
+                color: var(--color-text-primary);
+                margin-bottom: 1.5rem;
+
+                packages, all {
+                    color: var(--color-text-tertiary);
+                    font-style: italic;
+                }
+            }
+
+            .packages-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.25rem;
+
+                > div {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1.25rem;
+                    border: 1px solid var(--color-text-tertiary);
+                    border-radius: 8px;
+                    background-color: var(--color-bg-secondary);
+                    transition: transform var(--transition-one), box-shadow var(--transition-one), border-color var(--transition-one);
+
+                    &:hover {
+                        border-color: var(--color-text-primary);
+                        transform: translateY(-3px);
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                    }
+
+                    span {
+                        font-family: var(--font-code);
+                        font-weight: bold;
+                        font-size: 1.05rem;
+                        color: var(--color-text-primary);
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.4rem;
+                        margin-bottom: 0.75rem;
+                        padding: 0.25rem 0.6rem;
+                        border-radius: 4px;
+                        background-color: rgba(0, 0, 0, 0.06);
+                        width: fit-content;
+
+                        &::before {
+                            content: '$';
+                            color: var(--color-link);
+                            font-weight: bold;
+                        }
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 160px;
+                        object-fit: cover;
+                        border-radius: 6px;
+                        border: 1px solid rgba(0, 0, 0, 0.1);
+                        background-color: rgba(0, 0, 0, 0.03);
+                        display: block;
+                    }
+                }
+
+                @media (max-width: 600px) {
+                    grid-template-columns: 1fr;
+                }
+            }
+        }
+
         &#hero {
             * {
                 WIDTH: fit-content;
@@ -1921,7 +1999,7 @@ body {
 
 
 /* ToDo: move to right position */
-just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, competitions, something, sad, pay {
+just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, competitions, something, sad, pay, packages, all {
     color: var(--color-text-tertiary);
     font-style: italic;
 }

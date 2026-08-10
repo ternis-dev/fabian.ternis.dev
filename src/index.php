@@ -79,7 +79,7 @@
             <?php endforeach; ?>
         </ol>
     </section>
-
+asdasd
 <div class="has-newsbanner">
 
     <section id="homelab">
@@ -442,9 +442,9 @@
     <section id="competitions">
         <h2>Some <competitions>competitions</competitions>, i took part in.</h2>
 
-        <div>
+        <!-- <div>
+        </div> -->
 
-        </div>
         <?php foreach(($competitions ?? []) as $competition): ?>
             <div>
                 <?php // if(isset($competition['images'])): ?>
@@ -459,7 +459,20 @@
                 </div>
             </div>
         <?php endforeach; ?>
+    </section>
 
+
+    <section id="packages">
+        <h2>The <packages>packages</packages>, i install on <all>all</all> my systems</h2>
+
+        <div class="packages-container">
+            <?php foreach(['tmux', 'btop', 'screenfetch'] as $package): ?>
+                <div>
+                    <span><?= $package ?></span>
+                    <!--img src="<?= $package ?>" alt="<?= $package ?>"-->
+                </div>
+            <?php endforeach; ?>
+        </div>
     </section>
 
     <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
