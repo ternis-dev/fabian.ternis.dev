@@ -40,18 +40,243 @@ body.chat-fullscreen-active {
     overflow: hidden !important;
 }
 
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]),
+    body:not([data-theme]) {
+        --color-bg: #121214;
+        --color-bg-secondary: #1f1f23;
+        --color-text-primary: #f4f4f5;
+        --color-text-secondary: #a1a1aa;
+        --color-text-tertiary: #52525b;
+        --color-link: #38bdf8;
+        --color-primary: #2563eb;
+        --color-primary-hover: #3b82f6;
+        --color-github-black: #ffffff;
+        --color-github-white: #121214;
+    }
+}
+
 body {
+    &[data-theme="light"] {
+        --color-bg: #fafafa;
+        --color-bg-secondary: #ebebeb;
+        --color-text-primary: #111827;
+        --color-text-secondary: #374151;
+        --color-text-tertiary: #6b7280;
+        --color-link: #2563eb;
+        --color-primary: #2563eb;
+        --color-primary-hover: #1d4ed8;
+        --color-github-black: #000000;
+        --color-github-white: #ffffff;
+    }
+
     &[data-theme="dark"] {
-        --color-bg: green;
+        --color-bg: #121214;
+        --color-bg-secondary: #1f1f23;
+        --color-text-primary: #f4f4f5;
+        --color-text-secondary: #a1a1aa;
+        --color-text-tertiary: #52525b;
+        --color-link: #38bdf8;
+        --color-primary: #2563eb;
+        --color-primary-hover: #3b82f6;
+        --color-github-black: #ffffff;
+        --color-github-white: #121214;
     }
-    &[data-theme="light"] { 
-        --color-bg: yellow;
-    }
+
+    &[data-theme="catppuccin"],
     &[data-theme="catpucchino"] {
-        --color-bg: red;
+        --color-bg: #1e1e2e;
+        --color-bg-secondary: #313244;
+        --color-text-primary: #cdd6f4;
+        --color-text-secondary: #bac2de;
+        --color-text-tertiary: #6c7086;
+        --color-link: #89b4fa;
+        --color-primary: #cba6f7;
+        --color-primary-hover: #f5c2e7;
+        --color-github-black: #cdd6f4;
+        --color-github-white: #1e1e2e;
     }
+
     &[data-theme="dracula"] {
-        --color-bg: blue;
+        --color-bg: #282a36;
+        --color-bg-secondary: #44475a;
+        --color-text-primary: #f8f8f2;
+        --color-text-secondary: #bd93f9;
+        --color-text-tertiary: #6272a4;
+        --color-link: #8be9fd;
+        --color-primary: #ff79c6;
+        --color-primary-hover: #ff92d0;
+        --color-github-black: #f8f8f2;
+        --color-github-white: #282a36;
+    }
+
+    &[data-theme="winter"] {
+        --color-bg: #0f172a;
+        --color-bg-secondary: #1e293b;
+        --color-text-primary: #f1f5f9;
+        --color-text-secondary: #94a3b8;
+        --color-text-tertiary: #475569;
+        --color-link: #38bdf8;
+        --color-primary: #0ea5e9;
+        --color-primary-hover: #7dd3fc;
+        --color-github-black: #f1f5f9;
+        --color-github-white: #0f172a;
+    }
+
+    &[data-theme="forest"] {
+        --color-bg: #121d17;
+        --color-bg-secondary: #1c2e24;
+        --color-text-primary: #e2f1e8;
+        --color-text-secondary: #a3c9b4;
+        --color-text-tertiary: #4d7c62;
+        --color-link: #34d399;
+        --color-primary: #10b981;
+        --color-primary-hover: #6ee7b7;
+        --color-github-black: #e2f1e8;
+        --color-github-white: #121d17;
+    }
+
+    &[data-theme="neon"] {
+        --color-bg: #0d0221;
+        --color-bg-secondary: #1d0b38;
+        --color-text-primary: #00f5d4;
+        --color-text-secondary: #f72585;
+        --color-text-tertiary: #7b2cbf;
+        --color-link: #00f5d4;
+        --color-primary: #f72585;
+        --color-primary-hover: #ff007f;
+        --color-github-black: #00f5d4;
+        --color-github-white: #0d0221;
+    }
+
+    &[data-theme="nord"] {
+        --color-bg: #2e3440;
+        --color-bg-secondary: #3b4252;
+        --color-text-primary: #eceff4;
+        --color-text-secondary: #d8dee9;
+        --color-text-tertiary: #4c566a;
+        --color-link: #88c0d0;
+        --color-primary: #81a1c1;
+        --color-primary-hover: #5e81ac;
+        --color-github-black: #eceff4;
+        --color-github-white: #2e3440;
+    }
+
+    &[data-theme="tokyo-night"] {
+        --color-bg: #1a1b26;
+        --color-bg-secondary: #24283b;
+        --color-text-primary: #c0caf5;
+        --color-text-secondary: #a9b1d6;
+        --color-text-tertiary: #565f89;
+        --color-link: #7aa2f7;
+        --color-primary: #bb9af7;
+        --color-primary-hover: #7dcfff;
+        --color-github-black: #c0caf5;
+        --color-github-white: #1a1b26;
+    }
+
+    &[data-theme="monokai"] {
+        --color-bg: #2d2a2e;
+        --color-bg-secondary: #3a373b;
+        --color-text-primary: #fcfcfa;
+        --color-text-secondary: #c1c0c0;
+        --color-text-tertiary: #727072;
+        --color-link: #ffd866;
+        --color-primary: #ff6188;
+        --color-primary-hover: #fc9867;
+        --color-github-black: #fcfcfa;
+        --color-github-white: #2d2a2e;
+    }
+
+    &[data-theme="cyberpunk"] {
+        --color-bg: #10002b;
+        --color-bg-secondary: #240046;
+        --color-text-primary: #ffee32;
+        --color-text-secondary: #e0aaff;
+        --color-text-tertiary: #7b2cbf;
+        --color-link: #ff0054;
+        --color-primary: #ff5400;
+        --color-primary-hover: #ffbd00;
+        --color-github-black: #ffee32;
+        --color-github-white: #10002b;
+    }
+
+    &[data-theme="rose-pine"] {
+        --color-bg: #191724;
+        --color-bg-secondary: #1f1d2e;
+        --color-text-primary: #e0def4;
+        --color-text-secondary: #908caa;
+        --color-text-tertiary: #6e6a86;
+        --color-link: #9ccfd8;
+        --color-primary: #ebbcba;
+        --color-primary-hover: #f6c177;
+        --color-github-black: #e0def4;
+        --color-github-white: #191724;
+    }
+
+    &[data-theme="coffee"] {
+        --color-bg: #201815;
+        --color-bg-secondary: #2d221e;
+        --color-text-primary: #f5ebe0;
+        --color-text-secondary: #d5bdaf;
+        --color-text-tertiary: #8d7a6e;
+        --color-link: #e3a857;
+        --color-primary: #c68b59;
+        --color-primary-hover: #d4a373;
+        --color-github-black: #f5ebe0;
+        --color-github-white: #201815;
+    }
+
+    &[data-theme="solarized-dark"] {
+        --color-bg: #002b36;
+        --color-bg-secondary: #073642;
+        --color-text-primary: #93a1a1;
+        --color-text-secondary: #839496;
+        --color-text-tertiary: #586e75;
+        --color-link: #2aa198;
+        --color-primary: #268bd2;
+        --color-primary-hover: #6c71c4;
+        --color-github-black: #93a1a1;
+        --color-github-white: #002b36;
+    }
+
+    &[data-theme="solarized-light"] {
+        --color-bg: #fdf6e3;
+        --color-bg-secondary: #eee8d5;
+        --color-text-primary: #657b83;
+        --color-text-secondary: #586e75;
+        --color-text-tertiary: #93a1a1;
+        --color-link: #2aa198;
+        --color-primary: #268bd2;
+        --color-primary-hover: #cb4b16;
+        --color-github-black: #657b83;
+        --color-github-white: #fdf6e3;
+    }
+
+    &[data-theme="sunset"] {
+        --color-bg: #1c1326;
+        --color-bg-secondary: #2a1b3d;
+        --color-text-primary: #fceade;
+        --color-text-secondary: #f3b082;
+        --color-text-tertiary: #8c5a6b;
+        --color-link: #ff758f;
+        --color-primary: #ff758f;
+        --color-primary-hover: #ff4d6d;
+        --color-github-black: #fceade;
+        --color-github-white: #1c1326;
+    }
+
+    &[data-theme="emerald"] {
+        --color-bg: #062419;
+        --color-bg-secondary: #0a3a29;
+        --color-text-primary: #ecfdf5;
+        --color-text-secondary: #a7f3d0;
+        --color-text-tertiary: #059669;
+        --color-link: #34d399;
+        --color-primary: #10b981;
+        --color-primary-hover: #6ee7b7;
+        --color-github-black: #ecfdf5;
+        --color-github-white: #062419;
     }
 
     /* background-color: var(--bg-color);
@@ -1963,6 +2188,35 @@ body {
 }
 
 
+
+.theme-select-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 0.5rem 0;
+
+    #theme-select {
+        background-color: var(--color-bg-secondary);
+        color: var(--color-text-primary);
+        border: 1px solid var(--color-text-tertiary);
+        border-radius: 6px;
+        padding: 0.35rem 0.75rem;
+        font-family: var(--font-code);
+        font-size: 0.875rem;
+        cursor: pointer;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+        &:hover, &:focus {
+            border-color: var(--color-link);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        option {
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+        }
+    }
+}
 
 #live-time-container {
     .location-indicator {

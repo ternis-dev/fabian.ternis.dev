@@ -12,32 +12,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     applyNoColorVars();
 
-    let theme = localStorage.getItem('theme') ?? 'system';
+    let savedTheme = localStorage.getItem('theme') ?? 'system';
     const themeInput = document.getElementById('theme-select');
-    // const apiData = document.getElementById(apiDataElementId ?? 'apiData'); // The Back-end creates the element-id (may be unique)
-    // const hackatime_total = 0; // apiData Stuff
 
-    const available_themes = ['system', 'dark', 'light', 'catpucchino', 'dracula', 'winter', 'forest', 'neon'];
+    const available_themes = [
+        { id: 'system', name: 'System (Auto)' },
+        { id: 'dark', name: 'Dark' },
+        { id: 'light', name: 'Light' },
+        { id: 'catppuccin', name: 'Catppuccin' },
+        { id: 'dracula', name: 'Dracula' },
+        { id: 'winter', name: 'Winter' },
+        { id: 'forest', name: 'Forest' },
+        { id: 'neon', name: 'Neon' },
+        { id: 'nord', name: 'Nord' },
+        { id: 'tokyo-night', name: 'Tokyo Night' },
+        { id: 'monokai', name: 'Monokai' },
+        { id: 'cyberpunk', name: 'Cyberpunk' },
+        { id: 'rose-pine', name: 'Rosé Pine' },
+        { id: 'coffee', name: 'Coffee' },
+        { id: 'solarized-dark', name: 'Solarized Dark' },
+        { id: 'solarized-light', name: 'Solarized Light' },
+        { id: 'sunset', name: 'Sunset' },
+        { id: 'emerald', name: 'Emerald' }
+    ];
 
-    themeInput.innerHTML = available_themes.map(theme_option => {
-        const isSelected = theme_option === theme ? ' selected' : '';
-        return `<option value="${theme_option}"${isSelected}>${theme_option}</option>`;
-    }).join('');
+    if (themeInput) {
+        themeInput.innerHTML = available_themes.map(t => {
+            const isSelected = (savedTheme === t.id || (savedTheme === 'catpucchino' && t.id === 'catppuccin')) ? ' selected' : '';
+            return `<option value="${t.id}"${isSelected}>${t.name}</option>`;
+        }).join('');
+
+        themeInput.addEventListener('change', updateTheme);
+    }
 
     updateTheme();
 
     function updateTheme() {
-        let theme = themeInput.value;
-        localStorage.setItem('theme', theme);
+        let currentTheme = themeInput ? themeInput.value : savedTheme;
+        localStorage.setItem('theme', currentTheme);
 
-        if(theme != 'system') {
-            body.dataset.theme = theme;
+        if (currentTheme !== 'system') {
+            body.dataset.theme = currentTheme;
         } else {
-            // do stuff (ToDo)
+            delete body.dataset.theme;
         }
     }
-
-    themeInput.addEventListener('change', updateTheme)
 
     const liveTimeContainer = document.getElementById('live-time-container');
     const liveTimeDisplay = document.getElementById('live-time-display');
