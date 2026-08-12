@@ -2259,14 +2259,8 @@ body {
         transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 
         &:hover {
-            background-color: var(--color-github-black);
-            border-color: var(--color-github-black);
-            color: var(--color-github-white);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-
-            svg path {
-                fill: var(--color-github-white);
-            }
+            transform: rotate(45deg) scale(1.08);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
         }
 
         svg {
