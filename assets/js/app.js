@@ -52,8 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', currentTheme);
 
         if (currentTheme !== 'system') {
+            document.documentElement.dataset.theme = currentTheme;
             body.dataset.theme = currentTheme;
         } else {
+            delete document.documentElement.dataset.theme;
             delete body.dataset.theme;
         }
     }

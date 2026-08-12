@@ -56,6 +56,8 @@ body.chat-fullscreen-active {
     }
 }
 
+:root,
+html,
 body {
     &[data-theme="light"] {
         --color-bg: #fafafa;
@@ -278,7 +280,17 @@ body {
         --color-github-black: #ecfdf5;
         --color-github-white: #062419;
     }
+}
 
+html {
+    min-height: 100vh;
+    --a-background-color: var(--color-bg);
+    --a-color: var(--color-text-primary);
+    background-color: var(--a-background-color);
+    color: var(--a-color);
+}
+
+body {
     /* background-color: var(--bg-color);
     color: var(--text-color) */
     --a-background-color: var(--color-bg);
@@ -2246,7 +2258,7 @@ body {
         align-items: center;
         justify-content: center;
         position: absolute;
-        top: 30px;
+        top: 20px;
         right: -40px;
         width: 170px;
         padding: 8px 0;

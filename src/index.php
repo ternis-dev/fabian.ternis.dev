@@ -79,7 +79,7 @@
             <?php endforeach; ?>
         </ol>
     </section>
-asdasd
+
 <div class="has-newsbanner">
 
     <section id="homelab">

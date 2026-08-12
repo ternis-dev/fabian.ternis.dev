@@ -285,6 +285,14 @@ if ($safePath === '/links' || $safePath === '/links/') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fabian Ternis - Personal Website</title>
+    <script>
+        (function() {
+            var t = localStorage.getItem('theme');
+            if (t && t !== 'system') {
+                document.documentElement.dataset.theme = t;
+            }
+        })();
+    </script>
     <!-- Whyever this is anotehr unicode ... ? ... -->
     <link rel="stylesheet" href="app.css">
     <link rel="alternate" type="application/rss+xml" title="Fabian Ternis - News (RSS Feed)" href="/feed/news/xml">
