@@ -558,6 +558,8 @@ body {
         }
 
         a {
+            &:not(&.OTHER-LINK) {
+            &:not(&.prevent-default) {
             --a-color: var(--color-link);
             text-decoration: none;
             position: relative;
@@ -625,6 +627,8 @@ body {
                         transform: translateX(.35rem);
                     }
                 }
+            }
+            }
             }
         }
 
@@ -2229,26 +2233,66 @@ body {
 }
 
 #github-star-container {
-    /* anyhow not functioniong if inside body ... */
-    --a-background-color: var(--color-github-black);
-    /* position: absolute; */
     position: fixed;
-
-    z-index: 6969;
-
     top: 0;
     right: 0;
+    z-index: 6969;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
 
-    width: 10dvh;
-    height: 10dvh;
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 30px;
+        right: -40px;
+        width: 170px;
+        padding: 8px 0;
+        background-color: var(--color-github-white, var(--color-bg-secondary));
+        color: var(--color-github-black, var(--color-text-primary));
+        border: 1px solid var(--color-text-tertiary);
+        transform: rotate(45deg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        text-decoration: none;
+        transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 
-    rotate: 45deg;
-    /* translate: 0 -5dvh; */
-    transform: translateY(-3dvh);
-    scale: 2.45;
+        &:hover {
+            background-color: var(--color-github-black);
+            border-color: var(--color-github-black);
+            color: var(--color-github-white);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 
-    @media(max-width: 1000px) {
-        display:none;
+            svg path {
+                fill: var(--color-github-white);
+            }
+        }
+
+        svg {
+            width: 80px;
+            height: auto;
+            display: block;
+
+            path {
+                fill: var(--color-github-black, var(--color-text-primary));
+                transition: fill 0.2s ease;
+            }
+        }
+    }
+
+    svg {
+        width: 80px;
+        height: auto;
+        display: block;
+
+        path {
+            fill: var(--color-github-black, var(--color-text-primary));
+        }
+    }
+
+    @media (max-width: 1000px) {
+        display: none;
     }
 }
 
