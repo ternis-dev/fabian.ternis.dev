@@ -397,6 +397,21 @@
     </section>
 
 
+    <section id="web-search_org">
+        <h2>Web-Search.org</h2>
+
+        <div>
+            <p>I got this domain and started the Project becuase i thought taht Searching teh web could be a way better experience than it currently is with google, AI-Summaries and co.</p>
+            <h3>The Start</h3>
+            <p>I started by half-vibe-coding an initial application that was way too slow and not optimized at all.</p>
+            <h3>The Plan</h3>
+            <p>My Plan is it to have a functioning application by mid-2027 and some kind of "Search Database", everyone can download and self-host.</p>
+            <!-- <h3></h3> -->
+            <p>I also plan to have customizeable "trackign" and "AI" features (e.g. user can specify if tehy want their query and co. to be stored or if tehy want everything to be voided). AI-features could use the users api-tokens and every feature could be toggleable. I also plan on stronmg Privacy-features like proxying and co.</p>
+        </div>
+    </section>
+
+
     <section id="spam_pervention">
         <h2>A Captcha just for <fun>fun</fun>!</h2>
 
@@ -572,14 +587,15 @@
             Fabian Ternis
 
             <div class="footer-row bottom-oriented">
-                <!-- <ul class="footer-row"> -->
                 <ul class="footer-column">
                     <li class="footer-item">a</li>
                     <li class="footer-item">b</li>
                     <li class="footer-item">c</li>
                     <li class="footer-item">d</li>
+                    <li class="footer-item">e</li>
+                    <li class="footer-item">f</li>
+                    <li class="footer-item">g</li>
                 </ul>
-                <!-- <ul class="footer-row"> -->
                 <ul class="footer-column">
                     <li class="footer-item">1</li>
                     <li class="footer-item">2</li>
@@ -588,7 +604,6 @@
                     <li class="footer-item">5</li>
                     <li class="footer-item">6</li>
                 </ul>
-                <!-- <ul class="footer-row"> -->
                 <ul class="footer-column">
                     <li class="footer-item">I</li>
                     <li class="footer-item">II</li>
@@ -610,10 +625,10 @@
 
             <div>
                 <div>Current Time: < ToDo ></div>
-               <div>Time Spent: < Hack A Time ></div>
+                <div>Time Spent: < Hack A Time ></div>
             </div>
 
-            I have way too many outlinks on this website and may use ternis.link(once it is finally finished (or eventually begun)).
+            <div>I have way too many outlinks on this website and may use ternis.link(once it is finally finished (or eventually begun)). ...</div>
         </div>
     </footer>
 </div>
