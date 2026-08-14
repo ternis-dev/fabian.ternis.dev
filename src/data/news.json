@@ -1,5 +1,15 @@
 [
     {
+        "id": 12,
+        "date": "2026-08-14",
+        "content": "Just found out that wakatime autoatically sets \"fast changes\"(e.g. 10 lines changed in 2s) as \"Ai Coding\" which added 2h of \"AI-Coding\" to my Project, where i used no ai for the actual code. The Revierwer Told me to \"please declaude AI honestly!\". I hope they understand my response."
+    },
+    {
+        "id": 11,
+        "date": "2026-08-13",
+        "content": "Just found out taht my Macondo-project had a revierer-response ONE WEEK ago and just noticed it today. (I forgot to update the README)"
+    },
+    {
         "id": 10,
         "date": "2026-08-12",
         "content": "Bought ternisdomains.e today ... (In addition to t-api.de, tstatic.de, thosted.de and tstatus.de)"

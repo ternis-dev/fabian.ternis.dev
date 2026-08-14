@@ -15,31 +15,64 @@ document.addEventListener('DOMContentLoaded', () => {
     let savedTheme = localStorage.getItem('theme') ?? 'system';
     const themeInput = document.getElementById('theme-select');
 
-    const available_themes = [
-        { id: 'system', name: 'System (Auto)' },
-        { id: 'dark', name: 'Dark' },
-        { id: 'light', name: 'Light' },
-        { id: 'catppuccin', name: 'Catppuccin' },
-        { id: 'dracula', name: 'Dracula' },
-        { id: 'winter', name: 'Winter' },
-        { id: 'forest', name: 'Forest' },
-        { id: 'neon', name: 'Neon' },
-        { id: 'nord', name: 'Nord' },
-        { id: 'tokyo-night', name: 'Tokyo Night' },
-        { id: 'monokai', name: 'Monokai' },
-        { id: 'cyberpunk', name: 'Cyberpunk' },
-        { id: 'rose-pine', name: 'Rosé Pine' },
-        { id: 'coffee', name: 'Coffee' },
-        { id: 'solarized-dark', name: 'Solarized Dark' },
-        { id: 'solarized-light', name: 'Solarized Light' },
-        { id: 'sunset', name: 'Sunset' },
-        { id: 'emerald', name: 'Emerald' }
+    const theme_groups = [
+        {
+            label: 'System & Defaults',
+            themes: [
+                { id: 'system', name: 'System (Auto)' },
+                { id: 'dark', name: 'Dark Mode' },
+                { id: 'light', name: 'Light Mode' }
+            ]
+        },
+        {
+            label: 'Light Themes ☀️',
+            themes: [
+                { id: 'catppuccin-latte', name: 'Catppuccin Latte' },
+                { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn' },
+                { id: 'nord-light', name: 'Nord Light' },
+                { id: 'one-light', name: 'One Light' },
+                { id: 'solarized-light', name: 'Solarized Light' },
+                { id: 'gruvbox-light', name: 'Gruvbox Light' },
+                { id: 'tokyo-night-day', name: 'Tokyo Night Day' },
+                { id: 'paper-sepia', name: 'Paper / Sepia' },
+                { id: 'cupcake', name: 'Cupcake' },
+                { id: 'garden', name: 'Garden' },
+                { id: 'horizon-light', name: 'Horizon Light' },
+                { id: 'alabaster', name: 'Alabaster' }
+            ]
+        },
+        {
+            label: 'Dark Themes 🌙',
+            themes: [
+                { id: 'catppuccin', name: 'Catppuccin Mocha' },
+                { id: 'dracula', name: 'Dracula' },
+                { id: 'nord', name: 'Nord' },
+                { id: 'tokyo-night', name: 'Tokyo Night' },
+                { id: 'rose-pine', name: 'Rosé Pine' },
+                { id: 'solarized-dark', name: 'Solarized Dark' },
+                { id: 'gruvbox-dark', name: 'Gruvbox Dark' },
+                { id: 'winter', name: 'Winter' },
+                { id: 'forest', name: 'Forest' },
+                { id: 'emerald', name: 'Emerald' },
+                { id: 'coffee', name: 'Coffee' },
+                { id: 'sunset', name: 'Sunset' },
+                { id: 'monokai', name: 'Monokai' },
+                { id: 'cyberpunk', name: 'Cyberpunk' },
+                { id: 'synthwave', name: 'Synthwave \'84' },
+                { id: 'neon', name: 'Neon' },
+                { id: 'horizon-dark', name: 'Horizon Dark' },
+                { id: 'vampire', name: 'Vampire' }
+            ]
+        }
     ];
 
     if (themeInput) {
-        themeInput.innerHTML = available_themes.map(t => {
-            const isSelected = (savedTheme === t.id || (savedTheme === 'catpucchino' && t.id === 'catppuccin')) ? ' selected' : '';
-            return `<option value="${t.id}"${isSelected}>${t.name}</option>`;
+        themeInput.innerHTML = theme_groups.map(group => {
+            const options = group.themes.map(t => {
+                const isSelected = (savedTheme === t.id || (savedTheme === 'catpucchino' && t.id === 'catppuccin')) ? ' selected' : '';
+                return `<option value="${t.id}"${isSelected}>${t.name}</option>`;
+            }).join('');
+            return `<optgroup label="${group.label}">${options}</optgroup>`;
         }).join('');
 
         themeInput.addEventListener('change', updateTheme);

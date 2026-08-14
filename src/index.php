@@ -2,7 +2,7 @@
     <section id="hero">
         <div class="hero-item">
             <h1>Hello, I'm <me>Fabian Ternis</me></h1>
-            <h2>A Student and developer from Germany.</h2>
+            <h2>A Student and developer from <location>Germany</location>.</h2>
             <div class="some-container">
                 <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
                 <h3>Web development @ <span class="font-code">(<a href="http://xpsystems.eu" target="_blank">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
