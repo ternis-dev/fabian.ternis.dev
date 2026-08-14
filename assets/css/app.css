@@ -13,6 +13,33 @@
     scrollbar-width: none;
 }
 
+/* Focus reset */
+input,
+textarea,
+select,
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+:focus,
+:focus-visible,
+input:focus,
+textarea:focus,
+select:focus,
+button:focus,
+a:focus {
+    outline: none !important;
+}
+
+/* Utility class to suppress outlines completely */
+.hide-outline,
+.hide-outline:focus,
+.hide-outline:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 /* Hide scrollbars across Chrome, Safari, Opera */
 *::-webkit-scrollbar,
 html::-webkit-scrollbar,
@@ -1522,11 +1549,11 @@ body {
                 
                 border-radius: .7rem;
             }
-
             form#upload_form {
                 .disclaimer {
                     font-family: var(--font-footer);
                     font-size: smaller;
+                    color: var(--color-text-secondary);
                 }
                 display: flex;
                 flex-direction: column;
@@ -1534,8 +1561,8 @@ body {
                 width: 100%;
                 margin: 0 auto;
                 padding: 1.5rem;
-                background-color: #ffffff;
-                border: 1px solid #e5e7eb;
+                background-color: var(--color-bg-secondary);
+                border: 1px solid var(--color-text-tertiary);
                 border-radius: 8px;
                 box-sizing: border-box;
 
@@ -1545,11 +1572,12 @@ body {
                     display: flex;
                     flex-direction: column;
                     gap: 0.375rem;
+                    background-color: var(--color-bg);
 
                     label {
                         font-size: 0.875rem;
                         font-weight: 600;
-                        color: #374151;
+                        color: var(--color-text-primary);
                     }
 
                     input[type="text"],
@@ -1558,22 +1586,22 @@ body {
                         padding: 0.625rem 0.75rem;
                         font-size: 0.875rem;
                         line-height: 1.4;
-                        color: #111827;
-                        background-color: #f9fafb;
-                        border: 1px solid #d1d5db;
+                        color: var(--color-text-primary);
+                        background-color: var(--color-bg);
+                        border: 1px solid var(--color-text-tertiary);
                         border-radius: 6px;
                         box-sizing: border-box;
-                        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+                        transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 
                         &:focus {
                             outline: none;
                             border-color: var(--color-primary);
-                            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-                            background-color: #ffffff;
+                            background-color: var(--color-bg-secondary);
                         }
 
                         &::placeholder {
-                            color: #9ca3af;
+                            color: var(--color-text-tertiary);
+                            opacity: 0.7;
                         }
                     }
 
@@ -1584,7 +1612,7 @@ body {
 
                     input[type="file"] {
                         font-size: 0.875rem;
-                        color: #4b5563;
+                        color: var(--color-text-secondary);
                         cursor: pointer;
 
                         &::file-selector-button {
@@ -1592,16 +1620,16 @@ body {
                             margin-right: 0.75rem;
                             font-size: 0.875rem;
                             font-weight: 500;
-                            color: #374151;
-                            background-color: #f3f4f6;
-                            border: 1px solid #d1d5db;
+                            color: var(--color-text-primary);
+                            background-color: var(--color-bg);
+                            border: 1px solid var(--color-text-tertiary);
                             border-radius: 6px;
                             cursor: pointer;
                             transition: background-color 0.15s ease, border-color 0.15s ease;
 
                             &:hover {
-                                background-color: #e5e7eb;
-                                border-color: #9ca3af;
+                                background-color: var(--color-bg-secondary);
+                                border-color: var(--color-primary);
                             }
                         }
                     }
@@ -1616,7 +1644,7 @@ body {
                 /* border-radius: 4rem; */
                 border-radius: 4rem 4rem calc(1rem + 6px) calc(1rem + 6px);
 
-                /* :nth-last-child() /* also: .form-buttons *\/ {
+                /* :nth-last-child() /* also: .form-buttons */ {
                     border-radius: 0 0 3rem 3rem;
                     overflow: hidden;
                 } */
@@ -1635,7 +1663,7 @@ body {
                         padding: 0.75rem 1rem;
                         font-size: 0.875rem;
                         font-weight: 600;
-                        color: var(--color-bg);
+                        color: var(--color-github-white);
                         background-color: var(--color-primary);
                         border: none;
                         border-radius: 6px;
@@ -1983,7 +2011,6 @@ body {
 
                         &:focus {
                             border-color: var(--color-primary);
-                            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
                             background-color: #222222;
                         }
 
@@ -2025,7 +2052,6 @@ body {
 
                     &:focus {
                         border-color: var(--color-primary);
-                        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
                         background-color: #2a2a2a;
                     }
 
@@ -2226,6 +2252,16 @@ body {
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.25);
 
             margin-inline-start: calc(50% - 50vw);
+            a {
+                color: #ffffff;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+
+                &:hover {
+                    color: #ffffff;
+                    opacity: 0.85;
+                }
+            }
             .ticker-content {
                 display: inline-block;
                 padding-left: 100%;
@@ -2393,7 +2429,6 @@ body {
 
         &:hover, &:focus {
             border-color: var(--color-link);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
 
         option {

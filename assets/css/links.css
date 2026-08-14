@@ -154,7 +154,8 @@ body.links-page-body {
 
 .search-field input:focus {
     border-color: var(--color-primary);
-    background: #ffffff;
+    outline: none;
+    box-shadow: none;
 }
 
 .btn-clear {
