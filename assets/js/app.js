@@ -258,6 +258,25 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast(message, type, duration);
         });
     }
+
+    // Package command copy handler
+    document.addEventListener('click', (e) => {
+        const cmdBox = e.target.closest('.package-cmd-box');
+        if (cmdBox) {
+            const cmd = cmdBox.dataset.cmd;
+            if (cmd) {
+                navigator.clipboard.writeText(cmd).then(() => {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(`Copied "${cmd}" to clipboard`, 'success', 2500);
+                    }
+                }).catch(() => {
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Failed to copy to clipboard', 'error', 2500);
+                    }
+                });
+            }
+        }
+    });
 });
 
 // Global callbacks for Turnstile widget

@@ -478,13 +478,106 @@
 
 
     <section id="packages">
-        <h2>The <packages>packages</packages>, i install on <all>all</all> my systems</h2>
+        <div class="packages-header">
+            <h2>The <packages>packages</packages>, I install on <all>all</all> my systems</h2>
+            <p class="packages-subtitle">Essential CLI tools & utilities bootstrapped on every environment</p>
+        </div>
 
         <div class="packages-container">
-            <?php foreach(['tmux', 'btop', 'screenfetch'] as $package): ?>
-                <div>
-                    <span><?= $package ?></span>
-                    <!--img src="<?= $package ?>" alt="<?= $package ?>"-->
+            <?php
+            $essential_packages = [
+                [
+                    'name' => 'tmux',
+                    'category' => 'CLI Utility',
+                    'desc' => 'Terminal multiplexer for persistent sessions & split windows.',
+                    'cmd' => 'sudo apt install tmux'
+                ],
+                [
+                    'name' => 'btop',
+                    'category' => 'Monitoring',
+                    'desc' => 'TUI resource monitor with interactive process graphs.',
+                    'cmd' => 'sudo apt install btop'
+                ],
+                [
+                    'name' => 'git',
+                    'category' => 'Dev Tools',
+                    'desc' => 'Distributed version control system for source code.',
+                    'cmd' => 'sudo apt install git'
+                ],
+                [
+                    'name' => 'docker',
+                    'category' => 'Containers',
+                    'desc' => 'Container runtime for isolated app environments.',
+                    'cmd' => 'sudo apt install docker.io'
+                ],
+                [
+                    'name' => 'curl',
+                    'category' => 'Networking',
+                    'desc' => 'Command-line tool for transferring data with URLs.',
+                    'cmd' => 'sudo apt install curl'
+                ],
+                [
+                    'name' => 'sl',
+                    'category' => 'Fun / Essential',
+                    'desc' => 'Steam Locomotive: Runs a train across your terminal when you mistype ls.',
+                    'cmd' => 'sudo apt install sl'
+                ],
+                [
+                    'name' => 'caddy',
+                    'category' => 'Webhosting',
+                    'desc' => 'Fast, open-source web server with automatic HTTPS & reverse proxying.',
+                    'cmd' => 'sudo apt install caddy'
+                ],
+                [
+                    'name' => 'composer',
+                    'category' => 'Webhosting',
+                    'desc' => 'Dependency manager for PHP projects & package management.',
+                    'cmd' => 'sudo apt install composer'
+                ],
+                [
+                    'name' => 'php',
+                    'category' => 'Webhosting',
+                    'desc' => 'Popular server-side scripting language for modern web development.',
+                    'cmd' => 'sudo apt install php-cli php-fpm'
+                ],
+                [
+                    'name' => 'ufw',
+                    'category' => 'Security',
+                    'desc' => 'Uncomplicated Firewall for easily configuring & managing netfilter rules.',
+                    'cmd' => 'sudo apt install ufw'
+                ],
+                [
+                    'name' => 'fail2ban',
+                    'category' => 'Security',
+                    'desc' => 'Intrusion prevention framework that blocks brute-force attack vectors.',
+                    'cmd' => 'sudo apt install fail2ban'
+                ],
+                [
+                    'name' => 'certbot',
+                    'category' => 'Webhosting',
+                    'desc' => 'Automatic Let\'s Encrypt SSL/TLS certificate issuing & renewal tool.',
+                    'cmd' => 'sudo apt install certbot'
+                ],
+                [
+                    'name' => 'htop',
+                    'category' => 'Monitoring',
+                    'desc' => 'Interactive process viewer & TUI system resource monitor.',
+                    'cmd' => 'sudo apt install htop'
+                ]
+            ];
+            foreach($essential_packages as $pkg): ?>
+                <div class="package-card">
+                    <div class="package-card-header">
+                        <span class="package-name"><?= htmlspecialchars($pkg['name']) ?></span>
+                        <span class="package-badge"><?= htmlspecialchars($pkg['category']) ?></span>
+                    </div>
+                    <p class="package-desc"><?= htmlspecialchars($pkg['desc']) ?></p>
+                    <div class="package-cmd-box" title="Click to copy install command" data-cmd="<?= htmlspecialchars($pkg['cmd']) ?>">
+                        <code>$ <?= htmlspecialchars($pkg['cmd']) ?></code>
+                        <button type="button" class="btn-copy-cmd" aria-label="Copy install command">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                        </button>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>

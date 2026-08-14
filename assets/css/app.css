@@ -523,70 +523,123 @@ body {
         }
 
         &#packages {
-            margin-top: 3rem;
-            margin-bottom: 3rem;
+            margin-top: 3.5rem;
+            margin-bottom: 3.5rem;
 
-            h2 {
-                font-size: 1.5rem;
-                color: var(--color-text-primary);
+            .packages-header {
                 margin-bottom: 1.5rem;
+                h2 {
+                    font-size: 1.6rem;
+                    color: var(--color-text-primary);
+                    margin-bottom: 0.35rem;
 
-                packages, all {
-                    color: var(--color-text-tertiary);
-                    font-style: italic;
+                    packages, all {
+                        color: var(--color-link);
+                        font-style: italic;
+                    }
+                }
+                .packages-subtitle {
+                    font-size: 0.95rem;
+                    color: var(--color-text-secondary);
+                    font-family: var(--font-footer);
                 }
             }
 
             .packages-container {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
                 gap: 1.25rem;
 
-                > div {
+                .package-card {
                     display: flex;
                     flex-direction: column;
+                    justify-content: space-between;
+                    gap: 0.85rem;
                     padding: 1.25rem;
                     border: 1px solid var(--color-text-tertiary);
-                    border-radius: 8px;
+                    border-radius: 12px;
                     background-color: var(--color-bg-secondary);
-                    transition: transform var(--transition-one), box-shadow var(--transition-one), border-color var(--transition-one);
+                    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 
                     &:hover {
-                        border-color: var(--color-text-primary);
-                        /* transform: translateY(-3px); */
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                        border-color: var(--color-primary);
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
                     }
 
-                    span {
-                        font-family: var(--font-code);
-                        font-weight: bold;
-                        font-size: 1.05rem;
-                        color: var(--color-text-primary);
-                        display: inline-flex;
+                    .package-card-header {
+                        display: flex;
                         align-items: center;
-                        gap: 0.4rem;
-                        margin-bottom: 0.75rem;
-                        padding: 0.25rem 0.6rem;
-                        border-radius: 4px;
-                        background-color: rgba(0, 0, 0, 0.06);
-                        width: fit-content;
+                        justify-content: space-between;
 
-                        &::before {
-                            content: '$';
+                        .package-name {
+                            font-family: var(--font-code);
+                            font-weight: 700;
+                            font-size: 1.1rem;
+                            color: var(--color-text-primary);
+                            display: inline-flex;
+                            align-items: center;
+                        }
+
+                        .package-badge {
+                            font-size: 0.75rem;
+                            font-weight: 600;
+                            padding: 0.25rem 0.6rem;
+                            border-radius: 20px;
+                            background-color: rgba(37, 99, 235, 0.12);
                             color: var(--color-link);
-                            font-weight: bold;
+                            border: 1px solid rgba(56, 189, 248, 0.25);
                         }
                     }
 
-                    img {
-                        width: 100%;
-                        height: 160px;
+                    .package-desc {
+                        font-size: 0.875rem;
+                        color: var(--color-text-secondary);
+                        line-height: 1.45;
+                        font-family: var(--font-footer);
+                        margin: 0;
+                    }
 
-                        object-fit: cover;
+                    .package-cmd-box {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0.5rem 0.75rem;
+                        background-color: var(--color-bg);
+                        border: 1px solid var(--color-text-tertiary);
                         border-radius: 6px;
-                        border: 1px solid rgba(0, 0, 0, 0.1);
-                        background-color: rgba(0, 0, 0, 0.03);
-                        display: block;
+                        cursor: pointer;
+                        transition: border-color 0.15s ease, background-color 0.15s ease;
+
+                        &:hover {
+                            border-color: var(--color-link);
+                            background-color: var(--color-bg-secondary);
+
+                            .btn-copy-cmd {
+                                color: var(--color-link);
+                            }
+                        }
+
+                        code {
+                            font-family: var(--font-code);
+                            font-size: 0.8rem;
+                            color: var(--color-text-primary);
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .btn-copy-cmd {
+                            background: transparent;
+                            border: none;
+                            color: var(--color-text-tertiary);
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 2px;
+                            transition: color 0.15s ease;
+                        }
                     }
                 }
 
@@ -1499,6 +1552,7 @@ body {
                                     }
                                 }
                             }
+
                             width: fit-content;
                         }
                         width: fit-content;
@@ -2262,6 +2316,10 @@ body {
                     opacity: 0.85;
                 }
             }
+            &:hover .ticker-content {
+                animation-play-state: paused;
+            }
+
             .ticker-content {
                 display: inline-block;
                 padding-left: 100%;
