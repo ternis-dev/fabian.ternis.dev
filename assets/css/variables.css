@@ -66,9 +66,6 @@
     --theme-catppuccin-bg: #302d41;
     --theme-dracula-bg: #282a36;
 
-    --a-background-color: var(--color-bg);
-    --a-color: var(--color-text-primary);
-
     --font-main: 'Libre Baskerville', Georgia, serif;
     --font-code: 'Anonymous Pro', monospace;
     --font-time: system-ui, -apple-system, sans-serif;

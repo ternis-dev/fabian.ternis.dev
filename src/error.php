@@ -36,14 +36,14 @@ http_response_code($errorCode);
     <link rel="stylesheet" href="/assets/css/error.css">
     <link rel="stylesheet" href="/assets/css/404.css">
 </head>
-<body class="dont-use-attibut-color-variables">
-    <div class="bg-error-code dont-use-attibut-color-variables" aria-hidden="true"><?= htmlspecialchars($errorCode) ?></div>
-    <main class="error-container dont-use-attibut-color-variables">
-        <h1 class="error-code dont-use-attibut-color-variables"><?= htmlspecialchars($errorCode) ?></h1>
-        <h2 class="error-title dont-use-attibut-color-variables"><?= htmlspecialchars($title) ?></h2>
-        <p class="error-message dont-use-attibut-color-variables"><?= htmlspecialchars($description) ?></p>
-        <div class="error-actions dont-use-attibut-color-variables">
-            <a href="/" class="btn-home dont-use-attibut-color-variables">
+<body>
+    <div class="bg-error-code" aria-hidden="true"><?= htmlspecialchars($errorCode) ?></div>
+    <main class="error-container">
+        <h1 class="error-code"><?= htmlspecialchars($errorCode) ?></h1>
+        <h2 class="error-title"><?= htmlspecialchars($title) ?></h2>
+        <p class="error-message"><?= htmlspecialchars($description) ?></p>
+        <div class="error-actions">
+            <a href="/" class="btn-home">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                 Return to Home
             </a>

@@ -8,20 +8,6 @@
 
     box-sizing: border-box;
 
-    &:not(.dont-use-attibut-color-variables)
-    /* NO WAY, i did this MISTAKE ... AHHHH */
-    {
-    &:not(.dont-use-attibute-color-variables)
-    {
-        background-color: var(--a-background-color);
-        color: var(--a-color);
-    }}
-
-    /* &a {
-        background-color: var(--a-background-color);
-        color: var(--a-color);
-    } */
-
     /* Hide scrollbars across Firefox, Edge, IE */
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -481,24 +467,19 @@ body {
 
 html {
     min-height: 100vh;
-    --a-background-color: var(--color-bg);
-    --a-color: var(--color-text-primary);
-    background-color: var(--a-background-color);
-    color: var(--a-color);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
 }
 
 body {
-    /* background-color: var(--bg-color);
-    color: var(--text-color) */
-    --a-background-color: var(--color-bg);
-    --body-background-color: var(--a-background-color);
-    --a-color: var(--color-text-primary);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
     cursor: var(--cusrsor-default);
     max-width: var(--max-width);
 
     ::selection {
-        background-color: var(--a-color);
-        color: var(--a-background-color);
+        background-color: var(--color-text-primary);
+        color: var(--color-bg);
     }
 
     font-size: var(--font-size-main);
@@ -592,7 +573,7 @@ body {
             * {
                 WIDTH: fit-content;
             }
-            /* --a-background-color: transparent; */
+            
 
             margin-top: 5dvh;
             min-height: 20dvh;
@@ -707,12 +688,12 @@ body {
 
             h2 {
                 /* color: var(--color-text-secondary); */
-                --a-color:var(--color-text-tertiary);
+                color: var(--color-text-tertiary);
                 font-size: 1.8rem;
             }
 
             h3 {
-                --a-color:var(--color-text-secondary);
+                color: var(--color-text-secondary);
                 font-size: 1.348rem;
                 transform: translateX(1rem);
                 position: relative; 
@@ -751,7 +732,7 @@ body {
                 }
 
                 .copyright-note {
-                    --a-color:var(--color-text-tertiary);
+                    color: var(--color-text-tertiary);
                     font-size: .8rem;
                     margin-top: .5rem;
                     /* right: 1rem; */
@@ -769,7 +750,7 @@ body {
         a {
             &:not(&.OTHER-LINK) {
             &:not(&.prevent-default) {
-            --a-color: var(--color-link);
+            color: var(--color-link);
             text-decoration: none;
             position: relative;
             cursor: var(--cursor-pointer);
@@ -853,14 +834,14 @@ body {
                     display: flex;
                     flex-direction: column;
                     .name {
-                        /* --a-backgroundcolor: #abc;
-                        --a-color: #def; */
+                        /* background-color: #abc;
+                        color: #def; */
                         font-weight: bold;
                         font-size: larger;
                     }
     
                     .comment { /* more like a "note" */
-                        --a-color: var(--color-text-tertiary);
+                        color: var(--color-text-tertiary);
                     }
 
                     img {
@@ -985,8 +966,8 @@ body {
             }
 
             .btn-verify {
-                --a-background-color: var(--color-text-tertiary);
-                --a-color: #fff;
+                background-color: var(--color-text-tertiary);
+                color: #fff;
 
                 border: none;
                 padding: 0.6rem 1.4rem;
@@ -1013,21 +994,15 @@ body {
                 }
 
                 &.result-success {
-                    /* --a-background-color: rgba(46, 160, 67, 0.15); */
                     background-color: rgba(46, 160, 67, 0.15);
-                    --a-background-color: rgba(46, 160, 67, 0.00);
-                    --a-color: #56d364;
-                    --a-border-color: #2ea043;
-
-                    border: 1px solid var(--a-border-color);
+                    color: #56d364;
+                    border: 1px solid #2ea043;
                 }
 
                 &.result-error {
-                    /* --a-background-color: rgba(248, 81, 73, 0.15); */
                     background-color: rgba(248, 81, 73, 0.15);
-                    --a-background-color: rgba(248, 81, 73, 0.00);
-                    --a-border-color: #f85149;
-                    --a-color: #ff7b72;
+                    border: 1px solid #f85149;
+                    color: #ff7b72;
                 }
 
                 h4 {
@@ -1044,8 +1019,8 @@ body {
                     font-size: 0.85rem;
                     margin-top: 0.5rem;
 
-                    --a-color: var(--color-bg);
-                    --a-background-color: var(var(--color-text-primary)); /* was ment for ::select but does not function ... */
+                    color: var(--color-bg);
+                    
                 }
             }
         }
@@ -1073,12 +1048,12 @@ body {
 
                 color: var(--the-color);
                 background-color: var(--the-color);
-                --a-color: var(--the-color);
-                --a-background-color: var(--the-color);
+                color: var(--the-color);
+                background-color: var(--the-color);
     
                 ::selection {
                     /* color: var(--that-color); */
-                    /* --a-background-color: var(--that-color); */
+                    
 
 
                     background-color: var(--that-color);
@@ -1101,8 +1076,8 @@ body {
                 font-size: 0.9rem;
                 margin-top: 0.25rem;
                 margin-bottom: 1rem;
-                --a-color: var(--color-text-tertiary);
-                --a-background-color: transparent;
+                color: var(--color-text-tertiary);
+                background-color: transparent;
             }
 
             .stories-wrapper {
@@ -1113,7 +1088,7 @@ body {
                 width: 100%;
                 margin-block: 1.5rem;
                 min-height: 48dvh;
-                --a-background-color: transparent;
+                background-color: transparent;
             }
 
             .stories-container {
@@ -1126,7 +1101,7 @@ body {
                 perspective: 1200px;
                 overflow: visible;
                 touch-action: pan-y;
-                --a-background-color: transparent;
+                background-color: transparent;
 
                 .story-container {
                     position: absolute;
@@ -1146,8 +1121,8 @@ body {
                     z-index: var(--story-z-index, 1);
                     will-change: transform, opacity;
 
-                    --a-background-color: transparent;
-                    --a-color: var(--color-text-primary);
+                    background-color: transparent;
+                    color: var(--color-text-primary);
 
                     .story-card-inner {
                         position: relative;
@@ -1155,8 +1130,8 @@ body {
                         height: 100%;
                         border-radius: 16px;
                         padding: 3px;
-                        --a-background-color: var(--color-bg-secondary);
-                        --a-color: var(--color-text-primary);
+                        background-color: var(--color-bg-secondary);
+                        color: var(--color-text-primary);
                         border: 2px solid var(--color-text-tertiary);
                         transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
                     }
@@ -1183,8 +1158,8 @@ body {
                         height: 100%;
                         border-radius: 13px;
                         overflow: hidden;
-                        --a-background-color: #111111;
-                        --a-color: #ffffff;
+                        background-color: #111111;
+                        color: #ffffff;
                     }
 
                     .story-media {
@@ -1192,15 +1167,15 @@ body {
                         height: 100%;
                         object-fit: cover;
                         display: block;
-                        --a-background-color: #111111;
+                        background-color: #111111;
                     }
 
                     .story-badge {
                         position: absolute;
                         top: 10px;
                         right: 10px;
-                        --a-background-color: var(--color-text-primary);
-                        --a-color: var(--color-bg);
+                        background-color: var(--color-text-primary);
+                        color: var(--color-bg);
                         padding: 4px 8px;
                         border-radius: 20px;
                         display: flex;
@@ -1214,8 +1189,8 @@ body {
                         bottom: 0;
                         left: 0;
                         right: 0;
-                        --a-background-color: transparent;
-                        --a-color: #ffffff;
+                        background-color: transparent;
+                        color: #ffffff;
                         display: flex;
                         flex-direction: column;
                         justify-content: flex-end;
@@ -1228,8 +1203,8 @@ body {
                         font-weight: 500;
                         opacity: 0.95;
                         letter-spacing: 0.02em;
-                        --a-background-color: transparent;
-                        --a-color: #ffffff;
+                        background-color: transparent;
+                        color: #ffffff;
                         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
                     }
 
@@ -1237,8 +1212,8 @@ body {
                         font-size: 0.85rem;
                         font-weight: 600;
                         margin-top: 2px;
-                        --a-background-color: transparent;
-                        --a-color: #ffffff;
+                        background-color: transparent;
+                        color: #ffffff;
                         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
                     }
                 }
@@ -1249,8 +1224,8 @@ body {
                 top: 50%;
                 transform: translateY(-50%);
                 z-index: 120;
-                --a-background-color: var(--color-bg-secondary);
-                --a-color: var(--color-text-primary);
+                background-color: var(--color-bg-secondary);
+                color: var(--color-text-primary);
                 border: 1px solid var(--color-text-tertiary);
                 width: 44px;
                 height: 44px;
@@ -1262,8 +1237,8 @@ body {
                 transition: transform 0.2s ease, opacity 0.2s ease;
 
                 &:hover:not(:disabled) {
-                    --a-background-color: var(--color-link);
-                    --a-color: #ffffff;
+                    background-color: var(--color-link);
+                    color: #ffffff;
                     transform: translateY(-50%) scale(1.1);
                 }
 
@@ -1287,21 +1262,21 @@ body {
                 justify-content: center;
                 gap: 8px;
                 margin-top: 1rem;
-                --a-background-color: transparent;
+                background-color: transparent;
 
                 .story-dot {
                     width: 8px;
                     height: 8px;
                     border-radius: 4px;
                     border: none;
-                    --a-background-color: var(--color-text-tertiary);
+                    background-color: var(--color-text-tertiary);
                     cursor: pointer;
                     padding: 0;
                     transition: width 0.3s ease, border-radius 0.3s ease;
 
                     &.active {
                         width: 24px;
-                        --a-background-color: var(--color-link);
+                        background-color: var(--color-link);
                     }
                 }
             }
@@ -1337,8 +1312,8 @@ body {
                         font-size: 0.95rem;
                         border: 1px solid var(--color-text-tertiary);
                         border-radius: 4px;
-                        --a-background-color: var(--color-bg-secondary);
-                        --a-color: var(--color-text-primary);
+                        background-color: var(--color-bg-secondary);
+                        color: var(--color-text-primary);
 
                         &:focus {
                             outline: 2px solid var(--color-link);
@@ -1359,13 +1334,13 @@ body {
                         cursor: pointer;
                         border: 1px solid var(--color-text-primary);
                         border-radius: 4px;
-                        --a-background-color: var(--color-bg-secondary);
-                        --a-color: var(--color-text-primary);
+                        background-color: var(--color-bg-secondary);
+                        color: var(--color-text-primary);
                         transition: background-color 0.2s ease, transform 0.1s ease;
 
                         &:hover:not(:disabled) {
-                            --a-background-color: var(--color-link);
-                            --a-color: #ffffff;
+                            background-color: var(--color-link);
+                            color: #ffffff;
                             border-color: var(--color-link);
                         }
 
@@ -1388,12 +1363,12 @@ body {
 
                     &.success {
                         border: 1px solid #2e7d32;
-                        --a-background-color: rgba(46, 125, 50, 0.1);
+                        background-color: rgba(46, 125, 50, 0.1);
                     }
 
                     &.error {
                         border: 1px solid #d32f2f;
-                        --a-background-color: rgba(211, 47, 47, 0.1);
+                        background-color: rgba(211, 47, 47, 0.1);
                     }
 
                     h4 {
@@ -1402,7 +1377,7 @@ body {
 
                     .short-link-url {
                         font-weight: bold;
-                        --a-color: var(--color-link);
+                        color: var(--color-link);
                     }
 
                     .btn-copy {
@@ -1412,8 +1387,8 @@ body {
                         font-size: 0.85rem;
                         cursor: pointer;
                         border: 1px solid var(--color-link);
-                        --a-background-color: var(--color-link);
-                        --a-color: #ffffff;
+                        background-color: var(--color-link);
+                        color: #ffffff;
                         border-radius: 4px;
                     }
                 }
@@ -1440,7 +1415,7 @@ body {
                             padding: 0.6rem 0.8rem;
                             border: 1px solid var(--color-text-tertiary);
                             border-radius: 4px;
-                            --a-background-color: var(--color-bg-secondary);
+                            background-color: var(--color-bg-secondary);
                             font-family: var(--font-code);
 
                             .history-details {
@@ -1455,7 +1430,7 @@ body {
                                 }
 
                                 .history-short-url {
-                                    --a-color: var(--color-link);
+                                    color: var(--color-link);
                                     font-size: 0.85rem;
                                 }
 
@@ -1488,13 +1463,12 @@ body {
 
                                 .btn-delete-small {
                                     border: 1px solid #d32f2f;
-                                    --a-color: #d32f2f;
+                                    color: #d32f2f;
                                     background: transparent;
 
                                     &:hover {
-                                        --a-background-color: #d32f2f;
-                                        background-color: var(--a-background-color);
-                                        --a-color: #ffffff;
+                                        background-color: #d32f2f;
+                                        color: #ffffff;
                                     }
                                 }
                             }
@@ -1510,7 +1484,7 @@ body {
             .commented-out {
                 font-family: var(--font-code);
                 font-style: italic;
-                --a-color: var(--color-text-tertiary);
+                color: var(--color-text-tertiary);
             }
         }
 
@@ -1526,19 +1500,19 @@ body {
 
         &#uploads {
             .upload-result {
-                /* --a-background-color: var(--color-text-tertiary); */
+                
                 &.result-error {
-                    --a-color: red;
+                    color: red;
                 }
                 &.result-success {
-                    --a-color: green;
-                    /* --a-color: lime; */
+                    color: green;
+                    /* color: lime; */
                 }
 
                 /* transform: translateX(3rem); */
                 font-family: var(--font-footer);
                 padding: .3rem;
-                border: 3px solid var(--a-color);
+                border: 3px solid currentColor;
                 &:hover {
                     border-style: dotted;
                 }
@@ -1728,8 +1702,8 @@ body {
                             max-height: 30dh;
                         }
 
-                        --a-background-color: var(--color-text-tertiary);
-                        --a-color: var(--color-bg-secondary);
+                        background-color: var(--color-text-tertiary);
+                        color: var(--color-bg-secondary);
                     }
                 }
         }
@@ -1747,8 +1721,6 @@ body {
             /* SHomehow the LLM seems to have messed up ... */
 
             .chat-container {
-                --a-background-color: none;
-                --a-color: none;
                 background-color: #111111;
                 color: #eeeeee;
 
@@ -1824,7 +1796,7 @@ body {
 
                         svg {
                             color: var(--color-primary);
-                            /* --a-color: var(--color-primary); */
+                            
                         }
                     }
 
@@ -1838,7 +1810,7 @@ body {
                         display: inline-flex;
                         align-items: center;
                         gap: 0.45rem;
-                        --a-background-color: #1a1a1a;
+                        background-color: #1a1a1a;
                         color: #cccccc;
                         border: 1px solid #333333;
                         border-radius: var(--radius-three);
@@ -2241,8 +2213,8 @@ body {
             display: flex;
             align-items: center;
 
-            --a-background-color: #cc0000;
-            --a-color: #ffffff;
+            background-color: #cc0000;
+            color: #ffffff;
 
             font-family: system-ui, -apple-system, sans-serif; /* maybe new "news"-font ... */
             font-size: 1.25rem;
@@ -2262,13 +2234,13 @@ body {
             }
 
             .ticker-divider {
-                /* border: 3px solid var(--a-color);
+                /* border: 3px solid currentColor;
                 margin-inline: 2rem; */
                 /* height: calc(100% + 24px); */
 
                 &::before {
                     content: "";
-                    border: 3px solid var(--a-color);
+                    border: 3px solid currentColor;
                     margin-inline: 2rem;
                     height: 100%;
                     width: 0;
@@ -2292,8 +2264,8 @@ body {
 
 
             /* not getting applied anyhow */
-            --a-background-color: var(--color-text-secondary);
-            --a-color: var(--color-bg);
+            background-color: var(--color-text-secondary);
+            color: var(--color-bg);
             
 
             width: 100%;
@@ -2313,7 +2285,7 @@ body {
             padding: 1rem;
             height: fit-content;
             min-height: 50dvh;
-            border: .7531rem solid var(--a-background-color);
+            border: .7531rem solid var(--color-text-secondary);
             transition: all .5s ease-in-out;
             font-family: var(--font-footer);
             position: relative;
@@ -2357,7 +2329,7 @@ body {
 
 
     /* #github-star-container {
-        --a-background-color: var(--color-github-black);
+        background-color: var(--color-github-black);
         position: absolute;
         top: 0;
         right: 0;
@@ -2517,7 +2489,7 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    --a-background-color: transparent;
+    background-color: transparent;
 
     &.open {
         opacity: 1;
@@ -2527,7 +2499,7 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
     .story-modal-backdrop {
         position: absolute;
         inset: 0;
-        --a-background-color: rgba(0, 0, 0, 0.88);
+        background-color: rgba(0, 0, 0, 0.88);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
     }
@@ -2538,8 +2510,8 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
         max-width: 420px;
         height: 85dvh;
         max-height: 820px;
-        --a-background-color: #111111;
-        --a-color: #ffffff;
+        background-color: #111111;
+        color: #ffffff;
         border-radius: 16px;
         overflow: hidden;
         display: flex;
@@ -2560,14 +2532,14 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
         left: 0;
         right: 0;
         padding: 12px 16px;
-        --a-background-color: rgba(0, 0, 0, 0.7);
-        --a-color: #ffffff;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #ffffff;
         z-index: 10;
 
         .story-modal-progress-bar {
             width: 100%;
             height: 3px;
-            --a-background-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 2px;
             overflow: hidden;
             margin-bottom: 8px;
@@ -2575,7 +2547,7 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
             .story-modal-progress-fill {
                 height: 100%;
                 width: 0%;
-                --a-background-color: var(--color-link);
+                background-color: var(--color-link);
                 border-radius: 2px;
                 transition: width 0.1s linear;
             }
@@ -2585,8 +2557,8 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
             display: flex;
             align-items: center;
             justify-content: space-between;
-            --a-color: #ffffff;
-            --a-background-color: transparent;
+            color: #ffffff;
+            background-color: transparent;
             font-size: 0.9rem;
             font-weight: 600;
 
@@ -2594,8 +2566,8 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
                 display: flex;
                 align-items: center;
                 gap: 6px;
-                --a-color: #ffffff;
-                --a-background-color: transparent;
+                color: #ffffff;
+                background-color: transparent;
             }
 
             .story-modal-date {
@@ -2603,14 +2575,14 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
                 opacity: 0.75;
                 font-size: 0.8rem;
                 margin-left: 6px;
-                --a-color: rgba(255, 255, 255, 0.8);
-                --a-background-color: transparent;
+                color: rgba(255, 255, 255, 0.8);
+                background-color: transparent;
             }
 
             .story-modal-close {
-                --a-background-color: transparent;
+                background-color: transparent;
                 border: none;
-                --a-color: #ffffff;
+                color: #ffffff;
                 font-size: 1.8rem;
                 line-height: 1;
                 cursor: pointer;
@@ -2630,13 +2602,13 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
         display: flex;
         align-items: center;
         justify-content: center;
-        --a-background-color: #000000;
+        background-color: #000000;
 
         .story-modal-element {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            --a-background-color: #000000;
+            background-color: #000000;
         }
     }
 
@@ -2644,8 +2616,8 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        --a-background-color: rgba(255, 255, 255, 0.2);
-        --a-color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
         border: none;
         width: 36px;
         height: 36px;
@@ -2659,7 +2631,7 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
         transition: opacity 0.2s ease;
 
         &:hover {
-            --a-background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
         &.story-modal-prev {

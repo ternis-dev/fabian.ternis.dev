@@ -1,17 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
-    // Automatically apply 'dont-use-attibut-color-variables' to containers with data-auto-no-color-vars="true" / .auto-no-color-vars and all child tags
-    function applyNoColorVars() {
-        const containers = document.querySelectorAll('[data-auto-no-color-vars="true"], .auto-no-color-vars');
-        containers.forEach(container => {
-            container.classList.add('dont-use-attibut-color-variables');
-            const descendants = container.querySelectorAll('*');
-            descendants.forEach(el => el.classList.add('dont-use-attibut-color-variables'));
-        });
-    }
-    applyNoColorVars();
-
     let savedTheme = localStorage.getItem('theme') ?? 'system';
     const themeInput = document.getElementById('theme-select');
 
@@ -25,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            label: 'Light Themes ☀️',
+            label: 'Light Themes',
             themes: [
                 { id: 'catppuccin-latte', name: 'Catppuccin Latte' },
                 { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn' },
@@ -42,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         },
         {
-            label: 'Dark Themes 🌙',
+            label: 'Dark Themes',
             themes: [
                 { id: 'catppuccin', name: 'Catppuccin Mocha' },
                 { id: 'dracula', name: 'Dracula' },
@@ -199,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!container) {
             container = document.createElement('div');
             container.id = 'toast-container';
-            container.className = 'toast-container dont-use-attibut-color-variables';
+            container.className = 'toast-container';
             document.body.appendChild(container);
         }
 
@@ -209,25 +198,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let iconSvg = '';
         switch (type) {
             case 'success':
-                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+                iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
                 break;
             case 'error':
-                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>`;
+                iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>`;
                 break;
             case 'warning':
-                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+                iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
                 break;
             case 'info':
             default:
-                iconSvg = `<svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`;
+                iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>`;
                 break;
         }
 
         toast.innerHTML = `
-            <span class="toast-icon dont-use-attibut-color-variables">${iconSvg}</span>
-            <span class="toast-message dont-use-attibut-color-variables">${message}</span>
-            <button type="button" class="toast-close dont-use-attibut-color-variables" aria-label="Close notification">
-                <svg class="dont-use-attibut-color-variables" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            <span class="toast-icon">${iconSvg}</span>
+            <span class="toast-message">${message}</span>
+            <button type="button" class="toast-close" aria-label="Close notification">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         `;
 
