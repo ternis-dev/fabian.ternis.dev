@@ -45,17 +45,30 @@
         </div>
     </section>
 
+    <?php
+    $nav_items = [
+        ['label' => 'Top ↑', 'url' => '#hero'],
+        // ['label' => 'Top ↑', 'url' => '#theme-select'],
+        // ['label' => 'Contact', 'url' => '#contact'],
+        ['label' => 'News', 'url' => '#news'],
+        ['label' => 'HomeLab', 'url' => '#homelab'],
+        ['label' => 'Domains', 'url' => '#domains'],
+        ['label' => 'Music', 'url' => '#music'],
+        ['label' => 'AI Chat', 'url' => '#ai_chat'],
+        ['label' => 'Uploads', 'url' => '#uploads'],
+        ['label' => 'Links', 'url' => '/links'],
+        ['label' => 'Docs', 'url' => '/docs'],
+    ];
+    ?>
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item"><a href="#contact" class="nav-link no-before">Contact</a></li>
-            <li class="nav-item"><a href="#news" class="nav-link no-before">News</a></li>
-            <li class="nav-item"><a href="#homelab" class="nav-link no-before">HomeLab</a></li>
-            <li class="nav-item"><a href="#domains" class="nav-link no-before">Domains</a></li>
-            <li class="nav-item"><a href="#music" class="nav-link no-before">Music</a></li>
-            <li class="nav-item"><a href="#ai_chat" class="nav-link no-before">AI Chat</a></li>
-            <li class="nav-item"><a href="#uploads" class="nav-link no-before">Uploads</a></li>
-            <li class="nav-item"><a href="/links" class="nav-link no-before">Links</a></li>
-            <li class="nav-item"><a href="/docs" class="nav-link no-before">Docs</a></li>
+            <?php foreach ($nav_items as $item): ?>
+                <li class="nav-item">
+                    <a href="<?= htmlspecialchars($item['url']) ?>" class="nav-link no-before">
+                        <?= htmlspecialchars($item['label']) ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </nav>
 
@@ -70,7 +83,7 @@
     </section>
 
 
-    <section id="contact">
+    <section id="no_name">
         
         <h3>Still <sad>sad</sad> about losing the domain 'mail-free.de' in 2025 (currently own mail-free.eu though)</h3>        
         <p>You can contact me via email ('fabian.ternis.dev-{gen_token}[at]fabian.ternismail.de' || '{gen_token}[at]fabian.ternis.dev')</p>

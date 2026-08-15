@@ -496,6 +496,13 @@ html {
     min-height: 100vh;
     background-color: var(--color-bg);
     color: var(--color-text-primary);
+    scroll-behavior: smooth;
+    scroll-padding-top: clamp(1.5rem, 3.5vh, 2.5rem);
+}
+
+section[id],
+[id] {
+    scroll-margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
 }
 
 body {
@@ -2812,6 +2819,23 @@ body.scrolled {
 just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, competitions, something, sad, pay, packages, all, listen {
     color: var(--color-text-tertiary);
     font-style: italic;
+}
+
+location {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-shadow: 0 0 8px color-mix(in srgb, var(--color-primary) 65%, transparent),
+                0 0 16px color-mix(in srgb, var(--color-primary) 35%, transparent);
+    transition: text-shadow 0.25s ease, color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+
+    &:hover {
+        color: var(--color-primary-hover, var(--color-primary));
+        text-shadow: 0 0 10px var(--color-primary),
+                    0 0 22px color-mix(in srgb, var(--color-primary) 85%, transparent),
+                    0 0 35px color-mix(in srgb, var(--color-primary) 55%, transparent);
+        transform: scale(1.04);
+    }
 }
 
 /* Story Fullscreen Lightbox Modal */
