@@ -588,14 +588,31 @@
         <h2>Music, i <listen>listen</listen> to.</h2>
 
         <div class="not-listen">
-            <h3>WHat i dont listen to</h3>
+            <!-- ToDO: RSS-feed -->
+            <h3>What i dont listen to</h3>
             <div class="songs-container">
                 <!-- foreach ... -->
                 <div class="song-item">
+                    <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('bye.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
+                    <h5 class="name title">Bye</h5>
+                    <span class="creator">Leni Woess</span>
+                    <p class="description">...</p>
+                    <a href="http://leniwoess.de" class="my-website">Web Stuff</a>
+                </div>
+                <div class="song-item">
+                    <!-- ToDo: use icelnk.de for links and malke it, so the my-website links (due to being in dnbx.de) use teh originals ... -->
                     <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('check-das.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
                     <h5 class="name title">Check Das!</h5>
                     <span class="creator">Twins on ice</span>
                     <p class="description">...</p>
+                    <a href="http://twins-on-ice.de" class="my-website">Web Stuff</a>
+                </div>
+                <div class="song-item">
+                    <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('aura.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
+                    <h5 class="name title">Aura</h5>
+                    <span class="creator">Leni Woess</span>
+                    <p class="description">...</p>
+                    <a href="http://leniwoess.de" class="my-website">Web Stuff</a>
                 </div>
             </div>
         </div>
