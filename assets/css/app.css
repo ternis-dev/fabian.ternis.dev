@@ -828,22 +828,38 @@ body {
                 }
             }
         }
+    }
+    }
 
     .navbar {
+        position: sticky;
+        top: clamp(0.5rem, 2vh, 1.25rem);
+        z-index: 990;
         display: flex;
         align-items: center;
-        margin: 1.5rem 0 2rem 0;
-        padding: 0.65rem 1rem;
-        background-color: var(--color-bg-secondary);
+        width: 100%;
+        margin: 1rem 0 2rem 0;
+        padding: 0.4rem 0.85rem;
+        background-color: color-mix(in srgb, var(--color-bg-secondary) 80%, transparent);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         border: 1px solid var(--color-text-tertiary);
-        border-radius: 10px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         overflow-x: auto;
         white-space: nowrap;
+        scrollbar-width: none;
+        transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         .nav-list {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            width: 100%;
+            gap: 0.5rem;
             list-style: none;
             padding: 0;
             margin: 0;
@@ -851,20 +867,28 @@ body {
 
             .nav-item {
                 display: inline-block;
+                list-style: none;
+                font-family: var(--font-chat, var(--font-code));
 
                 .nav-link {
-                    font-family: var(--font-code);
-                    font-size: 0.875rem;
+                    display: inline-block;
+                    font-family: inherit;
+                    font-size: 0.85rem;
                     font-weight: 600;
                     color: var(--color-text-primary);
                     text-decoration: none;
-                    padding: 0.3rem 0.65rem;
-                    border-radius: 6px;
-                    transition: background-color 0.15s ease, color 0.15s ease;
+                    padding-inline: 12px;
+                    padding-block: 5px;
+                    border-radius: 8px;
+                    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
 
                     &:hover {
-                        background-color: rgba(37, 99, 235, 0.12);
+                        background-color: rgba(37, 99, 235, 0.14);
                         color: var(--color-link);
+                    }
+
+                    &:active {
+                        transform: scale(0.97);
                     }
                 }
             }
@@ -956,6 +980,7 @@ body {
             }
         }
 
+    section {
         &#homelab {
             ul.tech-list {
                 /* ToOd: make this more like aI actually want it ... */
@@ -2627,8 +2652,6 @@ body {
         height: 10dvh;
         rotate: 45deg;
     } */
-}
-
 
 .font-code {
     font-family: var(--font-code);
@@ -3096,25 +3119,5 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
     to {
         opacity: 0;
         transform: translateY(0.5rem) scale(0.95);
-    }
-}
-
-.navbar {
-    width: 100%;
-    .nav-list {
-        width: 100%;
-        display: flex;
-        .nav-item {
-            list-style: none;
-            font-family: var(--font-chat);
-            /* width: 10%; */
-            max-width: 20%;
-
-            /* padding-inline: 5%; */
-            padding-inline: 12px;
-            padding-block: 5px;
-            border: 1px solid red;
-        }
-        gap: 3%;
     }
 }

@@ -47,15 +47,15 @@
 
     <nav class="navbar">
         <ul class="nav-list">
-            <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-            <li class="nav-item"><a href="#news" class="nav-link">News</a></li>
-            <li class="nav-item"><a href="#homelab" class="nav-link">HomeLab</a></li>
-            <li class="nav-item"><a href="#domains" class="nav-link">Domains</a></li>
-            <li class="nav-item"><a href="#music" class="nav-link">Music</a></li>
-            <li class="nav-item"><a href="#ai_chat" class="nav-link">AI Chat</a></li>
-            <li class="nav-item"><a href="#uploads" class="nav-link">Uploads</a></li>
-            <li class="nav-item"><a href="/links" class="nav-link">Links</a></li>
-            <li class="nav-item"><a href="/docs" class="nav-link">Docs</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link no-before">Contact</a></li>
+            <li class="nav-item"><a href="#news" class="nav-link no-before">News</a></li>
+            <li class="nav-item"><a href="#homelab" class="nav-link no-before">HomeLab</a></li>
+            <li class="nav-item"><a href="#domains" class="nav-link no-before">Domains</a></li>
+            <li class="nav-item"><a href="#music" class="nav-link no-before">Music</a></li>
+            <li class="nav-item"><a href="#ai_chat" class="nav-link no-before">AI Chat</a></li>
+            <li class="nav-item"><a href="#uploads" class="nav-link no-before">Uploads</a></li>
+            <li class="nav-item"><a href="/links" class="nav-link no-before">Links</a></li>
+            <li class="nav-item"><a href="/docs" class="nav-link no-before">Docs</a></li>
         </ul>
     </nav>
 
