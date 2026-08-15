@@ -27,73 +27,11 @@ class SeoService
     }
 
     /**
-     * Render sitemap.xml content.
+     * Render sitemap.xml content via SitemapService.
      */
     public static function renderSitemapXml(): string
     {
-        $siteUrl = self::getSiteUrl();
-        $currentDate = date('Y-m-d');
-
-        $urls = [
-            [
-                'loc' => $siteUrl . '/',
-                'lastmod' => $currentDate,
-                'changefreq' => 'daily',
-                'priority' => '1.0'
-            ],
-            [
-                'loc' => $siteUrl . '/links',
-                'lastmod' => $currentDate,
-                'changefreq' => 'daily',
-                'priority' => '0.9'
-            ],
-            [
-                'loc' => $siteUrl . '/docs',
-                'lastmod' => $currentDate,
-                'changefreq' => 'weekly',
-                'priority' => '0.8'
-            ],
-            [
-                'loc' => $siteUrl . '/feed/news/xml',
-                'lastmod' => $currentDate,
-                'changefreq' => 'daily',
-                'priority' => '0.6'
-            ],
-            [
-                'loc' => $siteUrl . '/feed/news/json',
-                'lastmod' => $currentDate,
-                'changefreq' => 'daily',
-                'priority' => '0.6'
-            ],
-            [
-                'loc' => $siteUrl . '/llms.txt',
-                'lastmod' => $currentDate,
-                'changefreq' => 'weekly',
-                'priority' => '0.5'
-            ],
-            [
-                'loc' => $siteUrl . '/robots.txt',
-                'lastmod' => $currentDate,
-                'changefreq' => 'monthly',
-                'priority' => '0.3'
-            ]
-        ];
-
-        $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
-
-        foreach ($urls as $url) {
-            $xml .= "  <url>\n";
-            $xml .= "    <loc>" . htmlspecialchars($url['loc'], ENT_XML1, 'UTF-8') . "</loc>\n";
-            $xml .= "    <lastmod>" . htmlspecialchars($url['lastmod'], ENT_XML1, 'UTF-8') . "</lastmod>\n";
-            $xml .= "    <changefreq>" . htmlspecialchars($url['changefreq'], ENT_XML1, 'UTF-8') . "</changefreq>\n";
-            $xml .= "    <priority>" . htmlspecialchars($url['priority'], ENT_XML1, 'UTF-8') . "</priority>\n";
-            $xml .= "  </url>\n";
-        }
-
-        $xml .= "</urlset>";
-
-        return $xml;
+        return SitemapService::renderSitemapXml();
     }
 
     /**

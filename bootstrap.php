@@ -87,7 +87,7 @@ if ($safePath === '/robots.txt') {
         ob_end_clean();
     }
     header('Content-Type: application/xml; charset=UTF-8');
-    echo \App\Services\SeoService::renderSitemapXml();
+    echo \App\Services\SitemapService::renderSitemapXml();
     exit;
 } elseif ($safePath === '/stiemap.xml') {
     while (ob_get_level()) {
