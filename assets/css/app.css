@@ -2624,6 +2624,7 @@ body {
     display: inline-flex;
     align-items: center;
     margin: 0.5rem 0;
+    transition: all 0.25s ease-in-out;
 
     #theme-select {
         background-color: var(--color-bg-secondary);
@@ -2635,7 +2636,7 @@ body {
         font-size: 0.875rem;
         cursor: pointer;
         outline: none;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 
         &:hover, &:focus {
             border-color: var(--color-link);
@@ -2644,6 +2645,25 @@ body {
         option {
             background-color: var(--color-bg);
             color: var(--color-text-primary);
+        }
+
+
+        /* position: absolute; */
+    }
+}
+
+body.scrolled {
+    @media (min-width: 768px) {
+        .theme-select-container {
+            position: fixed;
+            top: 1rem;
+            left: 1.5rem;
+            z-index: 1000;
+            margin: 0;
+
+            #theme-select {
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+            }
         }
     }
 }

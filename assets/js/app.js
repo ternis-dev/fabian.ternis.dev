@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
+    function handleScroll() {
+        if (window.scrollY > 10) {
+            body.classList.add('scrolled');
+        } else {
+            body.classList.remove('scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
     let savedTheme = localStorage.getItem('theme') ?? 'system';
     const themeInput = document.getElementById('theme-select');
 
