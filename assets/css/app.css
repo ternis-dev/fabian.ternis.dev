@@ -2520,8 +2520,7 @@ body {
         &.bottom {
             overflow: hidden;
             white-space: nowrap;
-            width: 100%;
-            max-width: 100%;
+            width: 100vw;
 
             position: sticky;
             bottom: 0;

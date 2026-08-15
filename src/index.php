@@ -47,7 +47,8 @@
 
     <?php
     $nav_items = [
-        ['label' => 'Top ↑', 'url' => '#hero'],
+        // ['label' => 'Top ↑', 'url' => '#hero'],
+        ['label' => 'Top ↑', 'url' => '#'],
         // ['label' => 'Top ↑', 'url' => '#theme-select'],
         // ['label' => 'Contact', 'url' => '#contact'],
         ['label' => 'News', 'url' => '#news'],
@@ -56,6 +57,7 @@
         ['label' => 'Music', 'url' => '#music'],
         ['label' => 'AI Chat', 'url' => '#ai_chat'],
         ['label' => 'Uploads', 'url' => '#uploads'],
+        // ['label' => '', 'url' => '#'],
         ['label' => 'Links', 'url' => '/links'],
         ['label' => 'Docs', 'url' => '/docs'],
     ];
