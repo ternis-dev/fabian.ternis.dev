@@ -12,6 +12,43 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
+    // Active Nav-Link ScrollSpy
+    const sections = document.querySelectorAll('section[id], #hero');
+    const navLinks = document.querySelectorAll('.navbar .nav-link');
+
+    if (sections.length > 0 && navLinks.length > 0) {
+        const updateActiveNav = () => {
+            let currentActiveId = '';
+            const scrollPos = window.scrollY + 120;
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+
+                if (scrollPos >= top && scrollPos < top + height) {
+                    currentActiveId = id;
+                }
+            });
+
+            if (!currentActiveId && window.scrollY < 200) {
+                currentActiveId = 'hero';
+            }
+
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === `#${currentActiveId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        updateActiveNav();
+    }
+
     let savedTheme = localStorage.getItem('theme') ?? 'system';
     const themeInput = document.getElementById('theme-select');
 
