@@ -24,6 +24,7 @@ require_once __DIR__.'/src/API/cloudflare.php';
 require_once __DIR__.'/src/API/twinsonicelink.php'; // should i do this ... ill keep it for now
 require_once __DIR__.'/src/API/github.php';
 require_once __DIR__.'/src/API/hackclubcdn.php'; // still wondering ...
+require_once __DIR__.'/src/API/tstatic.php';
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 $safePath = str_replace(['..', '//'], '', $requestPath);
@@ -166,7 +167,7 @@ if (in_array($ext, $assetExtensions, true)) {
 
 
 
-use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter, hackAI, Hackatime, /*the_sk_provider,*/ skProvider};
+use App\API\{DomainBox, Turnstile, StoryGrab, TwinsOnIceLink, GitHub, HackClubCDN, ApiRouter, hackAI, Hackatime, TStatic, /*the_sk_provider,*/ skProvider};
 use App\Docs\DocsController;
 use App\Services\{CacheService, DatabaseService};
 
@@ -185,6 +186,7 @@ $api_['hackclub_cdn'] = new HackClubCDN();
 $api_['dnbx'] = $dnbx ?? new DomainBox();
 $api_['hackclub_ai'] = new hackAI();
 $api_['hackatime'] = new Hackatime();
+$api_['tstatic'] = new TStatic();
 // $api_['sk'] = new the_sk_provider();
 // $api_['sk'] = new skProvider();
 

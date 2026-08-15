@@ -493,13 +493,18 @@ body.links-page-body {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas: "toast";
     gap: 0.5rem;
     z-index: 9999;
+    pointer-events: none;
+    align-items: end;
 }
 
 .toast-item {
+    grid-area: toast;
+    position: relative;
+    pointer-events: auto;
     background: #1c1c1c;
     color: #ffffff;
     padding: 0.65rem 1.1rem;
@@ -507,8 +512,30 @@ body.links-page-body {
     font-family: var(--font-footer);
     font-size: 0.85rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: opacity 0.3s ease;
+
+    --stack-idx: var(--stack-index, 0);
+    --hover-y: var(--hover-offset-y, calc(var(--stack-idx) * (-100% - 0.5rem)));
+
+    z-index: calc(100 - var(--stack-idx));
+    transform: translateY(calc(var(--stack-idx) * -8px)) scale(calc(1 - var(--stack-idx) * 0.04));
+    opacity: calc(1 - var(--stack-idx) * 0.15);
+
+    transform-origin: bottom center;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s ease;
 }
+
+.toast-container:hover .toast-item {
+    transform: translateY(var(--hover-y)) scale(1);
+    opacity: 1;
+}
+
+.toast-item:nth-last-child(1) { --stack-index: 0; --hover-offset-y: 0px; }
+.toast-item:nth-last-child(2) { --stack-index: 1; --hover-offset-y: calc(-100% - 0.5rem); }
+.toast-item:nth-last-child(3) { --stack-index: 2; --hover-offset-y: calc(-200% - 1rem); }
+.toast-item:nth-last-child(4) { --stack-index: 3; --hover-offset-y: calc(-300% - 1.5rem); }
+.toast-item:nth-last-child(n+5) { --stack-index: 4; --hover-offset-y: calc(-400% - 2rem); }
 
 .toast-item.toast-error {
     background: #ef4444;

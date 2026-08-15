@@ -2743,33 +2743,83 @@ just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, 
     bottom: 1.5rem;
     right: 1.5rem;
     z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-areas: "toast";
     max-width: 380px;
     width: calc(100vw - 3rem);
     pointer-events: none;
+    align-items: end;
 }
 
 .toast {
+    grid-area: toast;
+    position: relative;
     pointer-events: auto;
     display: flex;
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    background-color: #18181b;
+    background-color: rgba(24, 24, 27, 0.94);
     color: #f4f4f5;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 0.75rem;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     font-size: 0.875rem;
     line-height: 1.4;
+
+    /* Stacking variables with selector defaults */
+    --stack-idx: var(--stack-index, 0);
+    --hover-y: var(--hover-offset-y, calc(var(--stack-idx) * (-100% - 0.75rem)));
+
+    /* Collapsed state: stacked mostly on Z-axis with subtle Y offset & scale */
+    z-index: calc(100 - var(--stack-idx));
+    transform: translateY(calc(var(--stack-idx) * -8px)) scale(calc(1 - var(--stack-idx) * 0.04));
+    opacity: calc(1 - var(--stack-idx) * 0.15);
+
+    transform-origin: bottom center;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s ease,
+                border-color 0.25s ease,
+                background-color 0.25s ease;
     animation: toast-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Expanded state: ON HOVER ONLY, toasts unstack upwards along Y-axis */
+.toast-container:hover .toast,
+.toast-container:focus-within .toast {
+    transform: translateY(var(--hover-y)) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 14px 30px -5px rgba(0, 0, 0, 0.6), 0 8px 12px -6px rgba(0, 0, 0, 0.4);
+}
+
+.toast-container:hover .toast:hover {
+    background-color: rgba(36, 36, 42, 0.98);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Selector fallbacks for stack positioning up to 6 toasts */
+.toast:nth-last-child(1) { --stack-index: 0; --hover-offset-y: 0px; }
+.toast:nth-last-child(2) { --stack-index: 1; --hover-offset-y: calc(-100% - 0.75rem); }
+.toast:nth-last-child(3) { --stack-index: 2; --hover-offset-y: calc(-200% - 1.5rem); }
+.toast:nth-last-child(4) { --stack-index: 3; --hover-offset-y: calc(-300% - 2.25rem); }
+.toast:nth-last-child(5) { --stack-index: 4; --hover-offset-y: calc(-400% - 3rem); }
+.toast:nth-last-child(n+6) {
+    --stack-index: 5;
+    --hover-offset-y: calc(-500% - 3.75rem);
+    opacity: 0;
+    pointer-events: none;
+}
+.toast-container:hover .toast:nth-last-child(n+6) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .toast.toast-hiding {
-    animation: toast-slide-out 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    animation: toast-slide-out 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards !important;
 }
 
 .toast-icon {

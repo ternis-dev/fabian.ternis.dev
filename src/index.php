@@ -465,7 +465,7 @@
                 <?php // if(isset($competition['images'])): ?>
                 <?php foreach(($competition['images'] ?? []) as $image): ?>
                     <!-- <div> -->
-                        <img src="<?= $image['url'] ?? 'https://tstatic.de/fallback/img.png' // TodO: add tstaticService ...?>" alt="<?= $image['alt'] ?? 'Fabian Ternis taking part in '.($competition['name'] ?? 'a Competition') ?>">
+                        <img src="<?= $image['url'] ?? $api_['tstatic']->getFallbackUrl() ?>" alt="<?= $image['alt'] ?? 'Fabian Ternis taking part in '.($competition['name'] ?? 'a Competition') ?>">
                     <!-- </div> -->
                 <?php endforeach; ?>
                 <div>
@@ -592,6 +592,7 @@
             <div class="songs-container">
                 <!-- foreach ... -->
                 <div class="song-item">
+                    <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('check-das.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
                     <h5 class="name title">Check Das!</h5>
                     <span class="creator">Twins on ice</span>
                     <p class="description">...</p>

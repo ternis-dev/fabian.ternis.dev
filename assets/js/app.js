@@ -176,6 +176,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ─── Toast Notifications ──────────────────────────────────────────────────
+
+    /**
+     * Updates CSS custom properties on toasts to manage 3D z-stacking
+     * and dynamic Y offsets during hover expansion.
+     */
+    function updateToastStack(container) {
+        if (!container) return;
+        const toasts = Array.from(container.children).filter(
+            t => (t.classList.contains('toast') || t.classList.contains('toast-item')) &&
+                 !t.classList.contains('toast-hiding') &&
+                 !t.classList.contains('fade-out')
+        );
+        const total = toasts.length;
+        let accumulatedHoverY = 0;
+
+        for (let i = total - 1; i >= 0; i--) {
+            const stackIndex = total - 1 - i;
+            const toast = toasts[i];
+
+            toast.style.setProperty('--stack-index', stackIndex);
+            toast.style.setProperty('--hover-offset-y', `-${accumulatedHoverY}px`);
+
+            const height = toast.offsetHeight || 50;
+            accumulatedHoverY += height + 12; // 12px vertical spacing between toasts on hover
+        }
+    }
     
     /**
      * Global Toast Notification Helper
@@ -224,12 +250,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const dismiss = () => {
             if (toast.classList.contains('toast-hiding')) return;
             toast.classList.add('toast-hiding');
-            toast.addEventListener('animationend', () => toast.remove());
+            updateToastStack(container);
+            toast.addEventListener('animationend', () => {
+                toast.remove();
+                updateToastStack(container);
+            });
         };
 
         closeBtn.addEventListener('click', dismiss);
 
+        // Remove slide-in keyframe animation after finish so CSS transform transitions control hover state cleanly
+        toast.addEventListener('animationend', (e) => {
+            if (e.animationName === 'toast-slide-in') {
+                toast.style.animation = 'none';
+            }
+        });
+
         container.appendChild(toast);
+        updateToastStack(container);
+        requestAnimationFrame(() => updateToastStack(container));
 
         if (duration > 0) {
             setTimeout(dismiss, duration);
@@ -237,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.showToast = showToast;
+    window.updateToastStack = updateToastStack;
 
     // const customToastForm = document.getElementById('customToastForm');
     // const toast_typ
