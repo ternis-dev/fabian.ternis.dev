@@ -45,6 +45,20 @@
         </div>
     </section>
 
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+            <li class="nav-item"><a href="#news" class="nav-link">News</a></li>
+            <li class="nav-item"><a href="#homelab" class="nav-link">HomeLab</a></li>
+            <li class="nav-item"><a href="#domains" class="nav-link">Domains</a></li>
+            <li class="nav-item"><a href="#music" class="nav-link">Music</a></li>
+            <li class="nav-item"><a href="#ai_chat" class="nav-link">AI Chat</a></li>
+            <li class="nav-item"><a href="#uploads" class="nav-link">Uploads</a></li>
+            <li class="nav-item"><a href="/links" class="nav-link">Links</a></li>
+            <li class="nav-item"><a href="/docs" class="nav-link">Docs</a></li>
+        </ul>
+    </nav>
+
 
     <section id="other">
         <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a> and <a href="http://twinsonice.link?from=fabian.ternis.dev&section=other">twinsonice.link</a>.</h4>
