@@ -585,35 +585,39 @@
 
 
     <section id="music">
-        <h2>Music, i <listen>listen</listen> to.</h2>
+        <div class="music-header-container">
+            <h2>Music, i <listen>listen</listen> to.</h2>
+            <div class="music-actions">
+                <a href="/feed/music/xml" target="_blank" class="rss-feed-link no-before" title="Music RSS Feed">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+                    <span>RSS Feed</span>
+                </a>
+            </div>
+        </div>
 
         <div class="not-listen">
-            <!-- ToDO: RSS-feed -->
             <h3>What i dont listen to</h3>
             <div class="songs-container">
-                <!-- foreach ... -->
-                <div class="song-item">
-                    <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('bye.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
-                    <h5 class="name title">Bye</h5>
-                    <span class="creator">Leni Woess</span>
-                    <p class="description">...</p>
-                    <a href="http://leniwoess.de" class="my-website">Web Stuff</a>
-                </div>
-                <div class="song-item">
-                    <!-- ToDo: use icelnk.de for links and malke it, so the my-website links (due to being in dnbx.de) use teh originals ... -->
-                    <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('check-das.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
-                    <h5 class="name title">Check Das!</h5>
-                    <span class="creator">Twins on ice</span>
-                    <p class="description">...</p>
-                    <a href="http://twins-on-ice.de" class="my-website">Web Stuff</a>
-                </div>
-                <div class="song-item">
-                    <img src="<?= htmlspecialchars($api_['tstatic']->getCoverUrl('aura.jpg')) ?>" alt="Check Das! Cover" class="cover-img" loading="lazy">
-                    <h5 class="name title">Aura</h5>
-                    <span class="creator">Leni Woess</span>
-                    <p class="description">...</p>
-                    <a href="http://leniwoess.de" class="my-website">Web Stuff</a>
-                </div>
+                <?php foreach (get_music() as $song): ?>
+                    <?php 
+                    $coverName = $song['cover'] ?? '';
+                    $coverUrl = !empty($coverName) ? $api_['tstatic']->getCoverUrl($coverName) : $api_['tstatic']->getFallbackUrl();
+                    $title = $song['title'] ?? 'Untitled';
+                    $artist = $song['artist'] ?? ($song['creator'] ?? 'Unknown Artist');
+                    $desc = $song['description'] ?? '...';
+                    $url = $song['url'] ?? null;
+                    $urlLabel = $song['url_label'] ?? 'Web Stuff';
+                    ?>
+                    <div class="song-item" data-id="<?= htmlspecialchars((string)($song['id'] ?? '')) ?>">
+                        <img src="<?= htmlspecialchars($coverUrl) ?>" alt="<?= htmlspecialchars($title) ?> Cover" class="cover-img" loading="lazy">
+                        <h5 class="name title"><?= htmlspecialchars($title) ?></h5>
+                        <span class="creator"><?= htmlspecialchars($artist) ?></span>
+                        <p class="description"><?= htmlspecialchars($desc) ?></p>
+                        <?php if (!empty($url)): ?>
+                            <a href="<?= htmlspecialchars($url) ?>" target="_blank" rel="noopener noreferrer" class="my-website no-before"><?= htmlspecialchars($urlLabel) ?></a>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>

@@ -835,7 +835,7 @@ body {
             position: relative;
             cursor: var(--cursor-pointer);
 
-            &:not(&:has(img)) { /* direct image-links ... */
+            &:not(&:has(img)):not(&.no-before):not(&.no-before-element):not(&.disable-before):not(&.prevent-before) { /* direct image-links ... */
                 &::before {
                     content: "";
                     position: absolute;
@@ -899,6 +899,16 @@ body {
                 }
             }
             }
+            }
+        }
+
+        a.no-before,
+        a.no-before-element,
+        a.disable-before,
+        a.prevent-before {
+            &::before {
+                display: none !important;
+                content: none !important;
             }
         }
 
@@ -2265,6 +2275,148 @@ body {
                         color: var(--color-text-tertiary);
                         font-style: italic;
                         margin-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    #music {
+        margin-top: 3rem;
+        margin-bottom: calc(.69rem * 6.9 * .69);
+
+        .music-header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+
+            h2 {
+                margin: 0;
+
+                listen {
+                    font-style: italic;
+                }
+            }
+
+            .music-actions {
+                display: flex;
+                align-items: center;
+
+                .rss-feed-link {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.4rem;
+                    padding: 0.3rem 0.65rem;
+                    font-family: var(--font-code, 'Anonymous Pro', monospace);
+                    font-size: 0.78rem;
+                    font-weight: 700;
+                    color: #d97706;
+                    background-color: rgba(217, 119, 6, 0.1);
+                    border: 1px solid rgba(217, 119, 6, 0.3);
+                    border-radius: 6px;
+                    text-decoration: none;
+                    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+
+                    &:hover {
+                        background-color: rgba(217, 119, 6, 0.2);
+                        border-color: rgba(217, 119, 6, 0.5);
+                        transform: translateY(-1px);
+                    }
+
+                    svg {
+                        flex-shrink: 0;
+                    }
+                }
+            }
+        }
+
+        .not-listen {
+            h3 {
+                font-size: 1.05rem;
+                color: var(--color-text-secondary);
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+
+            .songs-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 1.25rem;
+
+                .song-item {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1.1rem;
+                    background-color: var(--color-bg-secondary, rgba(0, 0, 0, 0.03));
+                    border: 1px solid var(--color-text-tertiary, rgba(0, 0, 0, 0.15));
+                    border-radius: 10px;
+                    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+                    &:hover {
+                        border-color: var(--color-primary, #2563eb);
+                        transform: translateY(-3px);
+                        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+                    }
+
+                    .cover-img {
+                        width: 100%;
+                        aspect-ratio: 1 / 1;
+                        object-fit: cover;
+                        border-radius: 6px;
+                        margin-bottom: 0.75rem;
+                        background-color: rgba(0, 0, 0, 0.05);
+                        border: 1px solid rgba(0, 0, 0, 0.08);
+                        display: block;
+                    }
+
+                    .name.title {
+                        font-size: 1.05rem;
+                        font-weight: 700;
+                        margin: 0 0 0.2rem 0;
+                        color: var(--color-text-primary);
+                        line-height: 1.3;
+                    }
+
+                    .creator {
+                        font-family: var(--font-code, 'Anonymous Pro', monospace);
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        color: var(--color-primary, #2563eb);
+                        margin-bottom: 0.4rem;
+                        display: block;
+                    }
+
+                    .description {
+                        font-size: 0.85rem;
+                        color: var(--color-text-secondary);
+                        line-height: 1.45;
+                        margin: 0 0 0.85rem 0;
+                        flex-grow: 1;
+                    }
+
+                    .my-website {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0.35rem 0.75rem;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        font-family: var(--font-code, 'Anonymous Pro', monospace);
+                        color: var(--color-link, #199cf3);
+                        background-color: rgba(37, 99, 235, 0.1);
+                        border: 1px solid rgba(37, 99, 235, 0.25);
+                        border-radius: 6px;
+                        text-decoration: none;
+                        transition: background-color 0.15s ease, border-color 0.15s ease;
+                        align-self: flex-start;
+
+                        &:hover {
+                            background-color: rgba(37, 99, 235, 0.2);
+                            border-color: rgba(37, 99, 235, 0.5);
+                        }
                     }
                 }
             }

@@ -51,6 +51,27 @@ if ($safePath === '/feed/news' || $safePath === '/feed/news/') {
     header('Content-Type: application/json; charset=UTF-8');
     echo \App\Services\NewsFeedService::renderJsonFeed();
     exit;
+} elseif ($safePath === '/feed/music' || $safePath === '/feed/music/') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: /feed/music/xml");
+    exit;
+} elseif ($safePath === '/feed/music/xml') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: application/rss+xml; charset=UTF-8');
+    echo \App\Services\MusicFeedService::renderXmlFeed();
+    exit;
+} elseif ($safePath === '/feed/music/json') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    header('Content-Type: application/json; charset=UTF-8');
+    echo \App\Services\MusicFeedService::renderJsonFeed();
+    exit;
 }
 
 // Robots, Sitemap, and LLMs routes
@@ -299,6 +320,8 @@ if ($safePath === '/links' || $safePath === '/links/') {
     <link rel="stylesheet" href="app.css">
     <link rel="alternate" type="application/rss+xml" title="Fabian Ternis - News (RSS Feed)" href="/feed/news/xml">
     <link rel="alternate" type="application/json" title="Fabian Ternis - News (JSON Feed)" href="/feed/news/json">
+    <link rel="alternate" type="application/rss+xml" title="Fabian Ternis - Music (RSS Feed)" href="/feed/music/xml">
+    <link rel="alternate" type="application/json" title="Fabian Ternis - Music (JSON Feed)" href="/feed/music/json">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=7">  ???-->
     <meta name="keywords" content="Fabian Ternis, ternis.dev, Web developer, StoryGrab, twins-on-ice Website, twinsonice website, ternis.net, Ternis HomeLab">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">

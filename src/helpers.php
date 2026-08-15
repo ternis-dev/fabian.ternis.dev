@@ -402,7 +402,47 @@ if (!function_exists('get_news')) {
         }
         $content = file_get_contents($filePath);
         $data = json_decode($content, true);
-        return is_array($data) ? $data : [];
+        if (!is_array($data)) {
+            return [];
+        }
+
+        foreach ($data as $index => &$item) {
+            if (!isset($item['id']) || $item['id'] === '') {
+                $item['id'] = 'news-' . ($index + 1);
+            }
+        }
+
+        return $data;
     }
 }
+
+if (!function_exists('get_music')) {
+    /**
+     * Load music items from src/data/music.json
+     * 
+     * @return array
+     */
+    function get_music(): array {
+        $filePath = __DIR__ . '/data/music.json';
+        if (!file_exists($filePath)) {
+            return [];
+        }
+        $content = file_get_contents($filePath);
+        $data = json_decode($content, true);
+        if (!is_array($data)) {
+            return [];
+        }
+
+        foreach ($data as $index => &$item) {
+            if (!isset($item['id']) || $item['id'] === '') {
+                $rawSlug = ($item['artist'] ?? '') . '-' . ($item['title'] ?? '');
+                $slug = strtolower(trim((string)preg_replace('/[^A-Za-z0-9]+/', '-', $rawSlug), '-'));
+                $item['id'] = !empty($slug) ? $slug : ($index + 1);
+            }
+        }
+
+        return $data;
+    }
+}
+
 
