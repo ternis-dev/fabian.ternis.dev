@@ -583,6 +583,24 @@
         </div>
     </section>
 
+
+    <section id="music">
+        <h2>Music, i <listen>listen</listen> to.</h2>
+
+        <div class="not-listen">
+            <h3>WHat i dont listen to</h3>
+            <div class="songs-container">
+                <!-- foreach ... -->
+                <div class="song-item">
+                    <h5 class="name title">Check Das!</h5>
+                    <span class="creator">Twins on ice</span>
+                    <p class="description">...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- <marquee behavior="" direction="" class="news-ticker bottom"> -->
     <div class="news-ticker bottom">
         <div class="ticker-content">
