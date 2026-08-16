@@ -4,11 +4,13 @@ namespace App\API;
 
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Utils;
+use App\Services\CacheService;
 
 class hackAI extends Base
 {
     protected string $docs_url = 'https://docs.ai.hackclub.com/';
     protected ?string $apiKey;
+    protected int $cacheTtl = 2592000; // 30 days (permanent AI completion cache)
 
     public $freeModels = [
         'qwen/qwen3-32b' => [
@@ -42,7 +44,7 @@ class hackAI extends Base
     ];
 
 
-    public function __construct(?string $apiKey = null)
+    public function __construct(?string $apiKey = null, ?CacheService $cache = null)
     {
         $this->apiKey = $apiKey ?? env('HACKCLUB_AI_API_KEY');
 
@@ -59,10 +61,10 @@ class hackAI extends Base
             'headers'         => $headers,
             'timeout'         => 60.0,  // AI responses can take a while
             'connect_timeout' => 10.0,
-        ]);
+        ], $cache ?? cache());
     }
 
-    public function promptFree(string $prompt, $model = null)
+    public function promptFree(string $prompt, $model = null, bool $forceFresh = false)
     {
         $selectedModel = $model ?? array_key_first($this->freeModels);
 
@@ -72,7 +74,7 @@ class hackAI extends Base
 
         return $this->chat([
             ['role' => 'user', 'content' => $prompt],
-        ], $selectedModel);
+        ], $selectedModel, $forceFresh);
     }
 
     /**
@@ -85,12 +87,14 @@ class hackAI extends Base
 
     /**
      * Send a multi-turn chat request with a full messages array.
+     * Automatically checks and caches all AI responses in CacheService.
      *
      * @param array  $messages Array of {role, content} objects
      * @param string|null $model  Model slug (must be in $freeModels)
+     * @param bool $forceFresh Whether to bypass cache and fetch fresh from API
      * @return array  Raw decoded API response or ['error' => '...']
      */
-    public function chat(array $messages, ?string $model = null): array
+    public function chat(array $messages, ?string $model = null, bool $forceFresh = false): array
     {
         $selectedModel = $model ?? array_key_first($this->freeModels);
 
@@ -102,6 +106,17 @@ class hackAI extends Base
         foreach ($messages as $msg) {
             if (!isset($msg['role'], $msg['content'])) {
                 return ['error' => 'Each message must have a "role" and "content" field.'];
+            }
+        }
+
+        // Cache key for this specific conversation state and model
+        $cacheKey = 'hackclub_ai_response_' . md5($selectedModel . '_' . serialize($messages));
+
+        if (!$forceFresh && $this->cache->has($cacheKey)) {
+            $cached = $this->cache->get($cacheKey);
+            if (is_array($cached) && !empty($cached['choices'][0]['message']['content'])) {
+                $cached['_cached'] = true;
+                return $cached;
             }
         }
 
@@ -119,16 +134,24 @@ class hackAI extends Base
                 'json' => $payload,
             ]);
 
-            return json_decode($response->getBody()->getContents(), true) ?? [];
+            $decoded = json_decode($response->getBody()->getContents(), true) ?? [];
+
+            // Cache successful AI completion
+            if (!empty($decoded['choices'][0]['message']['content'])) {
+                $this->cache->put($cacheKey, $decoded, $this->cacheTtl);
+            }
+
+            return $decoded;
         } catch (\Throwable $e) {
+            // Check if stale cached result is available on error
+            $stale = $this->cache->getStale($cacheKey);
+            if (is_array($stale) && !empty($stale['choices'][0]['message']['content'])) {
+                $stale['_cached'] = true;
+                $stale['_stale'] = true;
+                return $stale;
+            }
+
             return ['error' => $e->getMessage()];
         }
-
-        // ToDo: rate-limiting and "bot protection" ...
     }
-
-    // public function getModelsList()
-    // {
-    //     return $this->freeModels;
-    // }
 }

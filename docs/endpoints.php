@@ -575,6 +575,85 @@ return [
                     ]
                 ]
             ]
+        ],
+        [
+            'name' => 'AI Intelligence & Chat',
+            'slug' => 'ai',
+            'description' => 'Hack Club AI integration for interactive multi-turn chat sessions and dynamic content generation.',
+            'endpoints' => [
+                [
+                    'id' => 'post-ai-dynamic',
+                    'name' => 'Dynamic AI Generator',
+                    'method' => 'POST',
+                    'path' => '/v1/ai/dynamic',
+                    'description' => 'Generates dynamic, AI-crafted developer roasts, wisdom, homelab architectures, and hot takes with rate-limiting (6 req/min).',
+                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                    'parameters' => [
+                        ['name' => 'category', 'type' => 'string', 'required' => false, 'default' => 'roast_domains', 'description' => 'Category slug: roast_domains, dev_wisdom, homelab_idea, mail_free, hot_take, custom.'],
+                        ['name' => 'prompt', 'type' => 'string', 'required' => false, 'default' => '', 'description' => 'Custom user prompt (used when category is custom).'],
+                        ['name' => 'model', 'type' => 'string', 'required' => false, 'default' => 'qwen/qwen3-32b', 'description' => 'AI Model identifier slug.'],
+                        ['name' => 'fresh', 'type' => 'boolean', 'required' => false, 'default' => false, 'description' => 'Force bypass server cache for fresh generation.']
+                    ],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'category' => 'roast_domains',
+                            'content' => '### Domain Hoarding Audit\nFabian owns 50+ domains...',
+                            'model' => 'qwen/qwen3-32b',
+                            'duration_ms' => 450.2,
+                            'cached' => false
+                        ],
+                        'meta' => [
+                            'rate_limit' => ['remaining' => 5, 'limit' => 6, 'reset_at' => 1755367300]
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'post-ai-chat',
+                    'name' => 'Multi-turn AI Chat',
+                    'method' => 'POST',
+                    'path' => '/v1/ai/chat',
+                    'description' => 'Submits multi-turn conversation or single prompt to Hack Club AI models. Rate limited to 10 req/min per IP.',
+                    'headers' => ['Content-Type' => 'application/json', 'Accept' => 'application/json'],
+                    'parameters' => [
+                        ['name' => 'messages', 'type' => 'array', 'required' => false, 'default' => [], 'description' => 'Array of message objects [{role, content}].'],
+                        ['name' => 'prompt', 'type' => 'string', 'required' => false, 'default' => '', 'description' => 'Single prompt text (if messages not provided).'],
+                        ['name' => 'model', 'type' => 'string', 'required' => false, 'default' => 'qwen/qwen3-32b', 'description' => 'Target model identifier.'],
+                        ['name' => 'session_id', 'type' => 'string', 'required' => false, 'default' => '', 'description' => 'Browser session UUID for conversation logging.']
+                    ],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'reply' => 'Hello Fabian! How can I assist with your Homelab today?',
+                            'model' => 'qwen/qwen3-32b',
+                            'session_id' => '550e8400-e29b-41d4-a716-446655440000',
+                            'duration_ms' => 612.4
+                        ]
+                    ]
+                ],
+                [
+                    'id' => 'get-ai-models',
+                    'name' => 'List AI Models',
+                    'method' => 'GET',
+                    'path' => '/v1/ai/models',
+                    'description' => 'Lists available Hack Club AI models supported by the API system.',
+                    'headers' => ['Accept' => 'application/json'],
+                    'parameters' => [],
+                    'response_example' => [
+                        'success' => true,
+                        'status' => 200,
+                        'data' => [
+                            'models' => [
+                                ['slug' => 'qwen/qwen3-32b', 'name' => 'Qwen 32B'],
+                                ['slug' => 'inclusionai/ling-3.0-flash:free', 'name' => 'Ling-3.0-flash'],
+                                ['slug' => '~deepseek/deepseek-v4-flash-latest', 'name' => 'DeepSeek V4 Flash Latest']
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ]
     ]
 ];

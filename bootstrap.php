@@ -322,7 +322,11 @@ if ($safePath === '/links' || $safePath === '/links/') {
     <link rel="alternate" type="application/json" title="Fabian Ternis - News (JSON Feed)" href="/feed/news/json">
     <link rel="alternate" type="application/rss+xml" title="Fabian Ternis - Music (RSS Feed)" href="/feed/music/xml">
     <link rel="alternate" type="application/json" title="Fabian Ternis - Music (JSON Feed)" href="/feed/music/json">
-    <!-- <meta http-equiv="X-UA-Compatible" content="IE=7">  ???-->
+    <meta name="description" content="Fabian Ternis - Student and Web Developer from Germany. Homelab enthusiast, domain collector, and developer behind StoryGrab and open source tools.">
+    <meta property="og:title" content="Fabian Ternis - Personal Website">
+    <meta property="og:description" content="Student and Web Developer from Germany. Homelab enthusiast, domain collector, and developer.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fabian.ternis.dev/">
     <meta name="keywords" content="Fabian Ternis, ternis.dev, Web developer, StoryGrab, twins-on-ice Website, twinsonice website, ternis.net, Ternis HomeLab">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 </head>
@@ -356,6 +360,7 @@ if ($safePath === '/links' || $safePath === '/links/') {
     
     <script src="app.js"></script>
     <script src="helpers.js"></script>
+    <script src="ai_dynamic.js" defer></script>
     <script src="ai_chat.js" defer></script>
     <script src="stories.js" defer></script>
     <script src="linkshorten.js" defer></script>

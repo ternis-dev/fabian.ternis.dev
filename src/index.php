@@ -47,17 +47,14 @@
 
     <?php
     $nav_items = [
-        // ['label' => 'Top ↑', 'url' => '#hero'],
         ['label' => 'Top ↑', 'url' => '#'],
-        // ['label' => 'Top ↑', 'url' => '#theme-select'],
-        // ['label' => 'Contact', 'url' => '#contact'],
         ['label' => 'News', 'url' => '#news'],
         ['label' => 'HomeLab', 'url' => '#homelab'],
+        ['label' => 'AI Dynamic', 'url' => '#ai_dynamic'],
         ['label' => 'Domains', 'url' => '#domains'],
         ['label' => 'Music', 'url' => '#music'],
         ['label' => 'AI Chat', 'url' => '#ai_chat'],
         ['label' => 'Uploads', 'url' => '#uploads'],
-        // ['label' => '', 'url' => '#'],
         ['label' => 'Links', 'url' => '/links'],
         ['label' => 'Docs', 'url' => '/docs'],
     ];
@@ -76,7 +73,7 @@
 
 
     <section id="other">
-        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de' targte="_blank">mirrortwins.de</a> && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a> and <a href="http://twinsonice.link?from=fabian.ternis.dev&section=other">twinsonice.link</a>.</h4>
+        <h4>I am also trying not to get sued by <a href="https://cult-management.com" target="_blank">cult-management.com</a> for owning <span class="font-code">('<a href="https://twins-on-ice.de" target="_blank">twins-on-ice.de</a>' && '<a href="https://mirrortwins.de" target="_blank">mirrortwins.de</a>' && '<a href="https://twinsonice.eu" target="_blank">twinsonice.eu</a>')</span> as well as <span class="font-code">('<a href="https://emiliamacula.de" target="_blank">emiliamacula.de</a>' && '<a href="https://letiziamacula.de" target="_blank">letiziamacula.de</a>')</span> and <a href="https://cult-management.de" target="_blank">cult-management.de</a> of course. Newly I even own <a>twinsonice.shop</a> and <a href="http://twinsonice.link?from=fabian.ternis.dev&section=other">twinsonice.link</a>.</h4>
         
         <hr>
         Whenever I do a disclosure (in any way), I get no response (e.g., 'A Leaked Gemini-API-Key by a Google-Employee' or 'no idea how to name it')
@@ -193,7 +190,112 @@
 
 
     <section id="ai_dynamic">
-        <h2><dynamically>Dynamically</dynamically> <generated>generated</generated> by AI</h2>
+        <div class="ai-dynamic-header-row">
+            <h2><dynamically>Dynamically</dynamically> <generated>generated</generated> by AI</h2>
+            <div class="ai-dynamic-badge">
+                <span class="ai-pulse-dot"></span>
+                <span class="ai-badge-text">Hack Club AI</span>
+            </div>
+        </div>
+
+        <p class="ai-dynamic-intro">Freshly synthesized developer roasts, cynical dev wisdom, over-engineered homelab blueprints, and DNS confessionals generated on demand.</p>
+
+        <div class="ai-dynamic-card">
+            <div class="ai-dynamic-toolbar">
+                <div class="ai-category-tabs" role="tablist" aria-label="AI dynamic topic categories">
+                    <button type="button" class="ai-cat-btn active" data-category="roast_domains" role="tab" aria-selected="true">
+                        <span class="cat-icon">🌐</span> Roast Domains
+                    </button>
+                    <button type="button" class="ai-cat-btn" data-category="dev_wisdom" role="tab" aria-selected="false">
+                        <span class="cat-icon">💡</span> Dev Wisdom
+                    </button>
+                    <button type="button" class="ai-cat-btn" data-category="homelab_idea" role="tab" aria-selected="false">
+                        <span class="cat-icon">🖥️</span> Homelab Idea
+                    </button>
+                    <button type="button" class="ai-cat-btn" data-category="mail_free" role="tab" aria-selected="false">
+                        <span class="cat-icon">✉️</span> mail-free.de Eulogy
+                    </button>
+                    <button type="button" class="ai-cat-btn" data-category="hot_take" role="tab" aria-selected="false">
+                        <span class="cat-icon">🔥</span> Hot Take
+                    </button>
+                    <button type="button" class="ai-cat-btn" data-category="custom" role="tab" aria-selected="false">
+                        <span class="cat-icon">⚡</span> Custom Topic
+                    </button>
+                </div>
+
+                <div class="ai-dynamic-actions-bar">
+                    <?php if(isset($api_['hackclub_ai']) && count($api_['hackclub_ai']->freeModels) > 1): ?>
+                        <div class="ai-model-select-wrapper">
+                            <select id="ai_dynamic_model" class="ai-model-select" aria-label="Select AI model for dynamic generation">
+                                <?php foreach($api_['hackclub_ai']->freeModels as $ident => $data): ?>
+                                    <option value="<?= htmlspecialchars($ident) ?>"><?= htmlspecialchars($data['name']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php else: ?>
+                        <?php if(isset($api_['hackclub_ai'])): ?>
+                            <?php foreach($api_['hackclub_ai']->freeModels as $ident => $data): ?>
+                                <input type="hidden" id="ai_dynamic_model" value="<?= htmlspecialchars($ident) ?>">
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <button type="button" id="ai_dynamic_generate_btn" class="ai-generate-btn">
+                        <svg class="icon-sparkle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                        </svg>
+                        <span class="btn-text">Generate New</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="ai_dynamic_custom_wrap" class="ai-custom-prompt-wrap" style="display: none;">
+                <input type="text" id="ai_dynamic_custom_input" placeholder="Type a custom prompt or topic (e.g., 'Why is Vim superior?' or 'Roast my commit message')..." maxlength="250" aria-label="Custom dynamic AI prompt">
+            </div>
+
+            <div class="ai-dynamic-meta-bar">
+                <div class="ai-rate-limit-badge" id="ai_dynamic_ratelimit_info">
+                    <span class="rate-indicator-dot"></span>
+                    <span id="ai_dynamic_ratelimit_text">6 / 6 generations available this minute</span>
+                </div>
+                <div id="ai_dynamic_cooldown_banner" class="ai-cooldown-badge" style="display: none;">
+                    <span class="cooldown-icon">⏳</span>
+                    <span id="ai_dynamic_cooldown_text">Rate limit reached. Resets in 60s.</span>
+                </div>
+            </div>
+
+            <div class="ai-dynamic-output-card">
+                <div class="ai-output-topbar">
+                    <div class="ai-tags-group">
+                        <span class="ai-topic-tag" id="ai_dynamic_topic_label">🌐 Roast Domains</span>
+                        <span class="ai-model-tag" id="ai_dynamic_used_model">Qwen 32B</span>
+                    </div>
+
+                    <button type="button" id="ai_dynamic_copy_btn" class="ai-copy-btn" title="Copy generated markdown" aria-label="Copy generated text">
+                        <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                        </svg>
+                        <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        <span class="copy-text">Copy</span>
+                    </button>
+                </div>
+
+                <div id="ai_dynamic_loading" class="ai-dynamic-loading" style="display: none;">
+                    <div class="ai-spinner"></div>
+                    <div class="ai-loading-status" id="ai_dynamic_status_text">Consulting the neural nodes...</div>
+                </div>
+
+                <div id="ai_dynamic_content" class="ai-dynamic-content markdown-body">
+                    <h3>🌐 Domain Hoarding Diagnosis: Critical</h3>
+                    <p>Fabian has accumulated enough <code>.de</code>, <code>.link</code>, and <code>.eu</code> domains to open his own registrar, yet <strong>94% of them resolve directly to a default Caddy landing page or an empty git repository</strong>.</p>
+                    <blockquote><em>"Why build one completed project when you can buy seven related domains at 3:00 AM on a Tuesday?"</em></blockquote>
+                    <p><strong>Key Observation:</strong> Owning <code>twinsonice.shop</code>, <code>twinsonice.link</code>, and <code>mirrortwins.de</code> simultaneously is either a mastermind branding maneuver or a cry for help from ICANN.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
 
@@ -747,7 +849,7 @@
                             <!-- <a href="<?= htmlspecialchars($item['url']) ?>" target="_blank" rel="noopener"> -->
                                 <img src="<?= htmlspecialchars($item['url']) ?>" alt="<?= htmlspecialchars($item['filename'] ?? 'Upload') ?>" loading="lazy">
                             <!-- </a> -->
-                            <div clas="info">
+                            <div class="info">
                                 <strong><?= htmlspecialchars($item['username'] ?: 'Anonymous') ?></strong>
                                 <?php if (!empty($item['description'])): ?>
                                     <p><?= htmlspecialchars($item['description']) ?></p>

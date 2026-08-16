@@ -219,7 +219,7 @@ class ApiRouter
                     }
                     break;
 
-                // HackClub AI Chat
+                // HackClub AI Chat & Dynamic AI Generator
                 case '/v1/ai/chat':
                 case '/ai/chat':
                     if ($method === 'POST') {
@@ -227,6 +227,11 @@ class ApiRouter
                     } else {
                         $this->sendJson(['error' => ['code' => 'METHOD_NOT_ALLOWED', 'message' => 'POST method required']], 405);
                     }
+                    break;
+
+                case '/v1/ai/dynamic':
+                case '/ai/dynamic':
+                    $this->handleAiDynamic();
                     break;
 
                 case '/v1/ai/models':
@@ -404,6 +409,20 @@ class ApiRouter
             ];
         }
 
+        if ($target === 'ai' || $target === 'all') {
+            $categories = ['roast_domains', 'dev_wisdom', 'homelab_idea', 'mail_free', 'hot_take'];
+            $hackAI = new hackAI();
+            $defaultModel = array_key_first($hackAI->freeModels);
+            foreach ($categories as $cat) {
+                $cacheKey = 'ai_dynamic_' . $cat . '_' . md5($defaultModel . '_');
+                $this->cache->forget($cacheKey);
+            }
+            $refreshed['ai'] = [
+                'status' => 'cleared',
+                'categories' => $categories
+            ];
+        }
+
         $this->sendJson([
             'data' => [
                 'status' => 'cache_updated',
@@ -535,14 +554,15 @@ class ApiRouter
 
         $hackAI    = new hackAI();
         $model     = $input['model'] ?? array_key_first($hackAI->freeModels);
+        $forceFresh = !empty($input['fresh']) || !empty($_GET['fresh']);
         $logger    = new AiChatLogger($this->db);
 
         // Upsert session row
         $logger->upsertSession($sessionId, $model, $ip);
 
-        // ── Call the AI ───────────────────────────────────────────────────
+        // ── Call the AI (with automatic response caching) ────────────────
         $t0     = microtime(true);
-        $result = $hackAI->chat($messages, $model);
+        $result = $hackAI->chat($messages, $model, $forceFresh);
         $ms     = (microtime(true) - $t0) * 1000;
 
         if (isset($result['error'])) {
@@ -570,18 +590,187 @@ class ApiRouter
         }
 
         $usedModel = $result['model'] ?? $model;
+        $isCached = !empty($result['_cached']);
 
         // ── Log success ───────────────────────────────────────────────────
         $logger->logRequest($sessionId, $usedModel, $messages, $reply, true, $ms, 200);
 
         $this->sendJson([
             'data' => [
-                'reply'      => $reply,
-                'model'      => $usedModel,
-                'session_id' => $sessionId,
-                'duration_ms'=> round($ms, 1),
+                'reply'       => $reply,
+                'model'       => $usedModel,
+                'session_id'  => $sessionId,
+                'duration_ms' => round($ms, 1),
+                'cached'      => $isCached,
             ]
         ]);
+    }
+
+    /**
+     * Handle GET/POST /api/v1/ai/dynamic
+     * Generates dynamic, AI-powered developer snippets, roasts, homelab ideas, and wisdom.
+     * Rate limited to 6 requests per minute per IP. Always caches responses.
+     */
+    protected function handleAiDynamic(): void
+    {
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+        $rateLimitKey = 'ai_dynamic_' . md5($ip);
+        $rateCheck = $this->rateLimiter->check($rateLimitKey, 6, 60);
+
+        header('X-RateLimit-Limit: ' . $rateCheck['limit']);
+        header('X-RateLimit-Remaining: ' . $rateCheck['remaining']);
+        header('X-RateLimit-Reset: ' . $rateCheck['reset_at']);
+
+        if (!$rateCheck['allowed']) {
+            header('Retry-After: ' . $rateCheck['retry_after']);
+            $this->sendJson([
+                'error' => [
+                    'code'        => 'TOO_MANY_REQUESTS',
+                    'message'     => 'Rate limit exceeded for AI Dynamic generation. Max ' . $rateCheck['limit'] . ' generations per minute. Please wait ' . $rateCheck['retry_after'] . ' seconds.',
+                    'retry_after' => $rateCheck['retry_after'],
+                ]
+            ], 429);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+        $category = trim($input['category'] ?? $_GET['category'] ?? 'roast_domains');
+        $customPrompt = trim($input['prompt'] ?? $_GET['prompt'] ?? '');
+        $requestedModel = $input['model'] ?? $_GET['model'] ?? null;
+        $forceFresh = !empty($input['fresh']) || !empty($_GET['fresh']);
+
+        $validCategories = ['roast_domains', 'dev_wisdom', 'homelab_idea', 'mail_free', 'hot_take', 'custom'];
+        if (!in_array($category, $validCategories, true)) {
+            $category = 'roast_domains';
+        }
+
+        $sessionId = preg_replace('/[^a-zA-Z0-9\-_]/', '', $input['session_id'] ?? $_GET['session_id'] ?? '');
+        if (strlen($sessionId) < 8) {
+            $sessionId = bin2hex(random_bytes(16));
+        }
+
+        $hackAI = new hackAI();
+        $model = $requestedModel ?? array_key_first($hackAI->freeModels);
+        if (!array_key_exists($model, $hackAI->freeModels)) {
+            $model = array_key_first($hackAI->freeModels);
+        }
+
+        // Cache key covering category, custom prompt, and model (cached ALWAYS)
+        $cacheKey = 'ai_dynamic_' . $category . '_' . md5($model . '_' . $customPrompt);
+
+        if (!$forceFresh && $this->cache->has($cacheKey)) {
+            $cachedData = $this->cache->get($cacheKey);
+            if (is_array($cachedData) && !empty($cachedData['content'])) {
+                $this->sendJson([
+                    'data' => array_merge($cachedData, [
+                        'cached' => true,
+                        'session_id' => $sessionId,
+                    ]),
+                    'meta' => [
+                        'rate_limit' => [
+                            'remaining' => $rateCheck['remaining'],
+                            'limit' => $rateCheck['limit'],
+                            'reset_at' => $rateCheck['reset_at'],
+                        ]
+                    ]
+                ]);
+                return;
+            }
+        }
+
+        // Prepare prompts
+        $systemPrompt = "You are the witty, humorous AI embedded on Fabian Ternis's personal portfolio website (fabian.ternis.dev). "
+            . "Fabian is a passionate developer, homelab builder (ternis.net), domain hoarder (dnbx.de, twinsonice.de, mail-free.eu), and student from Germany. "
+            . "He never deletes code (only comments it out) and is still mourning the loss of the domain 'mail-free.de' in 2025. "
+            . "Keep your response concise (2-4 paragraphs or punchy bullet points), entertaining, well-formatted in Markdown, and playfully sarcastic. Do not use generic filler.";
+
+        $userPrompt = match ($category) {
+            'roast_domains' => "Write a hilarious, playful roast about Fabian's massive collection of 50+ obscure domain names (like dnbx.de, twinsonice.de, ternis.link, mail-free.eu), the fact that 90% of them have no content, and his ongoing DNS renewal addiction.",
+            'dev_wisdom' => "Give a piece of hilarious, relatable, cynical modern developer wisdom or life advice. Include a witty takeaway or pseudo-code snippet.",
+            'homelab_idea' => "Propose an absurdly over-engineered, ridiculously specific homelab or self-hosting project idea for Fabian's HomeLab at ternis.net. Include fictional architecture and Docker compose vibes.",
+            'mail_free' => "Write a melodramatic, tragic eulogy for the lost domain 'mail-free.de' that Fabian lost in 2025, contrasting it with his coping mechanism of owning mail-free.eu and mail-free.uk in 2026.",
+            'hot_take' => "Deliver a fiery, funny developer hot take (for example: why commenting out 500 lines of dead code is superior to Git, or why self-hosting DNS in a bedroom is a lifestyle choice).",
+            'custom' => !empty($customPrompt) ? "Respond to this user prompt with tech wit and charm: " . $customPrompt : "Give a random witty insight about Fabian's dev stack and hobbies.",
+        };
+
+        $messages = [
+            ['role' => 'system', 'content' => $systemPrompt],
+            ['role' => 'user', 'content' => $userPrompt]
+        ];
+
+        $logger = new AiChatLogger($this->db);
+        $logger->upsertSession($sessionId, $model, $ip);
+
+        $t0 = microtime(true);
+        $result = $hackAI->chat($messages, $model, $forceFresh);
+        $ms = (microtime(true) - $t0) * 1000;
+
+        $content = $result['choices'][0]['message']['content'] ?? null;
+        $isSuccess = ($content !== null && !isset($result['error']));
+
+        if (!$isSuccess) {
+            // High-quality dynamic fallback so the feature always shines
+            $content = $this->getDynamicAiFallback($category, $customPrompt);
+            $logger->logRequest($sessionId, $model, $messages, $content, false, $ms, 500);
+        } else {
+            $logger->logRequest($sessionId, $result['model'] ?? $model, $messages, $content, true, $ms, 200);
+        }
+
+        $responseData = [
+            'category'    => $category,
+            'content'     => $content,
+            'model'       => $result['model'] ?? $model,
+            'session_id'  => $sessionId,
+            'duration_ms' => round($ms, 1),
+            'timestamp'   => date('c'),
+            'cached'      => !empty($result['_cached']),
+        ];
+
+        // ALWAYS cache dynamic responses in CacheService (30 days)
+        $this->cache->put($cacheKey, $responseData, 2592000);
+
+        $this->sendJson([
+            'data' => $responseData,
+            'meta' => [
+                'rate_limit' => [
+                    'remaining' => $rateCheck['remaining'],
+                    'limit' => $rateCheck['limit'],
+                    'reset_at' => $rateCheck['reset_at'],
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * Witty offline / fallback content generator for dynamic AI categories.
+     */
+    protected function getDynamicAiFallback(string $category, string $customPrompt = ''): string
+    {
+        $fallbacks = [
+            'roast_domains' => [
+                "### 🌐 Domain Hoarding Diagnosis: Critical\n\nFabian has accumulated enough `.de`, `.link`, and `.eu` domains to open his own registrar, yet **94% of them resolve directly to a default Caddy landing page or an empty git repository**.\n\n> *\"Why build one completed project when you can buy seven related domains at 3:00 AM on a Tuesday?\"*\n\n**Key Observation:** Owning `twinsonice.shop`, `twinsonice.link`, and `mirrortwins.de` simultaneously is either a mastermind branding maneuver or a cry for help from ICANN.",
+                "### 🛒 The Cart of Broken Dreams\n\nFabian doesn't have hobbies; he has renewal invoices. His domain portfolio at `dnbx.de` looks like a graveyard of side-project inspirations that started with *\"This will take a weekend\"* and ended with *\"Auto-renew: Enabled for 10 years\"*.\n\n- **Total domains:** Way too many\n- **Active web apps:** `fabian.ternis.dev` and whatever container didn't crash yesterday\n- **Verdict:** 10/10 commitment to DNS propagation.",
+            ],
+            'dev_wisdom' => [
+                "### 📜 The Sacred Rule of Commented Code\n\n```php\n// Do NOT delete this line. It does nothing,\n// but removing it causes the entire production stack to panic.\n// sleep(0);\n```\n\nTrue senior engineering is not about writing clean, modular abstractions. It is about wrapping 400 lines of chaotic code in `/* ... */` with a comment saying `// ToDo: fix later` and pretending you will visit it before the heat death of the universe.",
+                "### ⚡ Modern Web Philosophy\n\n1. If it works on localhost, ship it straight to the HomeLab.\n2. If it breaks in production, rename it to a *\"Beta Feature Preview\"*.\n3. Real developers don't use garbage collectors; we simply buy more RAM from the KVM provider.",
+            ],
+            'homelab_idea' => [
+                "### 🖥️ Next Over-Engineered Homelab Project: `Pi-Toast-Daemon`\n\n**Architecture Blueprint:**\n- Deploy a 3-node K3s cluster on repurposed HP Mini PCs.\n- Set up **WireGuard mesh** and **Pi-Hole DNS** specifically to route internal telemetry for smart kitchen appliances.\n- Connect a custom **n8n webhook** that automatically registers a `.link` domain whenever server CPU temperature exceeds 65°C.\n\n*Resource consumption: 48GB ECC RAM, 320W continuous power draw. Utility: None, but the Grafana dashboard looks glorious.*",
+            ],
+            'mail_free' => [
+                "### ✉️ In Memoriam: `mail-free.de` (2024 – 2025)\n\nWe gather here today to remember the fallen hero of free email hosting.\n\nWhile the registry took `mail-free.de`, they could never extinguish the fire. Rising from the ashes come `mail-free.eu` and `mail-free.uk` in 2026—proving that Fabian will literally buy out the entire continent of European ccTLDs before admitting defeat on free mail.",
+            ],
+            'hot_take' => [
+                "### 🔥 Hot Take: Native PHP & CSS are Peak Web\n\nWhy ship 45 megabytes of JavaScript frameworks when `ob_start()`, vanilla CSS variables, and a single SQLite database can render in **4.2 milliseconds**?\n\nFrameworks come and go, but `<?php foreach(\$domains as \$d): ?>` is forever.",
+            ],
+            'custom' => [
+                "### 🤖 Dynamic AI Generator\n\n" . (!empty($customPrompt) ? "Analyzing query: *\"" . htmlspecialchars($customPrompt, ENT_QUOTES, 'UTF-8') . "\"*\n\n" : "") . "The neural network has processed your prompt. Remember: in the realm of development, every bug is simply an un-documented dynamic lifestyle feature!",
+            ]
+        ];
+
+        $list = $fallbacks[$category] ?? $fallbacks['dev_wisdom'];
+        return $list[array_rand($list)];
     }
 
     /**
