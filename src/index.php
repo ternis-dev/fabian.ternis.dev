@@ -84,6 +84,11 @@
         Building (mostly <vibing>Vibing</vibing>) storygrab.net as a side-project that is powered by Cloudflare R2(r2.dev) and was solely built to power twins-on-ice.de (alt: mirrortwins.de)
     </section>
 
+<!-- 
+    <section id="svg_stuff">
+        <h2><code>SVG</code> Stuff</h2>
+    </section> -->
+
 
     <section id="no_name">
         
@@ -148,6 +153,17 @@
     </section>
 
 
+    <section id="mail-free">
+        <h2><code>mail-free</code> (my <approach>approach</approach> on a free email-service)</h2>
+
+        <ol>
+            <li class="disabled"><s>mail-free.de</s> <span>2024</span></li>
+            <!-- <li>mail-free.eu <span>2025</span></li> -->
+            <li>mail-free.eu <span>2026</span></li>
+            <li>mail-free.uk <span>2026</span></li>
+        </ol>
+    </section>
+
     <section id="more_random">
         <h2>Some more <random>random</random> stuff</h2>
 
@@ -173,6 +189,11 @@
             <li><a href="http://MTEX.dev">MTEX.dev</a> (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))</li>
             ... way too many more ...
         </ul>
+    </section>
+
+
+    <section id="ai_dynamic">
+        <h2><dynamically>Dynamically</dynamically> <generated>generated</generated> by AI</h2>
     </section>
 
 

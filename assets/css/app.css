@@ -1201,6 +1201,7 @@ body {
         }
 
         &#redaction {
+            /* ToDo: fix those styles ... */
             tipp {
                 /* margin-block: .25rem; */
                 /* height: 2rem; */
@@ -2824,7 +2825,7 @@ body.scrolled {
 
 
 /* ToDo: move to right position */
-just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, competitions, something, sad, pay, packages, all, listen {
+just, some, currently, random, fun, really, me, vibing, redacts, ai-note, hate, competitions, something, sad, pay, packages, all, listen, approach {
     color: var(--color-text-tertiary);
     font-style: italic;
 }
