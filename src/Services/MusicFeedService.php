@@ -31,7 +31,7 @@ class MusicFeedService
             $xml .= "      <title>{$title}</title>\n";
             $xml .= "      <link>" . htmlspecialchars($item['url'] ?? ($siteUrl . '#music')) . "</link>\n";
             $xml .= "      <guid isPermaLink=\"false\">" . htmlspecialchars($guid) . "</guid>\n";
-            $xml .= "      <description><![CDATA[" . htmlspecialchars($item['description'] ?? '') . "]]></description>\n";
+            $xml .= "      <description><![CDATA[" . ($item['description'] ?? '') . "]]></description>\n";
             if (!empty($item['date'])) {
                 $timestamp = strtotime($item['date']);
                 if ($timestamp !== false) {

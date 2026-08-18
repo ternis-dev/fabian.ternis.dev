@@ -12,7 +12,7 @@ class the_sk_provider extends Base
     public function __construct(string $apiToken)
     {
         parent::__construct([
-            'base_uri' => env('THE_SK_PROVIDER_API_BASE_URL' ?? null),
+            'base_uri' => env('THE_SK_PROVIDER_API_BASE_URL', 'https://api.theskprovider.com/'),
             'headers' => [
                 'Authorization' => 'Bearer ' . $apiToken,
                 'Accept'        => 'application/json',
@@ -22,7 +22,8 @@ class the_sk_provider extends Base
     
     public function getCountryList(): array
     {
-        return $this->safeRequest('GET', "other/country")['data'];
+        $res = $this->safeRequest('GET', "other/country");
+        return $res['data'] ?? $res;
     }
     
     public function createCaptcha(string $user_ip, string $user_agent): array
@@ -58,11 +59,12 @@ class the_sk_provider extends Base
         }
     */
     {
-        return $this->safeRequest('GET', 'other/whois', [
+        $res = $this->safeRequest('GET', 'other/whois', [
             'query' => [
                 'query' => $domain,
             ],
-        ])['data'];
+        ]);
+        return $res['data'] ?? $res;
     }
 
     public function networkTool(string $host, string $type): array
@@ -78,11 +80,12 @@ class the_sk_provider extends Base
         }
     */
     {
-        return $this->safeRequest('GET', 'other/network', [
+        $res = $this->safeRequest('GET', 'other/network', [
             'query' => [
                 'host' => $host,
                 'type' => $type, // host, ping, mtr, traceroute
             ],
-        ])['data'];
+        ]);
+        return $res['data'] ?? $res;
     }
 }
