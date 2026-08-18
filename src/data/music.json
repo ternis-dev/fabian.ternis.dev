@@ -1,6 +1,5 @@
 [
     {
-        "id": 1,
         "title": "Bye",
         "artist": "Leni Woess",
         "cover": "bye.jpg",
@@ -8,28 +7,26 @@
         "url": "http://leniwoess.de",
         "url_label": "Web Site",
         "type": "not_listen",
-        "date": "2026-08-01"
+        "date": null
     },
     {
-        "id": 2,
         "title": "Check Das!",
         "artist": "Twins on ice",
         "cover": "check-das.jpg",
         "description": "Electronic and hip-hop track fusion.",
         "url": "http://twins-on-ice.de",
-        "url_label": "Web Stuff",
+        "url_label": "Website",
         "type": "not_listen",
-        "date": "2026-07-25"
+        "date": null
     },
     {
-        "id": 3,
         "title": "Aura",
         "artist": "Leni Woess",
         "cover": "aura.jpg",
         "description": "Atmospheric soundscape with expressive synth leads.",
         "url": "http://leniwoess.de",
-        "url_label": "Web Stuff",
+        "url_label": "Website",
         "type": "not_listen",
-        "date": "2026-07-10"
+        "date": null
     }
 ]

@@ -1,0 +1,279 @@
+/**
+ * Curated Theme Definitions for fabian.ternis.dev
+ * 
+ * Distinct, high-quality palettes:
+ * - System (Auto / prefers-color-scheme)
+ * - Light & Dark Defaults
+ * - 6 Iconic Light Themes (Catppuccin Latte, Rosé Pine Dawn, Nord Light, Gruvbox Light, Solarized Light, Paper / Sepia)
+ * - 8 Iconic Dark Themes (Catppuccin Mocha, Dracula, Tokyo Night, Nord, Rosé Pine, Gruvbox Dark, Solarized Dark, Synthwave '84)
+ */
+
+/* ==========================================================================
+   1. System & Default Themes
+   ========================================================================== */
+
+/* System Auto: Dark Mode Preference Fallback */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]),
+    [data-theme="system"] {
+        --color-bg: #121214;
+        --color-bg-secondary: #1f1f23;
+        --color-text-primary: #f4f4f5;
+        --color-text-secondary: #a1a1aa;
+        --color-text-tertiary: #52525b;
+        --color-link: #38bdf8;
+        --color-primary: #2563eb;
+        --color-primary-hover: #3b82f6;
+        --color-github-black: #ffffff;
+        --color-github-white: #121214;
+    }
+}
+
+/* Explicit Light Mode (Default) */
+[data-theme="light"],
+[data-theme="alabaster"],
+[data-theme="one-light"] {
+    --color-bg: #fafafa;
+    --color-bg-secondary: #ebebeb;
+    --color-text-primary: #111827;
+    --color-text-secondary: #374151;
+    --color-text-tertiary: #6b7280;
+    --color-link: #2563eb;
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-github-black: #000000;
+    --color-github-white: #ffffff;
+}
+
+/* Explicit Dark Mode (Default) */
+[data-theme="dark"] {
+    --color-bg: #121214;
+    --color-bg-secondary: #1f1f23;
+    --color-text-primary: #f4f4f5;
+    --color-text-secondary: #a1a1aa;
+    --color-text-tertiary: #52525b;
+    --color-link: #38bdf8;
+    --color-primary: #2563eb;
+    --color-primary-hover: #3b82f6;
+    --color-github-black: #ffffff;
+    --color-github-white: #121214;
+}
+
+/* ==========================================================================
+   2. Curated Light Themes
+   ========================================================================== */
+
+/* Catppuccin Latte */
+[data-theme="catppuccin-latte"] {
+    --color-bg: #eff1f5;
+    --color-bg-secondary: #e6e9ef;
+    --color-text-primary: #4c4f69;
+    --color-text-secondary: #5c5f77;
+    --color-text-tertiary: #8c8fa1;
+    --color-link: #1e66f5;
+    --color-primary: #8839ef;
+    --color-primary-hover: #7287fd;
+    --color-github-black: #4c4f69;
+    --color-github-white: #eff1f5;
+}
+
+/* Rosé Pine Dawn */
+[data-theme="rose-pine-dawn"],
+[data-theme="cupcake"],
+[data-theme="horizon-light"] {
+    --color-bg: #faf4ed;
+    --color-bg-secondary: #f2e9e1;
+    --color-text-primary: #575279;
+    --color-text-secondary: #797593;
+    --color-text-tertiary: #9893a5;
+    --color-link: #286983;
+    --color-primary: #b4637a;
+    --color-primary-hover: #ea9d34;
+    --color-github-black: #575279;
+    --color-github-white: #faf4ed;
+}
+
+/* Nord Light */
+[data-theme="nord-light"],
+[data-theme="tokyo-night-day"] {
+    --color-bg: #eceff4;
+    --color-bg-secondary: #e5e9f0;
+    --color-text-primary: #2e3440;
+    --color-text-secondary: #3b4252;
+    --color-text-tertiary: #4c566a;
+    --color-link: #5e81ac;
+    --color-primary: #88c0d0;
+    --color-primary-hover: #81a1c1;
+    --color-github-black: #2e3440;
+    --color-github-white: #eceff4;
+}
+
+/* Gruvbox Light */
+[data-theme="gruvbox-light"],
+[data-theme="garden"] {
+    --color-bg: #fbf1c7;
+    --color-bg-secondary: #ebdbb2;
+    --color-text-primary: #3c3836;
+    --color-text-secondary: #504945;
+    --color-text-tertiary: #7c6f64;
+    --color-link: #076678;
+    --color-primary: #af3a03;
+    --color-primary-hover: #b57614;
+    --color-github-black: #3c3836;
+    --color-github-white: #fbf1c7;
+}
+
+/* Solarized Light */
+[data-theme="solarized-light"] {
+    --color-bg: #fdf6e3;
+    --color-bg-secondary: #eee8d5;
+    --color-text-primary: #657b83;
+    --color-text-secondary: #586e75;
+    --color-text-tertiary: #93a1a1;
+    --color-link: #2aa198;
+    --color-primary: #268bd2;
+    --color-primary-hover: #cb4b16;
+    --color-github-black: #657b83;
+    --color-github-white: #fdf6e3;
+}
+
+/* Paper / Sepia */
+[data-theme="paper-sepia"] {
+    --color-bg: #fbf0d9;
+    --color-bg-secondary: #f4e3c1;
+    --color-text-primary: #433422;
+    --color-text-secondary: #5f4b32;
+    --color-text-tertiary: #8c7355;
+    --color-link: #8f3800;
+    --color-primary: #a04000;
+    --color-primary-hover: #c05000;
+    --color-github-black: #433422;
+    --color-github-white: #fbf0d9;
+}
+
+/* ==========================================================================
+   3. Curated Dark & Vibrant Themes
+   ========================================================================== */
+
+/* Catppuccin Mocha */
+[data-theme="catppuccin"],
+[data-theme="catpucchino"],
+[data-theme="vampire"] {
+    --color-bg: #1e1e2e;
+    --color-bg-secondary: #313244;
+    --color-text-primary: #cdd6f4;
+    --color-text-secondary: #bac2de;
+    --color-text-tertiary: #6c7086;
+    --color-link: #89b4fa;
+    --color-primary: #cba6f7;
+    --color-primary-hover: #f5c2e7;
+    --color-github-black: #cdd6f4;
+    --color-github-white: #1e1e2e;
+}
+
+/* Dracula */
+[data-theme="dracula"],
+[data-theme="monokai"] {
+    --color-bg: #282a36;
+    --color-bg-secondary: #44475a;
+    --color-text-primary: #f8f8f2;
+    --color-text-secondary: #bd93f9;
+    --color-text-tertiary: #6272a4;
+    --color-link: #8be9fd;
+    --color-primary: #ff79c6;
+    --color-primary-hover: #ff92d0;
+    --color-github-black: #f8f8f2;
+    --color-github-white: #282a36;
+}
+
+/* Tokyo Night */
+[data-theme="tokyo-night"],
+[data-theme="winter"] {
+    --color-bg: #1a1b26;
+    --color-bg-secondary: #24283b;
+    --color-text-primary: #c0caf5;
+    --color-text-secondary: #a9b1d6;
+    --color-text-tertiary: #565f89;
+    --color-link: #7aa2f7;
+    --color-primary: #bb9af7;
+    --color-primary-hover: #7dcfff;
+    --color-github-black: #c0caf5;
+    --color-github-white: #1a1b26;
+}
+
+/* Nord */
+[data-theme="nord"] {
+    --color-bg: #2e3440;
+    --color-bg-secondary: #3b4252;
+    --color-text-primary: #eceff4;
+    --color-text-secondary: #d8dee9;
+    --color-text-tertiary: #4c566a;
+    --color-link: #88c0d0;
+    --color-primary: #81a1c1;
+    --color-primary-hover: #5e81ac;
+    --color-github-black: #eceff4;
+    --color-github-white: #2e3440;
+}
+
+/* Rosé Pine */
+[data-theme="rose-pine"],
+[data-theme="horizon-dark"] {
+    --color-bg: #191724;
+    --color-bg-secondary: #1f1d2e;
+    --color-text-primary: #e0def4;
+    --color-text-secondary: #908caa;
+    --color-text-tertiary: #6e6a86;
+    --color-link: #9ccfd8;
+    --color-primary: #ebbcba;
+    --color-primary-hover: #f6c177;
+    --color-github-black: #e0def4;
+    --color-github-white: #191724;
+}
+
+/* Gruvbox Dark */
+[data-theme="gruvbox-dark"],
+[data-theme="coffee"],
+[data-theme="forest"],
+[data-theme="emerald"] {
+    --color-bg: #282828;
+    --color-bg-secondary: #3c3836;
+    --color-text-primary: #ebdbb2;
+    --color-text-secondary: #d5c4a1;
+    --color-text-tertiary: #928374;
+    --color-link: #83a598;
+    --color-primary: #fe8019;
+    --color-primary-hover: #fabd2f;
+    --color-github-black: #ebdbb2;
+    --color-github-white: #282828;
+}
+
+/* Solarized Dark */
+[data-theme="solarized-dark"] {
+    --color-bg: #002b36;
+    --color-bg-secondary: #073642;
+    --color-text-primary: #93a1a1;
+    --color-text-secondary: #839496;
+    --color-text-tertiary: #586e75;
+    --color-link: #2aa198;
+    --color-primary: #268bd2;
+    --color-primary-hover: #6c71c4;
+    --color-github-black: #93a1a1;
+    --color-github-white: #002b36;
+}
+
+/* Synthwave '84 */
+[data-theme="synthwave"],
+[data-theme="cyberpunk"],
+[data-theme="neon"],
+[data-theme="sunset"] {
+    --color-bg: #262335;
+    --color-bg-secondary: #34294f;
+    --color-text-primary: #36f9f6;
+    --color-text-secondary: #fe4450;
+    --color-text-tertiary: #72f1b8;
+    --color-link: #f92aad;
+    --color-primary: #ff7edb;
+    --color-primary-hover: #fe4450;
+    --color-github-black: #36f9f6;
+    --color-github-white: #262335;
+}

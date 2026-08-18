@@ -1,6 +1,8 @@
 @import 'variables.css';
+@import 'themes.css';
 
-@custom-media --breakpoint-two (min-width: 1200px); /* WHY NOT FUNCTIONING ? */
+/* WHY this NOT FUNCTIONING ? */
+@custom-media --breakpoint-two (min-width: 1200px);
 
 * {
     margin: 0;
@@ -8,7 +10,6 @@
 
     box-sizing: border-box;
 
-    /* Hide scrollbars across Firefox, Edge, IE */
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -53,445 +54,6 @@ body.chat-fullscreen-active {
     overflow: hidden !important;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme]),
-    body:not([data-theme]) {
-        --color-bg: #121214;
-        --color-bg-secondary: #1f1f23;
-        --color-text-primary: #f4f4f5;
-        --color-text-secondary: #a1a1aa;
-        --color-text-tertiary: #52525b;
-        --color-link: #38bdf8;
-        --color-primary: #2563eb;
-        --color-primary-hover: #3b82f6;
-        --color-github-black: #ffffff;
-        --color-github-white: #121214;
-    }
-}
-
-:root,
-html,
-body {
-    &[data-theme="light"] {
-        --color-bg: #fafafa;
-        --color-bg-secondary: #ebebeb;
-        --color-text-primary: #111827;
-        --color-text-secondary: #374151;
-        --color-text-tertiary: #6b7280;
-        --color-link: #2563eb;
-        --color-primary: #2563eb;
-        --color-primary-hover: #1d4ed8;
-        --color-github-black: #000000;
-        --color-github-white: #ffffff;
-    }
-
-    &[data-theme="dark"] {
-        --color-bg: #121214;
-        --color-bg-secondary: #1f1f23;
-        --color-text-primary: #f4f4f5;
-        --color-text-secondary: #a1a1aa;
-        --color-text-tertiary: #52525b;
-        --color-link: #38bdf8;
-        --color-primary: #2563eb;
-        --color-primary-hover: #3b82f6;
-        --color-github-black: #ffffff;
-        --color-github-white: #121214;
-    }
-
-    &[data-theme="catppuccin"],
-    &[data-theme="catpucchino"] {
-        --color-bg: #1e1e2e;
-        --color-bg-secondary: #313244;
-        --color-text-primary: #cdd6f4;
-        --color-text-secondary: #bac2de;
-        --color-text-tertiary: #6c7086;
-        --color-link: #89b4fa;
-        --color-primary: #cba6f7;
-        --color-primary-hover: #f5c2e7;
-        --color-github-black: #cdd6f4;
-        --color-github-white: #1e1e2e;
-    }
-
-    &[data-theme="dracula"] {
-        --color-bg: #282a36;
-        --color-bg-secondary: #44475a;
-        --color-text-primary: #f8f8f2;
-        --color-text-secondary: #bd93f9;
-        --color-text-tertiary: #6272a4;
-        --color-link: #8be9fd;
-        --color-primary: #ff79c6;
-        --color-primary-hover: #ff92d0;
-        --color-github-black: #f8f8f2;
-        --color-github-white: #282a36;
-    }
-
-    &[data-theme="winter"] {
-        --color-bg: #0f172a;
-        --color-bg-secondary: #1e293b;
-        --color-text-primary: #f1f5f9;
-        --color-text-secondary: #94a3b8;
-        --color-text-tertiary: #475569;
-        --color-link: #38bdf8;
-        --color-primary: #0ea5e9;
-        --color-primary-hover: #7dd3fc;
-        --color-github-black: #f1f5f9;
-        --color-github-white: #0f172a;
-    }
-
-    &[data-theme="forest"] {
-        --color-bg: #121d17;
-        --color-bg-secondary: #1c2e24;
-        --color-text-primary: #e2f1e8;
-        --color-text-secondary: #a3c9b4;
-        --color-text-tertiary: #4d7c62;
-        --color-link: #34d399;
-        --color-primary: #10b981;
-        --color-primary-hover: #6ee7b7;
-        --color-github-black: #e2f1e8;
-        --color-github-white: #121d17;
-    }
-
-    &[data-theme="neon"] {
-        --color-bg: #0d0221;
-        --color-bg-secondary: #1d0b38;
-        --color-text-primary: #00f5d4;
-        --color-text-secondary: #f72585;
-        --color-text-tertiary: #7b2cbf;
-        --color-link: #00f5d4;
-        --color-primary: #f72585;
-        --color-primary-hover: #ff007f;
-        --color-github-black: #00f5d4;
-        --color-github-white: #0d0221;
-    }
-
-    &[data-theme="nord"] {
-        --color-bg: #2e3440;
-        --color-bg-secondary: #3b4252;
-        --color-text-primary: #eceff4;
-        --color-text-secondary: #d8dee9;
-        --color-text-tertiary: #4c566a;
-        --color-link: #88c0d0;
-        --color-primary: #81a1c1;
-        --color-primary-hover: #5e81ac;
-        --color-github-black: #eceff4;
-        --color-github-white: #2e3440;
-    }
-
-    &[data-theme="tokyo-night"] {
-        --color-bg: #1a1b26;
-        --color-bg-secondary: #24283b;
-        --color-text-primary: #c0caf5;
-        --color-text-secondary: #a9b1d6;
-        --color-text-tertiary: #565f89;
-        --color-link: #7aa2f7;
-        --color-primary: #bb9af7;
-        --color-primary-hover: #7dcfff;
-        --color-github-black: #c0caf5;
-        --color-github-white: #1a1b26;
-    }
-
-    &[data-theme="monokai"] {
-        --color-bg: #2d2a2e;
-        --color-bg-secondary: #3a373b;
-        --color-text-primary: #fcfcfa;
-        --color-text-secondary: #c1c0c0;
-        --color-text-tertiary: #727072;
-        --color-link: #ffd866;
-        --color-primary: #ff6188;
-        --color-primary-hover: #fc9867;
-        --color-github-black: #fcfcfa;
-        --color-github-white: #2d2a2e;
-    }
-
-    &[data-theme="cyberpunk"] {
-        --color-bg: #10002b;
-        --color-bg-secondary: #240046;
-        --color-text-primary: #ffee32;
-        --color-text-secondary: #e0aaff;
-        --color-text-tertiary: #7b2cbf;
-        --color-link: #ff0054;
-        --color-primary: #ff5400;
-        --color-primary-hover: #ffbd00;
-        --color-github-black: #ffee32;
-        --color-github-white: #10002b;
-    }
-
-    &[data-theme="rose-pine"] {
-        --color-bg: #191724;
-        --color-bg-secondary: #1f1d2e;
-        --color-text-primary: #e0def4;
-        --color-text-secondary: #908caa;
-        --color-text-tertiary: #6e6a86;
-        --color-link: #9ccfd8;
-        --color-primary: #ebbcba;
-        --color-primary-hover: #f6c177;
-        --color-github-black: #e0def4;
-        --color-github-white: #191724;
-    }
-
-    &[data-theme="coffee"] {
-        --color-bg: #201815;
-        --color-bg-secondary: #2d221e;
-        --color-text-primary: #f5ebe0;
-        --color-text-secondary: #d5bdaf;
-        --color-text-tertiary: #8d7a6e;
-        --color-link: #e3a857;
-        --color-primary: #c68b59;
-        --color-primary-hover: #d4a373;
-        --color-github-black: #f5ebe0;
-        --color-github-white: #201815;
-    }
-
-    &[data-theme="solarized-dark"] {
-        --color-bg: #002b36;
-        --color-bg-secondary: #073642;
-        --color-text-primary: #93a1a1;
-        --color-text-secondary: #839496;
-        --color-text-tertiary: #586e75;
-        --color-link: #2aa198;
-        --color-primary: #268bd2;
-        --color-primary-hover: #6c71c4;
-        --color-github-black: #93a1a1;
-        --color-github-white: #002b36;
-    }
-
-    &[data-theme="solarized-light"] {
-        --color-bg: #fdf6e3;
-        --color-bg-secondary: #eee8d5;
-        --color-text-primary: #657b83;
-        --color-text-secondary: #586e75;
-        --color-text-tertiary: #93a1a1;
-        --color-link: #2aa198;
-        --color-primary: #268bd2;
-        --color-primary-hover: #cb4b16;
-        --color-github-black: #657b83;
-        --color-github-white: #fdf6e3;
-    }
-
-    &[data-theme="sunset"] {
-        --color-bg: #1c1326;
-        --color-bg-secondary: #2a1b3d;
-        --color-text-primary: #fceade;
-        --color-text-secondary: #f3b082;
-        --color-text-tertiary: #8c5a6b;
-        --color-link: #ff758f;
-        --color-primary: #ff758f;
-        --color-primary-hover: #ff4d6d;
-        --color-github-black: #fceade;
-        --color-github-white: #1c1326;
-    }
-
-    &[data-theme="emerald"] {
-        --color-bg: #062419;
-        --color-bg-secondary: #0a3a29;
-        --color-text-primary: #ecfdf5;
-        --color-text-secondary: #a7f3d0;
-        --color-text-tertiary: #059669;
-        --color-link: #34d399;
-        --color-primary: #10b981;
-        --color-primary-hover: #6ee7b7;
-        --color-github-black: #ecfdf5;
-        --color-github-white: #062419;
-    }
-
-    /* Light Mode Themes */
-    &[data-theme="catppuccin-latte"] {
-        --color-bg: #eff1f5;
-        --color-bg-secondary: #e6e9ef;
-        --color-text-primary: #4c4f69;
-        --color-text-secondary: #5c5f77;
-        --color-text-tertiary: #8c8fa1;
-        --color-link: #1e66f5;
-        --color-primary: #8839ef;
-        --color-primary-hover: #7287fd;
-        --color-github-black: #4c4f69;
-        --color-github-white: #eff1f5;
-    }
-
-    &[data-theme="rose-pine-dawn"] {
-        --color-bg: #faf4ed;
-        --color-bg-secondary: #f2e9e1;
-        --color-text-primary: #575279;
-        --color-text-secondary: #797593;
-        --color-text-tertiary: #9893a5;
-        --color-link: #286983;
-        --color-primary: #b4637a;
-        --color-primary-hover: #ea9d34;
-        --color-github-black: #575279;
-        --color-github-white: #faf4ed;
-    }
-
-    &[data-theme="nord-light"] {
-        --color-bg: #eceff4;
-        --color-bg-secondary: #e5e9f0;
-        --color-text-primary: #2e3440;
-        --color-text-secondary: #3b4252;
-        --color-text-tertiary: #4c566a;
-        --color-link: #5e81ac;
-        --color-primary: #88c0d0;
-        --color-primary-hover: #81a1c1;
-        --color-github-black: #2e3440;
-        --color-github-white: #eceff4;
-    }
-
-    &[data-theme="one-light"] {
-        --color-bg: #fafafa;
-        --color-bg-secondary: #f0f0f0;
-        --color-text-primary: #383a42;
-        --color-text-secondary: #50535b;
-        --color-text-tertiary: #a0a1a7;
-        --color-link: #4078f2;
-        --color-primary: #a626a4;
-        --color-primary-hover: #50a14f;
-        --color-github-black: #383a42;
-        --color-github-white: #fafafa;
-    }
-
-    &[data-theme="gruvbox-light"] {
-        --color-bg: #fbf1c7;
-        --color-bg-secondary: #ebdbb2;
-        --color-text-primary: #3c3836;
-        --color-text-secondary: #504945;
-        --color-text-tertiary: #7c6f64;
-        --color-link: #076678;
-        --color-primary: #af3a03;
-        --color-primary-hover: #b57614;
-        --color-github-black: #3c3836;
-        --color-github-white: #fbf1c7;
-    }
-
-    &[data-theme="tokyo-night-day"] {
-        --color-bg: #e1e2e7;
-        --color-bg-secondary: #d5d6db;
-        --color-text-primary: #3760bf;
-        --color-text-secondary: #6172b6;
-        --color-text-tertiary: #848cb5;
-        --color-link: #2e7de9;
-        --color-primary: #9854f6;
-        --color-primary-hover: #007197;
-        --color-github-black: #3760bf;
-        --color-github-white: #e1e2e7;
-    }
-
-    &[data-theme="paper-sepia"] {
-        --color-bg: #fbf0d9;
-        --color-bg-secondary: #f4e3c1;
-        --color-text-primary: #433422;
-        --color-text-secondary: #5f4b32;
-        --color-text-tertiary: #8c7355;
-        --color-link: #8f3800;
-        --color-primary: #a04000;
-        --color-primary-hover: #c05000;
-        --color-github-black: #433422;
-        --color-github-white: #fbf0d9;
-    }
-
-    &[data-theme="cupcake"] {
-        --color-bg: #faf7f5;
-        --color-bg-secondary: #efeae6;
-        --color-text-primary: #291ec4;
-        --color-text-secondary: #d97706;
-        --color-text-tertiary: #9ca3af;
-        --color-link: #651fff;
-        --color-primary: #ef4444;
-        --color-primary-hover: #f59e0b;
-        --color-github-black: #291ec4;
-        --color-github-white: #faf7f5;
-    }
-
-    &[data-theme="garden"] {
-        --color-bg: #e9f5ec;
-        --color-bg-secondary: #d3ead8;
-        --color-text-primary: #164e63;
-        --color-text-secondary: #15803d;
-        --color-text-tertiary: #4b7a5a;
-        --color-link: #0284c7;
-        --color-primary: #16a34a;
-        --color-primary-hover: #15803d;
-        --color-github-black: #164e63;
-        --color-github-white: #e9f5ec;
-    }
-
-    &[data-theme="horizon-light"] {
-        --color-bg: #fdf0ed;
-        --color-bg-secondary: #f9e2dc;
-        --color-text-primary: #1c1e26;
-        --color-text-secondary: #474247;
-        --color-text-tertiary: #948a87;
-        --color-link: #1d899b;
-        --color-primary: #da103f;
-        --color-primary-hover: #dc3314;
-        --color-github-black: #1c1e26;
-        --color-github-white: #fdf0ed;
-    }
-
-    &[data-theme="alabaster"] {
-        --color-bg: #f7f7f7;
-        --color-bg-secondary: #e8e8e8;
-        --color-text-primary: #000000;
-        --color-text-secondary: #333333;
-        --color-text-tertiary: #666666;
-        --color-link: #007acc;
-        --color-primary: #d73a49;
-        --color-primary-hover: #6f42c1;
-        --color-github-black: #000000;
-        --color-github-white: #f7f7f7;
-    }
-
-    /* Additional Dark & Vibrant Themes */
-    &[data-theme="gruvbox-dark"] {
-        --color-bg: #282828;
-        --color-bg-secondary: #3c3836;
-        --color-text-primary: #ebdbb2;
-        --color-text-secondary: #d5c4a1;
-        --color-text-tertiary: #928374;
-        --color-link: #83a598;
-        --color-primary: #fe8019;
-        --color-primary-hover: #fabd2f;
-        --color-github-black: #ebdbb2;
-        --color-github-white: #282828;
-    }
-
-    &[data-theme="synthwave"] {
-        --color-bg: #262335;
-        --color-bg-secondary: #34294f;
-        --color-text-primary: #36f9f6;
-        --color-text-secondary: #fe4450;
-        --color-text-tertiary: #72f1b8;
-        --color-link: #f92aad;
-        --color-primary: #ff7edb;
-        --color-primary-hover: #fe4450;
-        --color-github-black: #36f9f6;
-        --color-github-white: #262335;
-    }
-
-    &[data-theme="horizon-dark"] {
-        --color-bg: #1c1e26;
-        --color-bg-secondary: #232530;
-        --color-text-primary: #fdf0ed;
-        --color-text-secondary: #e95379;
-        --color-text-tertiary: #6c6f93;
-        --color-link: #26bbd9;
-        --color-primary: #fab795;
-        --color-primary-hover: #e95678;
-        --color-github-black: #fdf0ed;
-        --color-github-white: #1c1e26;
-    }
-
-    &[data-theme="vampire"] {
-        --color-bg: #181825;
-        --color-bg-secondary: #1e1e2e;
-        --color-text-primary: #f5e0dc;
-        --color-text-secondary: #f2cdcd;
-        --color-text-tertiary: #f5c2e7;
-        --color-link: #cba6f7;
-        --color-primary: #f38ba8;
-        --color-primary-hover: #fab387;
-        --color-github-black: #f5e0dc;
-        --color-github-white: #181825;
-    }
-}
-
 html {
     min-height: 100vh;
     background-color: var(--color-bg);
@@ -500,6 +62,7 @@ html {
     scroll-padding-top: clamp(1.5rem, 3.5vh, 2.5rem);
     overflow-x: hidden;
     max-width: 100%;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 section[id],
@@ -512,8 +75,10 @@ body {
 
     background-color: var(--color-bg);
     color: var(--color-text-primary);
-    cursor: var(--cusrsor-default);
+    cursor: var(--cursor-default, var(--cusrsor-default, default));
     max-width: var(--max-width);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    
 
     ::selection {
         background-color: var(--color-text-primary);
@@ -1264,6 +829,7 @@ body {
                     font-size: 0.76rem;
                     font-weight: 600;
                     color: #f59e0b;
+                    /* ToDO: Color variables ... */
                     background: rgba(245, 158, 11, 0.12);
                     border: 1px solid rgba(245, 158, 11, 0.25);
                     border-radius: 6px;
@@ -3033,7 +2599,8 @@ body {
     }
 
 
-    overflow-x: hidden;
+    /* Seems like this is not needed ... */
+    /* overflow-x: hidden; */
 
 
     /* #github-star-container {
@@ -3112,9 +2679,17 @@ body {
             border-color: var(--color-link);
         }
 
+        optgroup {
+            background-color: var(--color-bg-secondary);
+            color: var(--color-text-secondary);
+            font-weight: 700;
+            font-style: normal;
+        }
+
         option {
             background-color: var(--color-bg);
             color: var(--color-text-primary);
+            font-weight: normal;
         }
     }
 }

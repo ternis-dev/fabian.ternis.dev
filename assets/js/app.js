@@ -49,7 +49,31 @@ document.addEventListener('DOMContentLoaded', () => {
         updateActiveNav();
     }
 
+    const legacyThemeMap = {
+        'catpucchino': 'catppuccin',
+        'one-light': 'light',
+        'alabaster': 'light',
+        'tokyo-night-day': 'nord-light',
+        'cupcake': 'rose-pine-dawn',
+        'horizon-light': 'rose-pine-dawn',
+        'garden': 'gruvbox-light',
+        'winter': 'tokyo-night',
+        'forest': 'gruvbox-dark',
+        'emerald': 'gruvbox-dark',
+        'coffee': 'gruvbox-dark',
+        'sunset': 'synthwave',
+        'monokai': 'dracula',
+        'cyberpunk': 'synthwave',
+        'neon': 'synthwave',
+        'horizon-dark': 'rose-pine',
+        'vampire': 'catppuccin'
+    };
+
     let savedTheme = localStorage.getItem('theme') ?? 'system';
+    if (legacyThemeMap[savedTheme]) {
+        savedTheme = legacyThemeMap[savedTheme];
+        localStorage.setItem('theme', savedTheme);
+    }
     const themeInput = document.getElementById('theme-select');
 
     const theme_groups = [
@@ -67,15 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 'catppuccin-latte', name: 'Catppuccin Latte' },
                 { id: 'rose-pine-dawn', name: 'Rosé Pine Dawn' },
                 { id: 'nord-light', name: 'Nord Light' },
-                { id: 'one-light', name: 'One Light' },
-                { id: 'solarized-light', name: 'Solarized Light' },
                 { id: 'gruvbox-light', name: 'Gruvbox Light' },
-                { id: 'tokyo-night-day', name: 'Tokyo Night Day' },
-                { id: 'paper-sepia', name: 'Paper / Sepia' },
-                { id: 'cupcake', name: 'Cupcake' },
-                { id: 'garden', name: 'Garden' },
-                { id: 'horizon-light', name: 'Horizon Light' },
-                { id: 'alabaster', name: 'Alabaster' }
+                { id: 'solarized-light', name: 'Solarized Light' },
+                { id: 'paper-sepia', name: 'Paper / Sepia' }
             ]
         },
         {
@@ -83,22 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
             themes: [
                 { id: 'catppuccin', name: 'Catppuccin Mocha' },
                 { id: 'dracula', name: 'Dracula' },
-                { id: 'nord', name: 'Nord' },
                 { id: 'tokyo-night', name: 'Tokyo Night' },
+                { id: 'nord', name: 'Nord' },
                 { id: 'rose-pine', name: 'Rosé Pine' },
-                { id: 'solarized-dark', name: 'Solarized Dark' },
                 { id: 'gruvbox-dark', name: 'Gruvbox Dark' },
-                { id: 'winter', name: 'Winter' },
-                { id: 'forest', name: 'Forest' },
-                { id: 'emerald', name: 'Emerald' },
-                { id: 'coffee', name: 'Coffee' },
-                { id: 'sunset', name: 'Sunset' },
-                { id: 'monokai', name: 'Monokai' },
-                { id: 'cyberpunk', name: 'Cyberpunk' },
-                { id: 'synthwave', name: 'Synthwave \'84' },
-                { id: 'neon', name: 'Neon' },
-                { id: 'horizon-dark', name: 'Horizon Dark' },
-                { id: 'vampire', name: 'Vampire' }
+                { id: 'solarized-dark', name: 'Solarized Dark' },
+                { id: 'synthwave', name: 'Synthwave \'84' }
             ]
         }
     ];
@@ -106,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeInput) {
         themeInput.innerHTML = theme_groups.map(group => {
             const options = group.themes.map(t => {
-                const isSelected = (savedTheme === t.id || (savedTheme === 'catpucchino' && t.id === 'catppuccin')) ? ' selected' : '';
+                const isSelected = (savedTheme === t.id) ? ' selected' : '';
                 return `<option value="${t.id}"${isSelected}>${t.name}</option>`;
             }).join('');
             return `<optgroup label="${group.label}">${options}</optgroup>`;
@@ -116,6 +124,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateTheme();
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'theme') {
+            savedTheme = e.newValue ?? 'system';
+            if (themeInput) {
+                themeInput.value = savedTheme;
+            }
+            updateTheme();
+        }
+    });
 
     function updateTheme() {
         let currentTheme = themeInput ? themeInput.value : savedTheme;

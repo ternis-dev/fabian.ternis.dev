@@ -1,3 +1,5 @@
+@import 'themes.css';
+
 @font-face {
     font-family: 'Libre Baskerville';
     src: url('/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf') format('truetype');
@@ -47,24 +49,19 @@
 }
 
 :root {
-    /* Base Colors */
-    --color-bg: #eaeaea;
-    --color-bg-secondary: #e0e0e0;
-    --color-text-primary: #1c1c1c;
-    --color-text-secondary: #313131;
-    --color-text-tertiary: #545454;
-    --color-link: #199cf3;
-    --color-github-black: black;
-    --color-github-white: white;
+    /* Base Colors (Default Light) */
+    --color-bg: #fafafa;
+    --color-bg-secondary: #f0f0f2;
+    --color-text-primary: #18181b;
+    --color-text-secondary: #52525b;
+    --color-text-tertiary: #a1a1aa;
+    --color-link: #2563eb;
+    --color-github-black: #000000;
+    --color-github-white: #ffffff;
     --color-primary: #2563eb;
     --color-primary-hover: #1d4ed8;
-    --color-primary-active: var(--color-primary-hover); /* for now */
+    --color-primary-active: var(--color-primary-hover);
     --color-disabled: #9ca3af;
-    
-    --theme-dark-bg: #1a1a1a;
-    --theme-light-bg: #eaeaea;
-    --theme-catppuccin-bg: #302d41;
-    --theme-dracula-bg: #282a36;
 
     --font-main: 'Libre Baskerville', Georgia, serif;
     --font-code: 'Anonymous Pro', monospace;
@@ -74,7 +71,8 @@
     --font-chat: system-ui, -apple-system, sans-serif;
 
     --cursor-pointer: pointer;
-    --cusrsor-default: default;
+    --cursor-default: default;
+    --cusrsor-default: default; /* legacy compatibility */
 
     --transition-one: .2345s cubic-bezier(.5,-0.36,0,1.27); 
 
@@ -83,3 +81,4 @@
     --string-my-name: 'Fabian Ternis';
     --string-copyright-holder: var(--string-my-name);
 }
+
