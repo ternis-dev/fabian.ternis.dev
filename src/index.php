@@ -6,7 +6,8 @@
             <div class="some-container">
                 <h3>Building my HomeLab @ <a href="http://ternis.net">ternis.net</a></h3>
                 <h3>Web development @ <span class="font-code">(<a href="http://xpsystems.eu" target="_blank">xpsystems.eu</a> && <a href="http://ternis-edv.de">ternis-edv.de</a>)</span></h3>
-                <h3>Links via <a href="http://fabian-ternis-dev.ternis.link" target="_blank">ternis.link</a></h3>
+                <!-- <h3>Links via <a href="http://fabian-ternis-dev.ternis.link" target="_blank">ternis.link</a></h3> -->
+                <h3>Links via <a href="http://ternis.link" target="_blank">ternis.link</a></h3>
                 <h3>I just own too many domains (see: <a href="http://dnbx.de#domainlist" target="_blank">dnbx.de</a> and/or <a href="#domains">this</a>)</h3>
             </div>
             
@@ -114,7 +115,7 @@
 <div class="has-newsbanner">
 
     <section id="homelab">
-        <h2>What [software] I host on my HomeLab (I know, nobody asked):</h2>
+        <h2>What [software] I host on my HomeLab (I know, nobody wants to know):</h2>
 
         <ul class="tech-list">
             <?php foreach(config('homelab_techs') as $tech): ?>
@@ -182,13 +183,19 @@
         <h2>Some other projects I am currently not working on:</h2>
 
         <ul>
+            <!-- <li><a href="http://href.nz/url/example-dns.com">example-dns</a> (My own Nameservers powered by PowerDNS)</li>
+            <li><a href="http://href.nz/url/Web-Search.org">Web-Search.org</a> (Just another open-source Search engine)</li>
+            <li><a href="http://href.nz/url/MTEX.dev">MTEX.dev</a> (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))</li> -->
+            <li><a href="http://href.re">href.re</a> && <a href="http://web.static.re">static.re</a> (Hosting static assets and external links for my Web-Projects)</li>
+            <li><a href="http://href.nz">href.nz</a> (Inspired by href.li)</li>
+            <li><a href="http://example-dns.com">example-dns</a> (My own Nameservers powered by PowerDNS)</li>
             <li><a href="http://Web-Search.org">Web-Search.org</a> (Just another open-source Search engine)</li>
             <li><a href="http://MTEX.dev">MTEX.dev</a> (Developer Tools (SchemaBuilder (which I am currently working on) might be one of those but is currently not being built under the MTEX.dev Brand))</li>
             ... way too many more ...
         </ul>
     </section>
 
-
+<!-- 
     <section id="ai_dynamic">
         <div class="ai-dynamic-header-row">
             <h2><dynamically>Dynamically</dynamically> <generated>generated</generated> by AI</h2>
@@ -296,7 +303,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 
     <section id="domains">
@@ -461,7 +468,7 @@
     </section>
 
 
-    <section id="redaction">
+    <!-- <section id="redaction">
         <h2>This is, how the U.S. goverment <redacts>redacts</redacts> texts</h2>
 
         <tipp>Tipp: Try selecting the text below</tipp>
@@ -473,20 +480,20 @@
             <h2>Lorem Startum</h2>
             <p>Lorem ipsum dolor sit</p>
         </redacted>
-    </section>
+    </section> -->
 
 
-    <section id="buttons">
+    <!-- <section id="buttons">
         <h2>Just <some>some</some> Buttons ...</h2>
 
         <div class="buttons-container">
             <button class="hover-moving-gradient_border">Hover me!</button>
         </div>
-    </section>
+    </section> -->
 
 
     <section id="linkshorten">
-        <h2>I <would>would</would> have a form to shorten a link with <a href="http://ternis.link" target="_blank">ternis.link</a> but i am still working on it.</h2>
+        <!-- <h2>I <would>would</would> have a form to shorten a link with <a href="http://ternis.link" target="_blank">ternis.link</a> but i am still working on it.</h2>
 
         <h3>So, instead of <a href="http://ternis.link" target="_blank">ternis.link</a>, I will use <a href="http://twinsonice.link" target="_blank">twinsonice.link</a> (short: <a href="http://icelnk.de" target="_blank">icelnk.de</a>).</h3>
         <form id="link_shortening_form" method="post" action="#linkshorten">
@@ -513,7 +520,7 @@
             <script>
                 window.link_shortening_response = <?= json_encode($new_link) ?>;
             </script>
-        <?php endif; ?>
+        <?php endif; ?> -->
     </section>
 
 
@@ -598,12 +605,12 @@
         </div>
     </section>
 
-
+<!-- 
     <section id="fingerprinting">
         <h2>Beowser Fingerprinting <stuff>stuff</stuff> ...</h2>
 
         <div>"stuff" about Browser-Fingerprinting, Tracking and co.</div>
-    </section>
+    </section> -->
 
 
     <section id="competitions">
@@ -715,7 +722,14 @@
                     'category' => 'Monitoring',
                     'desc' => 'Interactive process viewer & TUI system resource monitor.',
                     'cmd' => 'sudo apt install htop'
-                ]
+                ],
+                [
+                    'name' => 'screenfetch',
+                    // 'category' => 'Monitoring Snapshot',
+                    'category' => 'Monitoring',
+                    'desc' => 'Shows a small graphic with the computer\'s uptime, resource-use and OS',
+                    'cmd' => 'sudo apt install screenfetch'
+                ],
             ];
             foreach($essential_packages as $pkg): ?>
                 <div class="package-card">
@@ -747,7 +761,7 @@
             </div>
         </div>
 
-        <div class="not-listen">
+        <!-- <div class="not-listen">
             <h3>What i dont listen to</h3>
             <div class="songs-container">
                 <?php foreach (get_music() as $song): ?>
@@ -771,7 +785,7 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-        </div>
+        </div> -->
     </section>
 
 

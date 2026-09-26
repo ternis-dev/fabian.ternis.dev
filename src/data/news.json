@@ -1,11 +1,19 @@
 [
     {
         "date": null,
+        "content": "I recently started self-hosting my own Nameservers for my Domains (example-dns.com)"
+    },
+    {
+        "date": null,
+        "content": "Building my own R2-based CDN on static.re"
+    },
+    {
+        "date": null,
         "content": "I actually like to use en-dashes (\"–\") and em-dashes. So you can never be sure, if it was AI or me, writing something."
     },
     {
         "date": "2026-08-18",
-        "content": "Today, i finally merged a pr on ternis-edv/site with changes that i made months ago. now <a href=\"https://ternis-edv.de\">ternis-edv.de</a> finally looks better ..."
+        "content": "Today, i finally merged a PR on ternis-edv/site with changes that i made months ago. now <a href=\"https://ternis-edv.de\">ternis-edv.de</a> finally looks better ..."
     },
     {
         "date": "2026-08-14",
